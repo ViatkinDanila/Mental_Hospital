@@ -5,14 +5,14 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
     <display-name>Archetype Created Web Application</display-name>
 
-<!--    <servlet>-->
-<!--        <servlet-name>main</servlet-name>-->
-<!--        <servlet-class>com.epam.hospital.controller.Controller</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>main</servlet-name>-->
-<!--        <url-pattern>/mental-hospital</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet>
+        <servlet-name>main</servlet-name>
+        <servlet-class>com.epam.hospital.controller.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/mental-hospital</url-pattern>
+    </servlet-mapping>
 
 <!--    <filter>-->
 <!--        <filter-name>CharacterSetFilter</filter-name>-->

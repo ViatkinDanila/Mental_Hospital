@@ -26,10 +26,16 @@ import java.io.IOException;
 //https://www.youtube.com/channel/UCRxBK1uUONfrU7roM36zuTQ
 
 @Slf4j
-@WebServlet(urlPatterns = {"/hello"}, name = "mainServlet")
+//http://localhost:8080/mental-hospital
 public class Controller extends HttpServlet {
     private static final String HOME_PAGE_COMMAND = "mental-hospital?command=" + CommandName.HOME_PAGE +
             "&" + RequestParameter.PAGE + "=1";
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("HELLO?");
+        super.service(req, resp);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
