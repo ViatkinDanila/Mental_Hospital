@@ -30,13 +30,6 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     private static final String HOME_PAGE_COMMAND = "mental-hospital?command=" + CommandName.HOME_PAGE +
             "&" + RequestParameter.PAGE + "=1";
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("HELLO?");
-        super.service(req, resp);
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
