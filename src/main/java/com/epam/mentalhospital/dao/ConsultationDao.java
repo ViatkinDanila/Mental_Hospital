@@ -10,5 +10,4 @@ public interface ConsultationDao extends AbstractDao<Consultation> {
 
     List<Consultation> findByPatientId(int patientId) throws DaoException;
 
-    List<Consultation> findByDate(String date) throws DaoException;
 }

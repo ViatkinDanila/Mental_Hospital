@@ -13,7 +13,7 @@ public class ConsultationBuilder implements EntityBuilder<Consultation> {
         Consultation consultation = new Consultation();
 
         consultation.setConsultationId(resultSet.getInt(Column.CONSULTATION_ID));
-        consultation.setCommunicationTypeId(CommunicationType.valueOf(resultSet.getString(Column.CONSULTATION_COMMUNICATION_TYPE_ID)));
+        consultation.setCommunicationType(CommunicationType.valueOf(resultSet.getString(Column.CONSULTATION_COMMUNICATION_TYPE)));
         consultation.setDate(resultSet.getString(Column.CONSULTATION_DATE));
         consultation.setDuration(resultSet.getInt(Column.CONSULTATION_DURATION));
         consultation.setDoctorId(resultSet.getInt(Column.CONSULTATION_DOCTOR_ID));

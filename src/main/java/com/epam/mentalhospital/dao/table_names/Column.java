@@ -36,7 +36,8 @@ public class Column {
     public static final String TREATMENT_COURSE_ID = "id";
 
     public static final String CONSULTATION_ID = "id";
-    public static final String CONSULTATION_COMMUNICATION_TYPE_ID = "communication_type_id";
+    public static final String CONSULTATION_TREATMENT_COURSE_ID = "treatment_course_id";
+    public static final String CONSULTATION_COMMUNICATION_TYPE = "communication_type";
     public static final String CONSULTATION_DOCTOR_ID = "doctor_id";
     public static final String CONSULTATION_PATIENT_ID = "patient_id";
     public static final String CONSULTATION_DATE = "date";
@@ -69,9 +70,9 @@ public class Column {
     public static final String HOSPITAL_NUMBER = "number";
 
     public static final String CHAMBER_ID = "id";
-    public static final String CHAMBER_CHAMBER_TYPE_ID = "chambres_type_id";
+    public static final String CHAMBER_CHAMBER_TYPE_ID = "chamber_type_id";
     public static final String CHAMBER_HOSPITAL_ID = "hospital_id";
-    public static final String CHAMBER_NUMBER_OF_FREE_BEDS = "num_free_beds";
+    public static final String CHAMBERS_TYPE_NUMBER_OF_FREE_CHAMBERS = "num_free_chambers";
     public static final String CHAMBER_NUMBER_OF_AVAILABLE_ROOMS = "num_available_rooms";
 
     public static final String CHAMBERS_TYPE_ID = "id";
