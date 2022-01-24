@@ -12,6 +12,7 @@ public class DrugBuilder implements EntityBuilder<Drug> {
     public Drug build(ResultSet resultSet) throws SQLException {
         Drug drug = new Drug();
         drug.setDrugId(resultSet.getInt(Column.DRUGS_ID));
-        return null;
+        drug.setName(resultSet.getString(Column.DRUGS_NAME));
+        return drug;
     }
 }

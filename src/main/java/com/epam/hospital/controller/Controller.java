@@ -11,6 +11,7 @@ import com.epam.hospital.controller.request.HttpRequestFiller;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.controller.request.RequestContextMapper;
 import com.epam.hospital.dao.connectionpool.ConnectionPool;
+import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,6 +29,13 @@ import java.io.IOException;
 @Slf4j
 //http://localhost:8080/mental-hospital
 public class Controller extends HttpServlet {
+    static{
+        try {
+            ConnectionPool.getInstance().init("jdbc:mysql://localhost:3306/mental_hospital?useSSL=false&allowPublicKeyRetrieval=true","root","admin");
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+    }
     private static final String HOME_PAGE_COMMAND = "mental-hospital?command=" + CommandName.HOME_PAGE +
             "&" + RequestParameter.PAGE + "=1";
     @Override

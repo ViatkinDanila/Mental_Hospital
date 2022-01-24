@@ -15,7 +15,7 @@ public class Column {
     public static final String DISEASES_DESCRIPTION = "description";
 
     public static final String DISEASE_SYMPTOMS_COURSE_ID = "treatment_course_id";
-    public static final String DISEASE_SYMPTOMS_DISEASE_ID = "disease_id";
+    public static final String DISEASE_SYMPTOMS_DISEASE_ID = "diseases_id";
     public static final String DISEASE_SYMPTOMS_SYMPTOMS = "symptoms";
 
     public static final String DRUGS_ID = "id";
