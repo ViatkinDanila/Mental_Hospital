@@ -5,4 +5,8 @@ import com.epam.hospital.service.exception.ServiceException;
 
 public interface TreatmentCourseService {
     TreatmentCourse getTreatmentCourseById(int treatmentCourseId) throws ServiceException;
+
+    List<DiseaseSymptom> getDiseaseSymptoms(int treatmentCourseId) throws ServiceException;
+
+    List<DrugRecipe> getDrugRecipes(int treatmentCourseId) throws ServiceException;
 }

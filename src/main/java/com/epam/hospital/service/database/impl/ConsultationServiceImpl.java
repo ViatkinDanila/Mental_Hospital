@@ -8,9 +8,11 @@ import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.service.database.ConsultationService;
 
 public class ConsultationServiceImpl implements ConsultationService {
-    private static ConsultationService instance = new ConsultationServiceImpl();
+    private static final ConsultationService instance = new ConsultationServiceImpl();
 
-    public ConsultationServiceImpl getInstance
+    public static ConsultationService getInstance(){
+        return instance;
+    }
 
     @Override
     public Consultation getConsultationById(int id) throws SecurityException {

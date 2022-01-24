@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -20,13 +20,9 @@ public class ConsultationDto implements Entity {
     private int duration;
     private String doctorFirstName;
     private String doctorLastName;
+    private String patientFirstName;
+    private String patientLastName;
     private List<String> diseases;
     private List<String> drugs;
     private String instruction;
-
-    public static void main(String[] args) {
-        System.out.println(ConsultationDto.builder().
-                duration(141).
-                build());
-    }
 }
