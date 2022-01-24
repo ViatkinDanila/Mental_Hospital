@@ -15,6 +15,7 @@ public class BuilderFactory {
     private final static DiseaseSymptomBuilder diseaseSymptomBuilder = new DiseaseSymptomBuilder();
     private final static DrugBuilder drugBuilder = new DrugBuilder();
     private final static ChamberStayingBuilder chamberStayingBuilder = new ChamberStayingBuilder();
+    private final static DiseaseBuilder diseaseBuilder = new DiseaseBuilder();
 
     public static UserBuilder getUserBuilder() {
         return userBuilder;
@@ -58,5 +59,9 @@ public class BuilderFactory {
 
     public static ChamberStayingBuilder getChamberStaying(){
         return chamberStayingBuilder;
+    }
+
+    public static DiseaseBuilder getDiseaseBuilder(){
+        return diseaseBuilder;
     }
 }

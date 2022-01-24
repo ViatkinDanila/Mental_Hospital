@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.util.Objects;
 
 @Data
@@ -16,7 +17,7 @@ public class Consultation implements Entity {
     private int doctorId;
     private int patientId;
     private CommunicationType communicationType;
-    private String date;
+    private Date date;
     private int duration;
     private int treatmentCourseId;
 }

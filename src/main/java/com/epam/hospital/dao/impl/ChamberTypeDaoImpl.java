@@ -11,7 +11,7 @@ import com.epam.hospital.model.treatment.Drug;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> implements ChamberTypeDao {
+public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> {
     private final String SAVE_CHAMBER_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
             Table.CHAMBERS_TYPE_TABLE,
