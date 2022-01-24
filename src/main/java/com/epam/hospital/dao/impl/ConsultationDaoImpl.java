@@ -75,34 +75,12 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
 
     @Override
     public List<Consultation> findByDoctorId(int doctorId) throws DaoException {
-        List<Consultation> result = new ArrayList<>();
-        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_BY_DOCTOR_ID_QUERY);) {
-            statement.setInt(1, doctorId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Consultation entity = BuilderFactory.getConsultationBuilder().build(resultSet);
-                result.add(entity);
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Can't find all entity's.", e);
-        }
-        return result;
+        return findByField(Column.CONSULTATION_DOCTOR_ID, doctorId);
     }
 
     @Override
     public List<Consultation> findByPatientId(int patientId) throws DaoException {
-        List<Consultation> result = new ArrayList<>();
-        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_BY_PATIENT_ID_QUERY);) {
-            statement.setInt(1, patientId);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Consultation entity = BuilderFactory.getConsultationBuilder().build(resultSet);
-                result.add(entity);
-            }
-        } catch (SQLException e) {
-            throw new DaoException("Can't find all entity's.", e);
-        }
-        return result;
+        return findByField(Column.CONSULTATION_PATIENT_ID, patientId);
     }
 
 

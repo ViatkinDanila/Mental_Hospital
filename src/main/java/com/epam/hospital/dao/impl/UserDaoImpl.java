@@ -7,12 +7,15 @@ import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.dao.table_names.Table;
+import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public static final String FIND_BY_EMAIL_QUERY = String.format(
@@ -42,10 +45,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Column.USER_ROLE_ID,
             Column.USER_ID
     );
-    public final static String FIND_BY_LOGIN_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
+    public final static String FIND_BY_FULLNAME_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.USER_TABLE,
-            Column.USER_LOGIN
+            Column.USER_FIRS_NAME,
+            Column.USER_LAST_NAME
     );
 
     public UserDaoImpl() {
@@ -54,56 +58,45 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public void save(User entity) throws DaoException {
-        try (//Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement statement = pooledConnection.prepareStatement(SAVE_USER_QUERY)) {
-            setParams(entity, statement, SAVE_USER_QUERY);
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_USER_QUERY);) {
+            setParams(statement, entity, SAVE_USER_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-//            LOGGER.error("Unable to save new user.",e);
-            throw new DaoException(e);
+            throw new DaoException("Can't save user.", e);
         }
     }
 
     @Override
     public void update(User entity) throws DaoException {
-        try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY)) {
-            setParams(entity, statement, UPDATE_USER_QUERY);
+        try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_USER_QUERY);) {
+            setParams(statement, entity, UPDATE_USER_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-//            LOGGER.error("Unable to save new user.",e);
-            throw new DaoException(e);
-        } catch (ConnectionPoolException e) {
-//            LOGGER.error("Unable to get connection.",e);
-            throw new DaoException("Unable to get connection.", e);
+            throw new DaoException("Can't update user.", e);
         }
     }
 
     @Override
     public User findByEmail(String email) throws DaoException {
-        User entity = null;
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.prepareStatement(FIND_BY_EMAIL_QUERY);
-            statement.setString(1, email);
-            resultSet = statement.executeQuery();
+        return findByField(Column.USER_EMAIL,email).get(0);
+    }
+//tested
+    public User findByFullName(String firstName, String lastName) throws DaoException{
+        User user = new User();
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_BY_FULLNAME_QUERY);) {
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                entity = BuilderFactory.getUserBuilder().build(resultSet);
+                user = BuilderFactory.getUserBuilder().build(resultSet);
             }
         } catch (SQLException e) {
-//            LOGGER.error("Can't find entity by id.",e);
-            throw new DaoException("Can't find user by email.", e);
-        } catch (ConnectionPoolException e) {
-//            LOGGER.error("Can't get connection.",e);
-            throw new DaoException("Unable to get connection.", e);
+            throw new DaoException("Can't find user by full name.", e);
         }
-        return entity;
+        return user;
     }
 
-    private void setParams(User user, PreparedStatement statement, String action) throws SQLException {
+    private void setParams(PreparedStatement statement, User user, String action) throws SQLException {
         statement.setString(1, user.getFirstname());
         statement.setString(2, user.getLastname());
         statement.setString(3, user.getNumber());

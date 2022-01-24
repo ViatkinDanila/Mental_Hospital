@@ -5,16 +5,20 @@ import com.epam.hospital.dao.connectionpool.ConnectionPool;
 import com.epam.hospital.dao.connectionpool.PooledConnection;
 import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import com.epam.hospital.dao.exception.DaoException;
+import com.epam.hospital.dao.impl.HospitalizationDaoImpl;
 import com.epam.hospital.model.Entity;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+@Slf4j
 public class DaoTransactionProvider implements AutoCloseable {
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance();
     private PooledConnection pooledConnection;
 
     @SafeVarargs
-    public final void initTransaction(AbstractDao<? extends Entity>... daos) throws DaoException {
+    public final void initTransaction(boolean isAutoCommit, AbstractDao<? extends Entity>... daos) throws DaoException {
         if (pooledConnection == null) {
             try {
                 pooledConnection = connectionPool.takeConnection();
@@ -22,11 +26,11 @@ public class DaoTransactionProvider implements AutoCloseable {
                 throw new DaoException(e);
             }
         }
-        if (daos.length > 1) {
+        if (!isAutoCommit) {
             try {
                 pooledConnection.setAutoCommit(false);
             } catch (SQLException e) {
-//                LOGGER.error("Init transaction error: " + e);
+                log.error("Init transaction error: " + e);
                 throw new DaoException(e);
             }
         }
@@ -35,11 +39,17 @@ public class DaoTransactionProvider implements AutoCloseable {
         }
     }
 
+
+    @SafeVarargs
+    public final void initTransaction(AbstractDao<? extends Entity>... daos) throws DaoException {
+        initTransaction(true, daos);
+    }
+
     public void commit() throws DaoException {
         try {
             pooledConnection.commit();
         } catch (SQLException e) {
-//            LOGGER.error("Commit error: " + e);
+            log.error("Commit error: " + e);
             throw new DaoException(e);
         }
     }

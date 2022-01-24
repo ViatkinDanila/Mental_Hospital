@@ -12,10 +12,8 @@ public class HospitalizationBuilder implements EntityBuilder<Hospitalization> {
     public Hospitalization build(ResultSet resultSet) throws SQLException {
         Hospitalization hospitalization = new Hospitalization();
         hospitalization.setHospitalizationId(resultSet.getInt(Column.HOSPITALIZATION_ID));
-        hospitalization.setChamberId(resultSet.getInt(Column.HOSPITALIZATION_CHAMBER_ID));
-        hospitalization.setDateIn(resultSet.getDate(Column.HOSPITALIZATION_DATE_IN));
-        hospitalization.setDateOut(resultSet.getDate(Column.HOSPITALIZATION_DATE_OUT));
         hospitalization.setPatientId(resultSet.getInt(Column.HOSPITALIZATION_PATIENT_ID));
+        hospitalization.setStatus(resultSet.getBoolean(Column.HOSPITALIZATION_STATUS));
         return hospitalization;
     }
 }

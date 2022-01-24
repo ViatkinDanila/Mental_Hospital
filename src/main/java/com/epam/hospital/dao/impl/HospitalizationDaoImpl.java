@@ -5,8 +5,11 @@ import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.dao.table_names.Table;
+import com.epam.hospital.model.treatment.Drug;
 import com.epam.hospital.model.treatment.Hospitalization;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> implements HospitalizationDao {
@@ -37,11 +40,6 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
             Column.HOSPITALIZATION_DATE_OUT,
             Column.HOSPITALIZATION_ID
     );
-    private final static String FIND_BY_PATIENT_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.HOSPITALIZATION_TABLE,
-            Column.HOSPITALIZATION_PATIENT_ID
-    );
 
     public HospitalizationDaoImpl() {
         super(BuilderFactory.getHospitalizationBuilder(), Table.HOSPITALIZATION_TABLE, Column.HOSPITALIZATION_ID);
@@ -49,29 +47,33 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
 
     @Override
     public void save(Hospitalization entity) throws DaoException {
-//        return queryExecutor.executeUpdate(SAVE_HOSPITALIZATION_QUERY,
-//                entity.getPatientId()) +
-//                queryExecutor.executeUpdate(SAVE_HOSPITALIZATION_CHAMBER_QUERY,
-//                        entity.getHospitalizationId(),
-//                        entity.getChamberId(),
-//                        entity.getDateIn(),
-//                        entity.getDateOut());
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_HOSPITALIZATION_QUERY);) {
+            setParams(statement, entity, SAVE_HOSPITALIZATION_QUERY);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't save hospitalization.", e);
+        }
     }
 
     @Override
     public void update(Hospitalization entity) throws DaoException {
-//        return queryExecutor.executeUpdate(UPDATE_HOSPITALIZATION_QUERY,
-//                entity.getPatientId(),
-//                entity.getHospitalizationId()) +
-//                queryExecutor.executeUpdate(UPDATE_HOSPITALIZATION_CHAMBER_QUERY,
-//                        entity.getChamberId(),
-//                        entity.getDateIn(),
-//                        entity.getDateOut(),
-//                        entity.getHospitalizationId());
+        try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_HOSPITALIZATION_QUERY);) {
+            setParams(statement, entity, UPDATE_HOSPITALIZATION_QUERY);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't update hospitalization.", e);
+        }
     }
 
     @Override
     public List<Hospitalization> findByPatientId(int patientId) throws DaoException {
-        return null;
+        return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId);
+    }
+
+    private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException{
+        statement.setInt(1,hospitalization.getPatientId());
+        if (action.equals(UPDATE_HOSPITALIZATION_QUERY)){
+            statement.setInt(2, hospitalization.getHospitalizationId());
+        }
     }
 }

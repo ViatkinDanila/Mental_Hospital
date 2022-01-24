@@ -4,6 +4,7 @@ import com.epam.hospital.dao.AbstractDao;
 import com.epam.hospital.dao.builder.EntityBuilder;
 import com.epam.hospital.dao.connectionpool.PooledConnection;
 import com.epam.hospital.dao.exception.DaoException;
+import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.Entity;
 
 
@@ -14,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T> {
-    private EntityBuilder<T> builder;
-    public PooledConnection pooledConnection;
+    private final EntityBuilder<T> builder;
+    protected PooledConnection pooledConnection;
     //    protected final Logger LOGGER = LogManager.getLogger();
     private final String FIND_ALL_QUERY;
     private final String DELETE_BY_ID_QUERY;
@@ -41,11 +42,11 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
 
     @Override
     public T findById(int id) throws DaoException {
-        return findByField("id", id);
+        return findByField(Column.ID, id).get(0);
     }
 
-    public T findByField(String fieldName, Object value) throws DaoException {
-        T entity = null;
+    public List<T> findByField(String fieldName, Object value) throws DaoException {
+        List<T> entities = new ArrayList<>();
         String query = String.format(
                 FIND_BY_FIELD_QUERY,
                 fieldName
@@ -54,13 +55,13 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
             statement.setObject(1, value);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                entity = builder.build(resultSet);
+                entities.add(builder.build(resultSet));
             }
         } catch (SQLException e) {
 //            LOGGER.error("Can't find entity by id.",e);
             throw new DaoException("Can't find by id.", e);
         }
-        return entity;
+        return entities;
     }
 
     @Override

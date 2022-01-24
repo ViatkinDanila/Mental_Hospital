@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface ConsultationDao extends AbstractDao<Consultation> {
     List<Consultation> findByDoctorId(int doctorId) throws DaoException;
-
     List<Consultation> findByPatientId(int patientId) throws DaoException;
-
 }

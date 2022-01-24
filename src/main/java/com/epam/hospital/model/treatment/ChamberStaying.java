@@ -5,13 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.Objects;
+import java.sql.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Hospitalization implements Entity {
-    private int hospitalizationId;
-    private int patientId;
-    private boolean status;
+public class ChamberStaying implements Entity {
+    private int hospitalization_id;
+    private int chamber_id;
+    private Date dateIn;
+    private Date dateOut;
 }

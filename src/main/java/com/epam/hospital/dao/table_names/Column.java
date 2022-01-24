@@ -8,6 +8,7 @@ public class Column {
     public static final String HOSPITALIZATION_DATE_IN = "hospitalization_date";
     public static final String HOSPITALIZATION_DATE_OUT = "discharge_date";
     public static final String HOSPITALIZATION_PATIENT_ID = "patient_id";
+    public static final String HOSPITALIZATION_STATUS = "status";
 
     public static final String DISEASES_ID = "id";
     public static final String DISEASES_NAME = "name";
@@ -25,6 +26,15 @@ public class Column {
     public static final String DRUG_RECIPE_DESCRIPTION = "description";
     public static final String DRUG_RECIPE_COURSE_ID = "treatment_course_id";
 
+    public static final String DRUGS_RECIPES_TREATMENT_COURSE_ID = "treatment_course_id";
+    public static final String DRUGS_RECIPES_DRUG_ID = "drug_id";
+    public static final String DRUGS_RECIPES_DESCRIPTION = "description";
+    public static final String DRUGS_RECIPES_DOSE = "dose";
+
+    public static final String CHAMBER_STAYING_CHAMBER_ID = "chamber_id";
+    public static final String CHAMBER_STAYING_HOSPITALIZATION_ID = "hospitalization_id";
+    public static final String CHAMBER_STAYING_DATE_IN = "date_in";
+    public static final String CHAMBER_STAYING_DATE_OUT = "date_out";
 
     public static final String TREATMENT_COURSE_CONSULTATION_ID = "consultation_id";
     public static final String TREATMENT_COURSE_INSTRUCTION = "instructions";
@@ -79,5 +89,7 @@ public class Column {
     public static final String CHAMBERS_TYPE_TITLE = "title";
     public static final String CHAMBERS_TYPE_NUMBER_OF_BEDS = "num_of_beds";
     public static final String CHAMBERS_TYPE_PRICE = "price";
+
+    public static final String ID = "id";
 
 }
