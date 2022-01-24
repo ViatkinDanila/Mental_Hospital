@@ -11,7 +11,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>main</servlet-name>
-        <url-pattern>/mental-hospital</url-pattern>
+        <url-pattern>/MentalHospital</url-pattern>
     </servlet-mapping>
 
 <!--    <filter>-->

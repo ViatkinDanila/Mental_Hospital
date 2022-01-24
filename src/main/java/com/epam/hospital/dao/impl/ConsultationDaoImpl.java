@@ -89,7 +89,7 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
         statement.setInt(2, consultation.getTreatmentCourseId());
         statement.setInt(3, consultation.getDoctorId());
         statement.setInt(4, consultation.getPatientId());
-        statement.setDate(5, Date.valueOf(consultation.getDate()));
+        statement.setDate(5, consultation.getDate());
         statement.setInt(6, consultation.getDuration());
         if (action.equals(UPDATE_CONSULTATION_QUERY)) {
             statement.setInt(6, consultation.getDuration());

@@ -5,12 +5,10 @@ import com.epam.hospital.dao.connectionpool.ConnectionPool;
 import com.epam.hospital.dao.connectionpool.PooledConnection;
 import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.impl.HospitalizationDaoImpl;
 import com.epam.hospital.model.Entity;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @Slf4j
 public class DaoTransactionProvider implements AutoCloseable {

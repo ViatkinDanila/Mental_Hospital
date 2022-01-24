@@ -6,6 +6,6 @@
     <title></title>
 </head>
 <body>
-<c:redirect url="${pageContext.request.contextPath}/mental-hospital?command=home-page"/>
+<c:redirect url="${pageContext.request.contextPath}/MentalHospital?command=home-page"/>
 </body>
 </html>
