@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class ChamberStayingDaoImpl extends AbstractDaoImpl<ChamberStaying> {
     private final static String SAVE_CHAMBER_STAYING_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
-            Table.CHAMBER_STAYING,
+            Table.CHAMBER_STAYING_TABLE,
             Column.CHAMBER_STAYING_DATE_IN,
             Column.CHAMBER_STAYING_DATE_OUT,
             Column.CHAMBER_STAYING_CHAMBER_ID,
@@ -23,7 +23,7 @@ public class ChamberStayingDaoImpl extends AbstractDaoImpl<ChamberStaying> {
     );
     private final static String UPDATE_CHAMBER_STAYING_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=? WHERE %s=? AND %s=?",
-            Table.CHAMBER_STAYING,
+            Table.CHAMBER_STAYING_TABLE,
             Column.CHAMBER_STAYING_DATE_IN,
             Column.CHAMBER_STAYING_DATE_OUT,
             Column.CHAMBER_STAYING_CHAMBER_ID,
@@ -31,7 +31,7 @@ public class ChamberStayingDaoImpl extends AbstractDaoImpl<ChamberStaying> {
     );
     
     public ChamberStayingDaoImpl(){
-        super(BuilderFactory.getChamberStaying(), Table.CHAMBER_STAYING, Column.CHAMBER_STAYING_HOSPITALIZATION_ID);
+        super(BuilderFactory.getChamberStaying(), Table.CHAMBER_STAYING_TABLE, Column.CHAMBER_STAYING_HOSPITALIZATION_ID);
     }
 
     @Override

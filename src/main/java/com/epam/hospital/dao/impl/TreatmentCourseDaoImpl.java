@@ -14,20 +14,19 @@ import java.util.List;
 
 public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> implements TreatmentCourseDao {
     public static final String SAVE_TREATMENT_COURSE_QUERY = String.format(
-            "INSERT INTO %s (%s, %s) VALUES (?, ?)",
-            Table.TREATMENT_COURS_TABLE,
-            Column.TREATMENT_COURSE_CONSULTATION_ID,
+            "INSERT INTO %s %s VALUES ?",
+            Table.TREATMENT_COURSES_TABLE,
             Column.TREATMENT_COURSE_INSTRUCTION
     );
     public static final String UPDATE_TREATMENT_COURSE_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=?",
-            Table.TREATMENT_COURS_TABLE,
+            Table.TREATMENT_COURSES_TABLE,
             Column.TREATMENT_COURSE_INSTRUCTION,
             Column.TREATMENT_COURSE_ID
     );
 
     public TreatmentCourseDaoImpl() {
-        super(BuilderFactory.getTreatmentCourseBuilder(), Table.TREATMENT_COURS_TABLE, Column.TREATMENT_COURSE_ID);
+        super(BuilderFactory.getTreatmentCourseBuilder(), Table.TREATMENT_COURSES_TABLE, Column.TREATMENT_COURSE_ID);
     }
 
     @Override
@@ -36,17 +35,17 @@ public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> imp
             setParams(statement, entity, SAVE_TREATMENT_COURSE_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Can't save hospitalization.", e);
+            throw new DaoException("Can't save treatment course.", e);
         }
     }
 
     @Override
     public void update(TreatmentCourse entity) throws DaoException {
-        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_TREATMENT_COURSE_QUERY);) {
-            setParams(statement, entity, SAVE_TREATMENT_COURSE_QUERY);
+        try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_TREATMENT_COURSE_QUERY);) {
+            setParams(statement, entity, UPDATE_TREATMENT_COURSE_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Can't save hospitalization.", e);
+            throw new DaoException("Can't update treatment course.", e);
         }    }
 
     private void setParams(PreparedStatement statement, TreatmentCourse treatmentCourse, String action) throws SQLException{

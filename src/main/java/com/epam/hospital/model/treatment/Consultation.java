@@ -20,4 +20,5 @@ public class Consultation implements Entity {
     private Date date;
     private int duration;
     private int treatmentCourseId;
+    private double price;
 }

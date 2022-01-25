@@ -17,17 +17,7 @@ import java.util.List;
 
 public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implements ConsultationDao {
     private final static String SAVE_CONSULTATION_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
-            Table.CONSULTATION_TABLE,
-            Column.CONSULTATION_COMMUNICATION_TYPE,
-            Column.CONSULTATION_TREATMENT_COURSE_ID,
-            Column.CONSULTATION_DOCTOR_ID,
-            Column.CONSULTATION_PATIENT_ID,
-            Column.CONSULTATION_DATE,
-            Column.CONSULTATION_DURATION
-    );
-    private final static String UPDATE_CONSULTATION_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",
             Table.CONSULTATION_TABLE,
             Column.CONSULTATION_COMMUNICATION_TYPE,
             Column.CONSULTATION_TREATMENT_COURSE_ID,
@@ -35,19 +25,20 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
             Column.CONSULTATION_PATIENT_ID,
             Column.CONSULTATION_DATE,
             Column.CONSULTATION_DURATION,
+            Column.CONSULTATION_PRICE
+    );
+    private final static String UPDATE_CONSULTATION_QUERY = String.format(
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            Table.CONSULTATION_TABLE,
+            Column.CONSULTATION_COMMUNICATION_TYPE,
+            Column.CONSULTATION_TREATMENT_COURSE_ID,
+            Column.CONSULTATION_DOCTOR_ID,
+            Column.CONSULTATION_PATIENT_ID,
+            Column.CONSULTATION_DATE,
+            Column.CONSULTATION_DURATION,
+            Column.CONSULTATION_PRICE,
             Column.CONSULTATION_ID
     );
-    private final static String FIND_BY_DOCTOR_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.CONSULTATION_TABLE,
-            Column.CONSULTATION_DOCTOR_ID
-    );
-    private final static String FIND_BY_PATIENT_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.CONSULTATION_TABLE,
-            Column.CONSULTATION_PATIENT_ID
-    );
-
 
     public ConsultationDaoImpl() {
         super(BuilderFactory.getConsultationBuilder(), Table.CONSULTATION_TABLE, Column.CONSULTATION_ID);
@@ -59,7 +50,7 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
             setParams(statement, entity, SAVE_CONSULTATION_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Can't save chamber type.", e);
+            throw new DaoException("Can't save consultation.", e);
         }
     }
 
@@ -69,7 +60,7 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
             setParams(statement, entity, UPDATE_CONSULTATION_QUERY);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DaoException("Can't save chamber type.", e);
+            throw new DaoException("Can't update consultation.", e);
         }
     }
 
@@ -84,15 +75,16 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
     }
 
 
-    private final void setParams(PreparedStatement statement, Consultation consultation, String action) throws SQLException {
+    private void setParams(PreparedStatement statement, Consultation consultation, String action) throws SQLException {
         statement.setString(1, String.valueOf(consultation.getCommunicationType()));
         statement.setInt(2, consultation.getTreatmentCourseId());
         statement.setInt(3, consultation.getDoctorId());
         statement.setInt(4, consultation.getPatientId());
         statement.setDate(5, consultation.getDate());
         statement.setInt(6, consultation.getDuration());
+        statement.setDouble(6, consultation.getPrice());
         if (action.equals(UPDATE_CONSULTATION_QUERY)) {
-            statement.setInt(6, consultation.getDuration());
+            statement.setInt(7, consultation.getDuration());
 
         }
     }

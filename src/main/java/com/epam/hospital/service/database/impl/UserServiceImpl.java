@@ -18,7 +18,13 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User login(String email, String password) throws ServiceException {
-        return null;
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findByEmailPassword(email,password);
+        } catch (DaoException e){
+            throw new ServiceException("Can't find out is user exit.", e);
+        }
     }
 
     @Override
@@ -33,7 +39,29 @@ public class UserServiceImpl implements UserService {
             transaction.initTransaction(userDao);
             return userDao.findById(id);
         } catch (DaoException e) {
-            throw new ServiceException("Can't get treatment course.", e);
+            throw new ServiceException("Can't get user.", e);
+        }
+    }
+
+    @Override
+    public User getUserByLogin(String email) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findByEmail(email);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get user by login.", e);
+        }
+    }
+
+    @Override
+    public String getUserRoleById(int id) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findUserRole(id);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get user by login.", e);
         }
     }
 }

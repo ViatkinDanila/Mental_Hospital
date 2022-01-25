@@ -60,7 +60,7 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
         AbstractDao<DrugRecipe> diseaseSymptomDao = new DrugRecipeDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(diseaseSymptomDao);
-            return diseaseSymptomDao.findByField(Column.DRUGS_RECIPES_TREATMENT_COURSE_ID, treatmentCourseId);
+            return diseaseSymptomDao.findByField(Column.DRUG_RECIPES_TREATMENT_COURSE_ID, treatmentCourseId);
         } catch (DaoException e) {
             throw new ServiceException("Can't get drug recipes.", e);
         }

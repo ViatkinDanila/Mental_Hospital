@@ -18,14 +18,14 @@ import java.util.List;
 public class DiseaseSymptomDaoImpl extends AbstractDaoImpl<DiseaseSymptom> {
     private final static String SAVE_DISEASE_SYMPTOMS_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)",
-            Table.DRUGS_RECIPES,
+            Table.DISEASE_SYMPTOMS_TABLE,
             Column.DISEASE_SYMPTOMS_SYMPTOMS,
             Column.DISEASE_SYMPTOMS_COURSE_ID,
             Column.DISEASE_SYMPTOMS_DISEASE_ID
     );
     private final static String UPDATE_DISEASE_SYMPTOMS_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=? AND %s=?",
-            Table.DRUGS_RECIPES,
+            Table.DISEASE_SYMPTOMS_TABLE,
             Column.DISEASE_SYMPTOMS_SYMPTOMS,
             Column.DISEASE_SYMPTOMS_COURSE_ID,
             Column.DISEASE_SYMPTOMS_DISEASE_ID
@@ -33,7 +33,7 @@ public class DiseaseSymptomDaoImpl extends AbstractDaoImpl<DiseaseSymptom> {
 
     private final static String FIND_DISEASE_SYMPTOMS_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s=?",
-            Table.DRUGS_RECIPES,
+            Table.DISEASE_SYMPTOMS_TABLE,
             Column.DISEASE_SYMPTOMS_COURSE_ID,
             Column.DISEASE_SYMPTOMS_DISEASE_ID
     );

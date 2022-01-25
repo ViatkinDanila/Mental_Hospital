@@ -18,11 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
-    public static final String FIND_BY_EMAIL_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.USER_TABLE,
-            Column.USER_EMAIL
-    );
     public static final String SAVE_USER_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
             Table.USER_TABLE,
@@ -50,6 +45,17 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_FIRS_NAME,
             Column.USER_LAST_NAME
+    );
+    public final static String LOGIN_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? AND %s=?",
+            Table.USER_TABLE,
+            Column.USER_EMAIL,
+            Column.USER_PASWORD
+    );
+    public final static String FIND_ROLE_BY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?",
+            Table.USER_ROLES_TABLE,
+            Column.USER_ROLES_ID
     );
 
     public UserDaoImpl() {
@@ -88,12 +94,42 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             statement.setString(2, lastName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = BuilderFactory.getUserBuilder().build(resultSet);
+
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by full name.", e);
         }
         return user;
+    }
+
+    @Override
+    public User findByEmailPassword(String email, String password) throws DaoException {
+        User user = new User();
+        try (PreparedStatement statement = pooledConnection.prepareStatement(LOGIN_QUERY);) {
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = BuilderFactory.getUserBuilder().build(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find user by email and password.", e);
+        }
+        return user;
+    }
+
+    @Override
+    public String findUserRole(int id) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_ROLE_BY_ID_QUERY);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString(Column.USER_ROLES_NAME);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find user by email and password.", e);
+        }
+        return null;
     }
 
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {

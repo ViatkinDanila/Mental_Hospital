@@ -11,10 +11,10 @@ public class DrugRecipeBuilder implements EntityBuilder<DrugRecipe> {
     @Override
     public DrugRecipe build(ResultSet resultSet) throws SQLException {
         DrugRecipe drugRecipe = new DrugRecipe();
-        drugRecipe.setDrugId(resultSet.getInt(Column.DRUG_RECIPE_DRUG_ID));
-        drugRecipe.setTreatmentCourseId(resultSet.getInt(Column.DRUG_RECIPE_COURSE_ID));
-        drugRecipe.setDose(resultSet.getInt(Column.DRUG_RECIPE_DOSE));
-        drugRecipe.setDescription(resultSet.getString(Column.DRUG_RECIPE_DESCRIPTION));
+        drugRecipe.setDrugId(resultSet.getInt(Column.DRUG_RECIPES_DRUG_ID));
+        drugRecipe.setTreatmentCourseId(resultSet.getInt(Column.DRUG_RECIPES_TREATMENT_COURSE_ID));
+        drugRecipe.setDose(resultSet.getInt(Column.DRUG_RECIPES_DOSE));
+        drugRecipe.setDescription(resultSet.getString(Column.DRUG_RECIPES_DESCRIPTION));
         return drugRecipe;
     }
 }

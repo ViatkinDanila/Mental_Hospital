@@ -18,28 +18,14 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
             Table.HOSPITALIZATION_TABLE,
             Column.HOSPITALIZATION_PATIENT_ID
     );
-    private final static String SAVE_HOSPITALIZATION_CHAMBER_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
-            Table.HOSPITALIZATION_HAS_CHAMBERS_TABLE,
-            Column.HOSPITALIZATION_ID,
-            Column.HOSPITALIZATION_CHAMBER_ID,
-            Column.HOSPITALIZATION_DATE_IN,
-            Column.HOSPITALIZATION_DATE_OUT
-    );
+
     private final static String UPDATE_HOSPITALIZATION_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=?",
             Table.HOSPITALIZATION_TABLE,
             Column.HOSPITALIZATION_PATIENT_ID,
             Column.HOSPITALIZATION_ID
     );
-    private final static String UPDATE_HOSPITALIZATION_CHAMBER_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=? WHERE %s=?",
-            Table.HOSPITALIZATION_HAS_CHAMBERS_TABLE,
-            Column.HOSPITALIZATION_CHAMBER_ID,
-            Column.HOSPITALIZATION_DATE_IN,
-            Column.HOSPITALIZATION_DATE_OUT,
-            Column.HOSPITALIZATION_ID
-    );
+
 
     public HospitalizationDaoImpl() {
         super(BuilderFactory.getHospitalizationBuilder(), Table.HOSPITALIZATION_TABLE, Column.HOSPITALIZATION_ID);

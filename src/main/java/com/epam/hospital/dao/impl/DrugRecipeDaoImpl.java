@@ -16,23 +16,23 @@ import java.sql.SQLException;
 public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> {
     private final static String SAVE_DRUG_RECIPE_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
-            Table.DRUGS_RECIPES,
-            Column.DRUGS_RECIPES_DESCRIPTION,
-            Column.DRUGS_RECIPES_DOSE,
-            Column.DRUGS_RECIPES_TREATMENT_COURSE_ID,
-            Column.DRUGS_RECIPES_DRUG_ID
+            Table.DRUG_RECIPES_TABLE,
+            Column.DRUG_RECIPES_DESCRIPTION,
+            Column.DRUG_RECIPES_DOSE,
+            Column.DRUG_RECIPES_TREATMENT_COURSE_ID,
+            Column.DRUG_RECIPES_DRUG_ID
     );
     private final static String UPDATE_DRUG_RECIPE_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=? WHERE %s=? AND %s=?",
-            Table.DRUGS_RECIPES,
-            Column.DRUGS_RECIPES_DESCRIPTION,
-            Column.DRUGS_RECIPES_DOSE,
-            Column.DRUGS_RECIPES_TREATMENT_COURSE_ID,
-            Column.DRUGS_RECIPES_DRUG_ID
+            Table.DRUG_RECIPES_TABLE,
+            Column.DRUG_RECIPES_DESCRIPTION,
+            Column.DRUG_RECIPES_DOSE,
+            Column.DRUG_RECIPES_TREATMENT_COURSE_ID,
+            Column.DRUG_RECIPES_DRUG_ID
     );
 
     public DrugRecipeDaoImpl(){
-        super(BuilderFactory.getDrugRecipeBuilder(), Table.DRUGS_RECIPES, Column.DRUGS_RECIPES_TREATMENT_COURSE_ID);
+        super(BuilderFactory.getDrugRecipeBuilder(), Table.DRUG_RECIPES_TABLE, Column.DRUG_RECIPES_TREATMENT_COURSE_ID);
     }
 
     @Override

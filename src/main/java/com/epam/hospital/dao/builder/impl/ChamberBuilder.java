@@ -14,6 +14,7 @@ public class ChamberBuilder implements EntityBuilder<Chamber> {
         chamber.setChamberId(resultSet.getInt(Column.CHAMBER_ID));
         chamber.setChamberTypeId(resultSet.getInt(Column.CHAMBERS_TYPE_ID));
         chamber.setHospitalId(resultSet.getInt(Column.CHAMBER_HOSPITAL_ID));
+        chamber.setNumberOfFreeBeds(resultSet.getInt(Column.CHAMBER_FREE_BEDS));
         return chamber;
     }
 }

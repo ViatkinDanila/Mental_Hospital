@@ -31,12 +31,6 @@ public class PatientCardDaoImpl extends AbstractDaoImpl<PatientCard> implements 
             Column.PATIENT_CARD_ID
     );
 
-    public static final String FIND_BY_PATIENT_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.PATIENT_CARD_TABLE,
-            Column.PATIENT_CARD_USER_ID
-    );
-
     public PatientCardDaoImpl() {
         super(BuilderFactory.getPatientCardBuilder(), Table.PATIENT_CARD_TABLE, Column.PATIENT_CARD_ID);
     }
