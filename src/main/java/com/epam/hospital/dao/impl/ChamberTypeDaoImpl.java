@@ -18,7 +18,7 @@ public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> {
             Column.CHAMBERS_TYPE_TITLE,
             Column.CHAMBERS_TYPE_NUMBER_OF_BEDS,
             Column.CHAMBERS_TYPE_PRICE,
-            Column.CHAMBERS_TYPE_NUMBER_OF_FREE_CHAMBERS
+            Column.CHAMBER_TYPE_NUMBER_OF_AVAILABLE_ROOMS
     );
 
     private final String UPDATE_CHAMBER_QUERY = String.format(
@@ -27,7 +27,7 @@ public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> {
             Column.CHAMBERS_TYPE_TITLE,
             Column.CHAMBERS_TYPE_NUMBER_OF_BEDS,
             Column.CHAMBERS_TYPE_PRICE,
-            Column.CHAMBERS_TYPE_NUMBER_OF_FREE_CHAMBERS,
+            Column.CHAMBER_TYPE_NUMBER_OF_AVAILABLE_ROOMS,
             Column.CHAMBERS_TYPE_ID
     );
 

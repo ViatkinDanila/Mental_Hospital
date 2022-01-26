@@ -28,6 +28,7 @@ public class ConsultationPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
+
         String consultationIdString = requestContext.getRequestParameter(Column.ID);
         int consultationId = Integer.parseInt(consultationIdString);
 
@@ -36,7 +37,6 @@ public class ConsultationPageCommand implements Command {
         User doctor = userService.getUserById(consultation.getDoctorId());
         PatientCard patient = patientCardService.getPatientCardById(consultation.getPatientId());
 
-        //List<String> drugs = treatmentCourse.getDrugId().stream().map(Drug::getName).collect(Collectors.toList());
         List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
         List<String> diseases = new ArrayList<>();
         for (DiseaseSymptom diseaseSymptom : diseaseSymptoms) {
@@ -54,7 +54,6 @@ public class ConsultationPageCommand implements Command {
             String name = drugById.getName();
             drugs.add(name);
         }
-
 
         ConsultationDto consultationDto = ConsultationDto.builder()
                 .consultationId(consultationId)
