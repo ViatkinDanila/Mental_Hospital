@@ -24,14 +24,14 @@ public class DaoTransactionProvider implements AutoCloseable {
                 throw new DaoException(e);
             }
         }
-        if (!isAutoCommit) {
-            try {
-                pooledConnection.setAutoCommit(false);
-            } catch (SQLException e) {
-                log.error("Init transaction error: " + e);
-                throw new DaoException(e);
-            }
+
+        try {
+            pooledConnection.setAutoCommit(isAutoCommit);
+        } catch (SQLException e) {
+            log.error("Init transaction error: " + e);
+            throw new DaoException(e);
         }
+
         for (AbstractDao<? extends Entity> daoElement : daos) {
             daoElement.setConnection(pooledConnection);
         }

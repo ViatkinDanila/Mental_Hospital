@@ -64,4 +64,15 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can't get user by login.", e);
         }
     }
+
+    @Override
+    public boolean isUserExist(String login) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.isUserExist(login);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get user by login.", e);
+        }
+    }
 }

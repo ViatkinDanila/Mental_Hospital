@@ -8,4 +8,5 @@ public interface UserDao extends AbstractDao<User> {
     User findByFullName(String firstName, String lastName) throws DaoException;
     User findByEmailPassword(String email, String password) throws DaoException;
     String findUserRole(int id) throws DaoException;
+    boolean isUserExist(String login) throws DaoException;
 }

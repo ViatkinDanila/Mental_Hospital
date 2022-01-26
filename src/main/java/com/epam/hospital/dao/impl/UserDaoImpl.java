@@ -19,18 +19,7 @@ import java.util.List;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public static final String SAVE_USER_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
-            Table.USER_TABLE,
-            Column.USER_FIRS_NAME,
-            Column.USER_LAST_NAME,
-            Column.USER_NUMBER,
-            Column.USER_EMAIL,
-            Column.USER_PASWORD,
-            Column.USER_ROLE_ID
-
-    );
-    public final static String UPDATE_USER_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",
             Table.USER_TABLE,
             Column.USER_FIRS_NAME,
             Column.USER_LAST_NAME,
@@ -38,6 +27,19 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Column.USER_EMAIL,
             Column.USER_PASWORD,
             Column.USER_ROLE_ID,
+            Column.USER_IS_BANNED
+
+    );
+    public final static String UPDATE_USER_QUERY = String.format(
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            Table.USER_TABLE,
+            Column.USER_FIRS_NAME,
+            Column.USER_LAST_NAME,
+            Column.USER_NUMBER,
+            Column.USER_EMAIL,
+            Column.USER_PASWORD,
+            Column.USER_ROLE_ID,
+            Column.USER_IS_BANNED,
             Column.USER_ID
     );
     public final static String FIND_BY_FULLNAME_QUERY = String.format(
@@ -56,6 +58,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             "SELECT * FROM %s WHERE %s=?",
             Table.USER_ROLES_TABLE,
             Column.USER_ROLES_ID
+    );
+    public final static String IS_USER_EXIST_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?",
+            Table.USER_ROLES_TABLE,
+            Column.USER_EMAIL
     );
 
     public UserDaoImpl() {
@@ -130,6 +137,20 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             throw new DaoException("Can't find user by email and password.", e);
         }
         return null;
+    }
+
+    @Override
+    public boolean isUserExist(String login) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(IS_USER_EXIST_QUERY);) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find user by email and password.", e);
+        }
+        return true;
     }
 
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {
