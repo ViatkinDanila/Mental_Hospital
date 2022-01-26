@@ -9,5 +9,5 @@ public interface UserService {
     User getUserById(int id) throws ServiceException;
     User getUserByLogin(String email) throws ServiceException;
     String getUserRoleById(int id) throws ServiceException;
-    boolean isUserExist(String login) throws ServiceException;
+    boolean isUserExistByLogin(String login) throws ServiceException;
 }

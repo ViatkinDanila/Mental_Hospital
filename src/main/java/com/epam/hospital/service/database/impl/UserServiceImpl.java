@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserExist(String login) throws ServiceException {
+    public boolean isUserExistByLogin(String login) throws ServiceException {
         UserDao userDao = new UserDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(userDao);

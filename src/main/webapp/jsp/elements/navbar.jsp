@@ -10,18 +10,20 @@
     <div class="container-fluid p-0">
         <div class="p-2 d-flex align-items-center justify-content-lg-between">
             <div class="container align-items-center d-flex justify-content-lg-center">
-                <img class="mr-5" style="width:7%"
-                     src="https://sun1-94.userapi.com/impg/rtxx1D38IgGogEgvRSqWsNfHSXCtbkimRhHlWA/MNlGT-PNr1s.jpg?size=200x0&quality=90&crop=0,0,640,640&sign=322336ead46fdbe67e140d62dde4294b&ava=1">
-                <span class="text-info ml-5">Budagovo, Yana Chechota 4, 46</span>
+                <a class="ml-5" href="${pageContext.request.contextPath}/MentalHospital?command=home-page">
+                    <img style="width:30%"
+                         src="https://sun1-94.userapi.com/impg/rtxx1D38IgGogEgvRSqWsNfHSXCtbkimRhHlWA/MNlGT-PNr1s.jpg?size=200x0&quality=90&crop=0,0,640,640&sign=322336ead46fdbe67e140d62dde4294b&ava=1">
+                </a>
+                <span class="text-info">Budagovo, Yana Chechota 4, 46</span>
             </div>
             <div class="container d-flex justify-content-lg-around">
                 <div>
                     <a type="button"
                        href="${pageContext.request.contextPath}/MentalHospital?command=localization&locale=ru"
-                       class="btn btn-primary m-1 langToggle" data-onstyle="light">RU</a>
+                       class="btn btn-primary m-1">RU</a>
                     <a type="button"
                        href="${pageContext.request.contextPath}/MentalHospital?command=localization&locale=en"
-                       class="btn btn-primary m-1 langToggle" data-onstyle="light">EN</a>
+                       class="btn btn-primary m-1">EN</a>
                 </div>
                 <div>
                     <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=login-page"

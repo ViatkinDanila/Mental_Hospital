@@ -8,16 +8,28 @@
 
 <html>
 
+<html lang="<fmt:message key="html.lang"/>">
 <head>
     <c:import url="/jsp/elements/head.jsp"/>
-    <title>Mental Hospital</title>
+    <title><fmt:message key="label.title"/></title>
 </head>
+<body>
+
 <body>
 <c:import url="/jsp/elements/navbar.jsp"/>
 
 <div class="container d-flex flex-column">
     <span class="h5 text-dark m-auto p-5">HOME PAGE</span>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=goto-consultation-page&id=1">Get consultation by id=1</a>
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=1">Get consultation by id=1</a>
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=1">Get hospitalization by id=1</a>
+
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=consultation">Get all consultations (profile page)</a>
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalizations&elements=hospitalization">Get all hospitalizations (profile page)</a>
+
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctor&id=1">Get doctor by id=1</a>
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctors">Get all doctors</a>
+
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user&id=1">Get user by id=1</a>
 </div>
 
 </body>
