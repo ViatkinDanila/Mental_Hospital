@@ -22,7 +22,7 @@ import java.util.UUID;
 
 public class SignUpCommand implements Command {
     private static final byte[] salt = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
-    private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
+    private static final String LOGIN_PAGE_COMMAND = "MentalHospital?command=" + CommandName.LOGIN_PAGE;
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final String INVALID_LOGIN_KEY = "invalid.login";
     private static final int USER_ROLE_ID = 1;

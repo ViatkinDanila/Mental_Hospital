@@ -5,4 +5,5 @@ import com.epam.hospital.service.exception.ServiceException;
 
 public interface ConsultationService {
     Consultation getConsultationById(int id) throws ServiceException;
+    void save(Consultation consultation) throws ServiceException;
 }

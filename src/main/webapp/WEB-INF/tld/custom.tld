@@ -7,15 +7,15 @@
     <short-name>sc</short-name>
     <uri>custom-tags</uri>
 
-<!--    <tag>-->
-<!--        <name>access</name>-->
-<!--        <tag-class>com.epam.poker.util.tag.AccessTag</tag-class>-->
-<!--        <body-content>scriptless</body-content>-->
-<!--        <attribute>-->
-<!--            <name>role</name>-->
-<!--            <required>true</required>-->
-<!--            <rtexprvalue>true</rtexprvalue>-->
-<!--        </attribute>-->
-<!--    </tag>-->
+    <tag>
+        <name>access</name>
+        <tag-class>com.epam.hospital.util.tag.AccessTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>role</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 
 </taglib>
