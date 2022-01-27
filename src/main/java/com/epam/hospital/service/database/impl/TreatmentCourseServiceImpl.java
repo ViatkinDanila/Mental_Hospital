@@ -3,12 +3,14 @@ package com.epam.hospital.service.database.impl;
 import com.epam.hospital.dao.AbstractDao;
 import com.epam.hospital.dao.DiseaseSymptomDao;
 import com.epam.hospital.dao.TreatmentCourseDao;
+import com.epam.hospital.dao.UserDao;
 import com.epam.hospital.dao.connectionpool.ConnectionPool;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.DiseaseSymptomDaoImpl;
 import com.epam.hospital.dao.impl.DrugRecipeDaoImpl;
 import com.epam.hospital.dao.impl.TreatmentCourseDaoImpl;
+import com.epam.hospital.dao.impl.UserDaoImpl;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.treatment.Disease;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
@@ -20,17 +22,17 @@ import com.epam.hospital.service.exception.ServiceException;
 import java.util.List;
 
 public class TreatmentCourseServiceImpl implements TreatmentCourseService {
-    private static TreatmentCourseService treatmentCourseService;
+    private static TreatmentCourseService instance;
 
     private TreatmentCourseServiceImpl(){
 
     }
 
     public static TreatmentCourseService getInstance(){
-        if (treatmentCourseService == null){
-            treatmentCourseService = new TreatmentCourseServiceImpl();
+        if (instance == null){
+            instance = new TreatmentCourseServiceImpl();
         }
-        return treatmentCourseService;
+        return instance;
     }
 
     @Override
@@ -65,4 +67,6 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
             throw new ServiceException("Can't get drug recipes.", e);
         }
     }
+
+
 }

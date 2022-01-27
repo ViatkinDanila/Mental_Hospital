@@ -10,6 +10,9 @@ import com.epam.hospital.service.database.ConsultationService;
 public class ConsultationServiceImpl implements ConsultationService {
     private static final ConsultationService instance = new ConsultationServiceImpl();
 
+    private ConsultationServiceImpl(){
+    }
+
     public static ConsultationService getInstance(){
         return instance;
     }

@@ -36,7 +36,7 @@ public class SignUpCommand implements Command {
         if (!isUserExist){
             requestContext.addAttribute(Attribute.LOGIN, login);
 
-            String password = requestContext.getRequestParameter(Attribute.PASSWORD);
+            String password = ParameterExtractor.extractString(Attribute.PASSWORD, requestContext);
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hashString(password, salt);
             User user = User.builder()
@@ -49,7 +49,7 @@ public class SignUpCommand implements Command {
                     .number(ParameterExtractor.extractString(Parameter.PHONE_NUMBER, requestContext))
                     .build();
             PatientCard patientCard = PatientCard.builder()
-                    .age(ParameterExtractor.takeInt(Parameter.AGE, requestContext))
+                    .age(ParameterExtractor.extractInt(Parameter.AGE, requestContext))
                     .sex(ParameterExtractor.extractString(Parameter.SEX, requestContext))
                     .spareNumber(ParameterExtractor.extractString(Parameter.SPARE_PHONE_NUMBER, requestContext))
                     .build();

@@ -70,4 +70,8 @@ public class PatientCardDaoImpl extends AbstractDaoImpl<PatientCard> implements 
         }
     }
 
+    @Override
+    public int findPatientCardIdByUserId(int userId) throws DaoException {
+        return findByField(Column.PATIENT_CARD_USER_ID, userId).get(0).getCardId();
+    }
 }

@@ -10,5 +10,8 @@ public class Attribute {
     public static final String LAST_NAME = "lastName";
     public static final String NUMBER = "number";
     public static final String ERROR_MESSAGE = "error-message";
-
+    public static final String PATIENT_CARD_ID = "patient_card_id";
+    public static final String COMMUNICATION_TYPE = "communication_type";
+    public static final String DATE = "date";
+    public static final String DOCTOR_ID = "doctor_id";
 }

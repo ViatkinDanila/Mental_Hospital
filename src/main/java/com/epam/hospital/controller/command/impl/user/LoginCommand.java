@@ -6,8 +6,13 @@ import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.constant.CommandName;
 import com.epam.hospital.controller.constant.Page;
 import com.epam.hospital.controller.request.RequestContext;
+import com.epam.hospital.dao.PatientCardDao;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.service.database.PatientCardService;
+import com.epam.hospital.service.database.TreatmentCourseService;
 import com.epam.hospital.service.database.UserService;
+import com.epam.hospital.service.database.impl.PatientCardServiceImpl;
+import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.database.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
@@ -23,6 +28,8 @@ public class LoginCommand implements Command {
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
 
     private static final UserService userService = UserServiceImpl.getInstance();
+    private static final PatientCardService patientCardService = PatientCardServiceImpl.getInstance();
+
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
 
@@ -36,6 +43,8 @@ public class LoginCommand implements Command {
         if (user != null){
             if (user.isBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
+                int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
+                requestContext.addSession(Attribute.PATIENT_CARD_ID, patientCardId);
                 requestContext.addSession(Attribute.USER_ID, user.getUserId());
                 requestContext.addSession(Attribute.ROLE, role);
                 return CommandResult.redirect(HOME_PAGE_COMMAND);

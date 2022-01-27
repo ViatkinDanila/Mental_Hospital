@@ -11,6 +11,8 @@ import com.epam.hospital.controller.request.HttpRequestFiller;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.controller.request.RequestContextMapper;
 import com.epam.hospital.dao.connectionpool.ConnectionPool;
+import com.epam.hospital.dao.connectionpool.DBParameter;
+import com.epam.hospital.dao.connectionpool.DBResourceManager;
 import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -29,15 +31,32 @@ import java.io.IOException;
 @Slf4j
 //http://localhost:8080/mental-hospital
 public class Controller extends HttpServlet {
-    static{
-        try {
-            ConnectionPool.getInstance().init("jdbc:mysql://localhost:3306/mental_hospital?useSSL=false&allowPublicKeyRetrieval=true","root","admin");
-        } catch (ConnectionPoolException e) {
-            e.printStackTrace();
-        }
-    }
     private static final String HOME_PAGE_COMMAND = "mental-hospital?command=" + CommandName.HOME_PAGE +
             "&" + RequestParameter.PAGE + "=1";
+
+    @Override
+    public void init() throws ServletException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        DBResourceManager dbResourceManager = DBResourceManager.getInstance();
+
+        String url = dbResourceManager.getValue(DBParameter.DB_URL);
+        String user = dbResourceManager.getValue(DBParameter.DB_USER);
+        String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+        int repeatCounter= 0;
+        boolean isDone = false;
+        while (!isDone){
+            try{
+                connectionPool.init(url, user, password);
+                isDone = true;
+            } catch (ConnectionPoolException e) {
+                if(repeatCounter++ > 4){
+                    System.exit(1);
+                }
+            }
+        }
+        super.init();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);

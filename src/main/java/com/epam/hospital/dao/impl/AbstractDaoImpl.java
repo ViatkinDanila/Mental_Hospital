@@ -44,7 +44,6 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
     public T findById(int... ids) throws DaoException {
         return findByField(Column.ID, ids[0]).get(0);
     }
-
     @Override
     public List<T> findByField(String fieldName, Object value) throws DaoException {
         List<T> entities = new ArrayList<>();

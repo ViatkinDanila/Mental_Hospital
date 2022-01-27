@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 public class Hasher {
-    private static final int iterations  = 10000;
+    private static final int iterations  = 5;
     private static final int keyLength = 512;
     private static final String ALGORITHM_NAME = "PBKDF2WithHmacSHA512";
 
