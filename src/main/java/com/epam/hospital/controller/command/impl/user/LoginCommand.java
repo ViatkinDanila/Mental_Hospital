@@ -16,12 +16,11 @@ import com.epam.hospital.util.constant.Attribute;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-public class SignInCommand implements Command {
+public class LoginCommand implements Command {
     private static final byte[] salt = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
-    //+"&" + Parameter.PAGE + "=1"; ?????????????????
 
     private static final UserService userService = UserServiceImpl.getInstance();
     @Override

@@ -11,12 +11,9 @@ import com.epam.hospital.model.user.User;
 import com.epam.hospital.service.database.*;
 import com.epam.hospital.service.database.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ConsultationPageCommand implements Command {
     private final static ConsultationService consultationService = ConsultationServiceImpl.getInstance();
@@ -35,7 +32,8 @@ public class ConsultationPageCommand implements Command {
         Consultation consultation = consultationService.getConsultationById(consultationId);
         TreatmentCourse treatmentCourse = treatmentCourseService.getTreatmentCourseById(consultation.getTreatmentCourseId());
         User doctor = userService.getUserById(consultation.getDoctorId());
-        PatientCard patient = patientCardService.getPatientCardById(consultation.getPatientId());
+        int userId = patientCardService.getPatientCardById(consultation.getPatientId()).getUserId();
+        User user = userService.getUserById(userId);
 
         List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
         List<String> diseases = new ArrayList<>();
@@ -62,6 +60,8 @@ public class ConsultationPageCommand implements Command {
                 .duration(consultation.getDuration())
                 .doctorFirstName(doctor.getFirstname())
                 .doctorLastName(doctor.getLastname())
+                .patientFirstName(user.getFirstname())
+                .patientLastName(user.getLastname())
                 .diseases(diseases)
                 .drugs(drugs)
                 .instruction(treatmentCourse.getInstruction())

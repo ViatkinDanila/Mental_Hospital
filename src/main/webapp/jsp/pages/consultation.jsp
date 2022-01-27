@@ -8,10 +8,13 @@
 
 <html>
 
+<html lang="<fmt:message key="html.lang"/>">
 <head>
     <c:import url="/jsp/elements/head.jsp"/>
-    <title>Mental Hospital</title>
+    <title><fmt:message key="label.title"/></title>
 </head>
+<body>
+
 <body>
 <c:import url="/jsp/elements/navbar.jsp"/>
 
@@ -37,6 +40,11 @@
             <span>Doctor:</span>
             <span class="ml-2">${consultation.getDoctorFirstName()}</span>
             <span class="ml-1">${consultation.getDoctorLastName()}</span>
+        </div>
+        <div class="d-flex justify-content-center p-1">
+            <span>Doctor:</span>
+            <span class="ml-2">${consultation.getPatientFirstName()}</span>
+            <span class="ml-1">${consultation.getPatientLastName()}</span>
         </div>
         <div class="d-flex justify-content-center p-1">
             <span>Diseases:</span>

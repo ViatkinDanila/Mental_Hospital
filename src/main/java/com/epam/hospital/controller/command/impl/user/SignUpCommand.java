@@ -22,16 +22,17 @@ import java.util.UUID;
 
 public class SignUpCommand implements Command {
     private static final byte[] salt = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
-    private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.SIGN_IN_PAGE;
+    private static final String LOGIN_PAGE_COMMAND = "controller?command=" + CommandName.LOGIN_PAGE;
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final String INVALID_LOGIN_KEY = "invalid.login";
     private static final int USER_ROLE_ID = 1;
-    private final SignUpService sigUpService = SignUpServiceImpl.getInstance();
+
+    private final SignUpService signUpService = SignUpServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String login = ParameterExtractor.extractString(Attribute.LOGIN, requestContext);
-        boolean isUserExist = userService.isUserExist(login);
+        boolean isUserExist = userService.isUserExistByLogin(login);
         if (!isUserExist){
             requestContext.addAttribute(Attribute.LOGIN, login);
 
@@ -52,7 +53,8 @@ public class SignUpCommand implements Command {
                     .sex(ParameterExtractor.extractString(Parameter.SEX, requestContext))
                     .spareNumber(ParameterExtractor.extractString(Parameter.SPARE_PHONE_NUMBER, requestContext))
                     .build();
-            sigUpService.signUp(user, patientCard);
+            signUpService.signUp(user, patientCard);
+
             return CommandResult.redirect(LOGIN_PAGE_COMMAND);
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_LOGIN_KEY);

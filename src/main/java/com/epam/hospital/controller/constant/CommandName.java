@@ -1,7 +1,11 @@
 package com.epam.hospital.controller.constant;
 
 public final class CommandName {
-    public static final String SIGN_IN_PAGE = "sign-in";
-    public static final String GOTO_CONSULTATION_PAGE = "goto-consultation-page";
+    public static final String SIGN_UP = "sign-up";
+    public static final String LOGIN = "login";
+
+    public static final String SIGN_UP_PAGE = "sign-up-page";
+    public static final String LOGIN_PAGE = "login-page";
+    public static final String GOTO_CONSULTATION_PAGE = "consultation";
     public static final String HOME_PAGE = "home-page";
 }
