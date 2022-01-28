@@ -6,5 +6,5 @@ import com.epam.hospital.model.treatment.TreatmentCourse;
 import java.util.List;
 
 public interface TreatmentCourseDao extends AbstractDao<TreatmentCourse> {
-
+    TreatmentCourse findTreatmentCourseByInstruction(String instruction) throws DaoException;
 }

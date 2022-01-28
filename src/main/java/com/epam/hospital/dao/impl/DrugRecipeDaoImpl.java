@@ -13,7 +13,7 @@ import com.epam.hospital.model.treatment.DrugRecipe;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> {
+public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements DrugRecipeDao {
     private final static String SAVE_DRUG_RECIPE_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
             Table.DRUG_RECIPES_TABLE,

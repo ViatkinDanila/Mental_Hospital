@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiseaseSymptomDaoImpl extends AbstractDaoImpl<DiseaseSymptom> {
+public class DiseaseSymptomDaoImpl extends AbstractDaoImpl<DiseaseSymptom> implements DiseaseSymptomDao{
     private final static String SAVE_DISEASE_SYMPTOMS_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)",
             Table.DISEASE_SYMPTOMS_TABLE,

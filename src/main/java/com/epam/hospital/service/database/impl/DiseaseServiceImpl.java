@@ -23,10 +23,21 @@ public class DiseaseServiceImpl implements DiseaseService {
 
     @Override
     public Disease getDiseaseById(int id) throws ServiceException {
-        AbstractDao<Disease> consultationDao = new DiseaseDaoImpl();
+        DiseaseDao diseaseDao = new DiseaseDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
-            transaction.initTransaction(consultationDao);
-            return consultationDao.findById(id);
+            transaction.initTransaction(diseaseDao);
+            return diseaseDao.findById(id);
+        } catch(DaoException e){
+            throw new SecurityException("Can't get consultation.", e);
+        }
+    }
+
+    @Override
+    public int getDiseaseIdByName(String name) throws ServiceException {
+        DiseaseDao diseaseDao = new DiseaseDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(diseaseDao);
+            return diseaseDao.findIdByName(name);
         } catch(DaoException e){
             throw new SecurityException("Can't get consultation.", e);
         }

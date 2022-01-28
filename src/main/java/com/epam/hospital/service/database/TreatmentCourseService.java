@@ -15,4 +15,6 @@ public interface TreatmentCourseService {
 
     List<DrugRecipe> getDrugRecipes(int treatmentCourseId) throws ServiceException;
 
+    void saveTreatmentCourse(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException;
+
 }

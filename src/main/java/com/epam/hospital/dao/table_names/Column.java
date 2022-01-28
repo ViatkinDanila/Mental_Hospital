@@ -26,6 +26,7 @@ public class Column {
     public static final String CONSULTATION_DATE = "date";
     public static final String CONSULTATION_DURATION = "duration";
     public static final String CONSULTATION_PRICE = "price";
+    public static final String CONSULTATION_STATUS = "status";
 
     public static final String DISEASE_SYMPTOMS_COURSE_ID = "treatment_course_id";
     public static final String DISEASE_SYMPTOMS_DISEASE_ID = "diseases_id";
@@ -51,6 +52,8 @@ public class Column {
     public static final String HOSPITALIZATION_ID = "id";
     public static final String HOSPITALIZATION_PATIENT_ID = "patient_id";
     public static final String HOSPITALIZATION_STATUS = "status";
+    public static final String HOSPITALIZATION_DOCTOR_ID = "doctor_id";
+
 
     public static final String HOSPITAL_ID = "id";
     public static final String HOSPITAL_ADDRESS = "address";

@@ -1,6 +1,7 @@
 package com.epam.hospital.dao.impl;
 
 import com.epam.hospital.dao.AbstractDao;
+import com.epam.hospital.dao.DrugDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.table_names.Column;
@@ -11,7 +12,7 @@ import com.epam.hospital.model.treatment.Drug;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DrugDaoImpl extends AbstractDaoImpl<Drug> {
+public class DrugDaoImpl extends AbstractDaoImpl<Drug> implements DrugDao {
     private final static String SAVE_DRUG_QUERY = String.format(
             "INSERT INTO %s %s VALUES ?",
             Table.DRUGS_TABLE,
@@ -46,6 +47,11 @@ public class DrugDaoImpl extends AbstractDaoImpl<Drug> {
         } catch (SQLException e) {
             throw new DaoException("Can't update drug.", e);
         }
+    }
+
+    @Override
+    public int getDrugIdByName(String name) throws DaoException {
+        return findByField(Column.DRUGS_NAME, name).get(0).getDrugId();
     }
 
     private void setParams(PreparedStatement statement, Drug drug, String action) throws SQLException {

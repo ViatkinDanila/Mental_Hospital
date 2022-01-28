@@ -1,6 +1,7 @@
 package com.epam.hospital.service.database.impl;
 
 import com.epam.hospital.dao.AbstractDao;
+import com.epam.hospital.dao.DrugDao;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.DrugDaoImpl;
@@ -22,6 +23,17 @@ public class DrugServiceImpl implements DrugService {
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(drugDao);
             return drugDao.findById(id);
+        } catch(DaoException e) {
+            throw new SecurityException("Can't get drug.", e);
+        }
+    }
+
+    @Override
+    public int getDrugIdByName(String name) throws ServiceException {
+        DrugDao drugDao = new DrugDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(drugDao);
+            return drugDao.getDrugIdByName(name);
         } catch(DaoException e) {
             throw new SecurityException("Can't get drug.", e);
         }

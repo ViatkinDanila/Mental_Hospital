@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> implements TreatmentCourseDao {
     public static final String SAVE_TREATMENT_COURSE_QUERY = String.format(
-            "INSERT INTO %s %s VALUES ?",
+            "INSERT INTO %s (%s) VALUES (?)",
             Table.TREATMENT_COURSES_TABLE,
             Column.TREATMENT_COURSE_INSTRUCTION
     );
@@ -48,6 +48,11 @@ public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> imp
             throw new DaoException("Can't update treatment course.", e);
         }    }
 
+    @Override
+    public TreatmentCourse findTreatmentCourseByInstruction(String instruction) throws DaoException {
+        return findByField(Column.TREATMENT_COURSE_INSTRUCTION, instruction).get(0);
+    }
+
     private void setParams(PreparedStatement statement, TreatmentCourse treatmentCourse, String action) throws SQLException{
         statement.setString(1,treatmentCourse.getInstruction());
         if (action.equals(UPDATE_TREATMENT_COURSE_QUERY)){
@@ -55,4 +60,5 @@ public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> imp
 
         }
     }
+
 }
