@@ -2,6 +2,7 @@ package com.epam.hospital.model.treatment;
 
 import com.epam.hospital.model.Entity;
 import com.epam.hospital.model.treatment.type.CommunicationType;
+import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,5 @@ public class Consultation implements Entity {
     private int duration;
     private int treatmentCourseId;
     private double price;
+    private ConsultationStatus status;
 }
