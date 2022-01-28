@@ -14,15 +14,19 @@ import java.util.List;
 
 public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> implements HospitalizationDao {
     private final static String SAVE_HOSPITALIZATION_QUERY = String.format(
-            "INSERT INTO %s (%s) VALUES (?)",
+            "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)",
             Table.HOSPITALIZATION_TABLE,
-            Column.HOSPITALIZATION_PATIENT_ID
+            Column.HOSPITALIZATION_PATIENT_ID,
+            Column.HOSPITALIZATION_DOCTOR_ID,
+            Column.HOSPITALIZATION_STATUS
     );
 
     private final static String UPDATE_HOSPITALIZATION_QUERY = String.format(
-            "UPDATE %s SET %s=? WHERE %s=?",
+            "UPDATE %s SET %s=?, %s=?, %s=? WHERE %s=?",
             Table.HOSPITALIZATION_TABLE,
             Column.HOSPITALIZATION_PATIENT_ID,
+            Column.HOSPITALIZATION_DOCTOR_ID,
+            Column.HOSPITALIZATION_STATUS,
             Column.HOSPITALIZATION_ID
     );
 
@@ -58,8 +62,10 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
 
     private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException{
         statement.setInt(1,hospitalization.getPatientId());
+        statement.setInt(2,hospitalization.getDoctorId());
+        statement.setString(3,hospitalization.getStatus().toString());
         if (action.equals(UPDATE_HOSPITALIZATION_QUERY)){
-            statement.setInt(2, hospitalization.getHospitalizationId());
+            statement.setInt(4, hospitalization.getHospitalizationId());
         }
     }
 }
