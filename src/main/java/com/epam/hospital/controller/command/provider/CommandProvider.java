@@ -21,6 +21,7 @@ public final class CommandProvider {
         commands.put(CommandName.HOME_PAGE, new ForwardPageCommand());
         commands.put(CommandName.SIGN_UP_PAGE, new ForwardPageCommand());
         commands.put(CommandName.LOGIN_PAGE, new ForwardPageCommand());
+        commands.put(CommandName.CONSULTATION_REQUEST_PAGE, new ForwardPageCommand());
     }
 
     public Command getCommand(String commandName) {

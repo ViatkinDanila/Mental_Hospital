@@ -6,13 +6,17 @@ import com.epam.hospital.controller.constant.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.dto.ConsultationDto;
+import com.epam.hospital.model.dto.DiseaseWithSymptomsDto;
+import com.epam.hospital.model.dto.DrugDtoWithDoze;
 import com.epam.hospital.model.treatment.*;
+import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.service.database.*;
 import com.epam.hospital.service.database.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConsultationPageCommand implements Command {
@@ -25,6 +29,32 @@ public class ConsultationPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
+//        if (true) {
+//            ConsultationDto consultationDto = ConsultationDto.builder()
+//                    .duration(10)
+//                    .communicationType("ONLINE")
+//                    .date(new Date())
+//                    .diseases(List.of(
+//                            DiseaseWithSymptomsDto.builder().name("RAK MOZGA").id(1).symptoms("GOLOVeshka bolit o4en. Dota 2 player.").build(),
+//                            DiseaseWithSymptomsDto.builder().name("ICE ICE BABY").id(2).symptoms("Holodno pizdaaaaaa. Eshe net vozdyha.").build()
+//                    ))
+//                    .patientFirstName("Edik")
+//                    .patientLastName("Pidobir")
+//                    .doctorFirstName("Alex")
+//                    .doctorLastName("Voroshilov")
+//                    .consultationStatus(ConsultationStatus.COMPLETED)
+//                    .doctorId(2)
+//                    .userId(3)
+//                    .drugs(List.of(
+//                            DrugDtoWithDoze.builder().name("MARIHYANA").doze(0.5f).build(),
+//                            DrugDtoWithDoze.builder().name("ASPERIN").doze(0.2f).build(),
+//                            DrugDtoWithDoze.builder().name("KRAHMAL KARTOSHKI").doze(3f).build()
+//                    ))
+//                    .instruction("Snimat' plenki s glaz")
+//                    .build();
+//            requestContext.addAttribute("consultation", consultationDto);
+//            return CommandResult.forward(Page.CONSULTATION_PAGE);
+//        }
 
         String consultationIdString = requestContext.getRequestParameter(Column.ID);
         int consultationId = Integer.parseInt(consultationIdString);
@@ -36,25 +66,31 @@ public class ConsultationPageCommand implements Command {
         User user = userService.getUserById(userId);
 
         List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
-        List<String> diseases = new ArrayList<>();
+        List<DiseaseWithSymptomsDto> diseaseWithSymptomsDtos = new ArrayList<>();
         for (DiseaseSymptom diseaseSymptom : diseaseSymptoms) {
             int diseaseId = diseaseSymptom.getDiseaseId();
-            Disease diseaseById = diseaseService.getDiseaseById(diseaseId);
-            String name = diseaseById.getName();
-            diseases.add(name);
+            Disease disease = diseaseService.getDiseaseById(diseaseId);
+            DiseaseWithSymptomsDto diseaseWithSymptomsDto = DiseaseWithSymptomsDto.builder()
+                    .name(disease.getName())
+                    .id(diseaseId)
+                    .build();
+            diseaseWithSymptomsDtos.add(diseaseWithSymptomsDto);
         }
 
         List<DrugRecipe> drugRecipes = treatmentCourseService.getDrugRecipes(treatmentCourse.getTreatmentCourseId());
-        List<String> drugs = new ArrayList<>();
+        List<DrugDtoWithDoze> drugDtoWithDozes = new ArrayList<>();
         for (DrugRecipe drugRecipe : drugRecipes) {
             int drugId = drugRecipe.getDrugId();
             Drug drugById = drugService.getDrugById(drugId);
             String name = drugById.getName();
-            drugs.add(name);
+            DrugDtoWithDoze drugDtoWithDoze = DrugDtoWithDoze.builder().
+                    name(name)
+                    .doze(drugRecipe.getDose())
+                    .build();
+            drugDtoWithDozes.add(drugDtoWithDoze);
         }
 
         ConsultationDto consultationDto = ConsultationDto.builder()
-                .consultationId(consultationId)
                 .communicationType(consultation.getCommunicationType().toString())
                 .date(consultation.getDate())
                 .duration(consultation.getDuration())
@@ -62,8 +98,8 @@ public class ConsultationPageCommand implements Command {
                 .doctorLastName(doctor.getLastname())
                 .patientFirstName(user.getFirstname())
                 .patientLastName(user.getLastname())
-                .diseases(diseases)
-                .drugs(drugs)
+                .diseases(diseaseWithSymptomsDtos)
+                .drugs(drugDtoWithDozes)
                 .instruction(treatmentCourse.getInstruction())
                 .build();
 

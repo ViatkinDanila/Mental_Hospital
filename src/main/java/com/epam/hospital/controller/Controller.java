@@ -29,9 +29,9 @@ import java.io.IOException;
 //https://www.youtube.com/channel/UCRxBK1uUONfrU7roM36zuTQ
 
 @Slf4j
-//http://localhost:8080/mental-hospital
+//http://localhost:8080/MentalHospital
 public class Controller extends HttpServlet {
-    private static final String HOME_PAGE_COMMAND = "mental-hospital?command=" + CommandName.HOME_PAGE +
+    private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE +
             "&" + RequestParameter.PAGE + "=1";
 
     @Override
@@ -42,14 +42,19 @@ public class Controller extends HttpServlet {
         String url = dbResourceManager.getValue(DBParameter.DB_URL);
         String user = dbResourceManager.getValue(DBParameter.DB_USER);
         String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
-        int repeatCounter= 0;
+        String driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
+        int repeatCounter = 0;
         boolean isDone = false;
-        while (!isDone){
-            try{
-                connectionPool.init(url, user, password);
+        log.info("[DB] Starting connection pool init logic");
+        while (!isDone) {
+            try {
+                log.info("[DB] try №{}: initialising connection pool", repeatCounter);
+                connectionPool.init(url, user, password, driverName);
                 isDone = true;
             } catch (ConnectionPoolException e) {
-                if(repeatCounter++ > 4){
+                log.error("Error while initialising connection pool.", e);
+                if (++repeatCounter > 4) {
+                    log.error("[DB] Connection pool failed to init connection pool {} times. Exiting...", repeatCounter);
                     System.exit(1);
                 }
             }

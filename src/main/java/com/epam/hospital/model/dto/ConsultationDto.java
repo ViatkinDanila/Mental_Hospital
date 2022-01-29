@@ -1,12 +1,13 @@
 package com.epam.hospital.model.dto;
 
 import com.epam.hospital.model.Entity;
+import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,15 +15,17 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ConsultationDto implements Entity {
-    private int consultationId;
     private String communicationType;
     private Date date;
     private int duration;
+    private ConsultationStatus consultationStatus;
     private String doctorFirstName;
     private String doctorLastName;
+    private int doctorId;
+    private int userId;
     private String patientFirstName;
     private String patientLastName;
-    private List<String> diseases;
-    private List<String> drugs;
+    private List<DiseaseWithSymptomsDto> diseases;
+    private List<DrugDtoWithDoze> drugs;
     private String instruction;
 }

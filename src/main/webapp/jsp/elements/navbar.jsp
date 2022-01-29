@@ -6,7 +6,7 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="locale"/>
 
-<header class="bg-light text-secondary ">
+<header class="bg-light text-secondary">
     <div class="container-fluid p-0">
         <div class="p-2 d-flex align-items-center justify-content-lg-between">
             <div class="container align-items-center d-flex justify-content-lg-center">
@@ -14,7 +14,7 @@
                     <img style="width:30%"
                          src="https://sun1-94.userapi.com/impg/rtxx1D38IgGogEgvRSqWsNfHSXCtbkimRhHlWA/MNlGT-PNr1s.jpg?size=200x0&quality=90&crop=0,0,640,640&sign=322336ead46fdbe67e140d62dde4294b&ava=1">
                 </a>
-                <span class="text-info">Budagovo, Yana Chechota 4, 46</span>
+                <span class="text-info"><fmt:message key="navbar.address"/></span>
             </div>
             <div class="container d-flex justify-content-lg-around">
                 <div>
@@ -27,21 +27,21 @@
                 </div>
                 <div>
                     <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=login-page"
-                       class="btn btn-primary my-1 mx-3">Login</a>
+                       class="btn btn-primary my-1 mx-3"><fmt:message key="navbar.login"/></a>
                     <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=sign-up-page"
-                       class="btn btn-primary">Sign up</a>
+                       class="btn btn-primary"><fmt:message key="navbar.signup"/></a>
                 </div>
             </div>
         </div>
-        <div class="py-4 d-flex flex-wrap align-items-center justify-content-around bg-primary h4">
+        <div class="py-3 d-flex flex-wrap align-items-center justify-content-around bg-primary h4">
             <div class="container-30 d-flex mr-5">
                 <a href="${pageContext.request.contextPath}/MentalHospital?command=home-page"
-                   class="nav-link px-5 text-light">Doctors</a>
+                   class="nav-link px-5 text-light"><fmt:message key="navbar.doctors"/></a>
                 <a href="${pageContext.request.contextPath}/MentalHospital?command=login-page"
-                   class="nav-link px-5 text-light">Diseases</a>
+                   class="nav-link px-5 text-light"><fmt:message key="navbar.diseases"/></a>
             </div>
-            <a href="${pageContext.request.contextPath}/MentalHospital?command=login-page"
-               class="nav-link text-light ml-5">Order</a>
+            <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation-request-page"
+               class="nav-link text-light ml-5"><fmt:message key="navbar.request.consultation"/></a>
         </div>
     </div>
 </header>

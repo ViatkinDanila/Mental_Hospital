@@ -60,7 +60,6 @@
         </form>
     </div>
 </div>
-<script src="/js/sign-up.js"></script>
 <script src="/js/checker-repeat-pas.js"></script>
 </body>
 </html>
