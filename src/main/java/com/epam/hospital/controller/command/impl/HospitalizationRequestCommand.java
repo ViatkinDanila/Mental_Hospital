@@ -9,6 +9,7 @@ import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.treatment.type.HospitalizationStatus;
 import com.epam.hospital.service.database.ChamberService;
 import com.epam.hospital.service.database.ConsultationService;
+
 import com.epam.hospital.service.database.HospitalizationService;
 import com.epam.hospital.service.database.impl.ChamberServiceImpl;
 import com.epam.hospital.service.database.impl.ConsultationServiceImpl;

@@ -19,7 +19,7 @@ import com.epam.hospital.service.database.impl.DrugServiceImpl;
 import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
-import org.w3c.dom.Attr;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,16 +34,11 @@ public class ConsultationCompleteCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
 
-        int consultationId = ParameterExtractor.extractInt(Attribute.CONSULTATION_ID, requestContext);
-        //Consultation consultation = consultationService.getConsultationById(consultationId);
-
-        TreatmentCourse treatmentCourse = TreatmentCourse.builder()
-                .instruction(ParameterExtractor.extractString(Attribute.INSTRUCTION, requestContext))
-                .build();
-
+        //TODO replace attribute to parameter
         String diseasesNamesStr = ParameterExtractor.extractString(Attribute.DISEASES_NAMES, requestContext);
         diseasesNamesStr.replaceAll(" ","");
         List<String> diseasesNames = new ArrayList<String>();
+        //TODO decompozition
         if (diseasesNamesStr.contains(",")){
             diseasesNames = Arrays.asList(diseasesNamesStr.split(","));
         } else {
@@ -117,7 +112,15 @@ public class ConsultationCompleteCommand implements Command {
                 drugsRecipes.add(drugRecipe);
             }
         }
-        treatmentCourseService.saveTreatmentCourse(treatmentCourse, diseaseSymptoms, drugsRecipes);
+
+        TreatmentCourse treatmentCourse = TreatmentCourse.builder()
+                .instruction(ParameterExtractor.extractString(Attribute.INSTRUCTION, requestContext))
+                .build();
+
+        int treatmentCourseId = treatmentCourseService.saveTreatmentCourse(treatmentCourse, diseaseSymptoms, drugsRecipes);
+        int consultationId = ParameterExtractor.extractInt(Attribute.CONSULTATION_ID, requestContext);
+        Consultation consultation = consultationService.getConsultationById(consultationId);
+        consultation.setTreatmentCourseId(treatmentCourseId);
         return CommandResult.redirect(PROFILE_PAGE_COMMAND);
     }
 }

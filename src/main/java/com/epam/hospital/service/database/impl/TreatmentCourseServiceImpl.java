@@ -63,12 +63,13 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     }
 
     @Override
-    public void saveTreatmentCourse(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException {
+    public int saveTreatmentCourse(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException {
         TreatmentCourseDao treatmentCourseDao = new TreatmentCourseDaoImpl();
         DrugRecipeDao drugRecipeDao = new DrugRecipeDaoImpl();
         DiseaseSymptomDao diseaseSymptomDao = new DiseaseSymptomDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(treatmentCourseDao, diseaseSymptomDao, drugRecipeDao);
+
             treatmentCourseDao.save(treatmentCourse);
             treatmentCourse = treatmentCourseDao.findTreatmentCourseByInstruction(treatmentCourse.getInstruction());
             int treatmentCourseId = treatmentCourse.getTreatmentCourseId();
@@ -84,6 +85,7 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
                     drugRecipeDao.save(drugRecipe);
                 }
             }
+            return treatmentCourseId;
         } catch (DaoException e) {
             throw new ServiceException("Can't get drug recipes.", e);
         }
