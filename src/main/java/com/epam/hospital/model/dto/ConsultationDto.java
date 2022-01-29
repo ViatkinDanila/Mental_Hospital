@@ -26,6 +26,7 @@ public class ConsultationDto implements Entity {
     private String patientFirstName;
     private String patientLastName;
     private List<DiseaseWithSymptomsDto> diseases;
-    private List<DrugDtoWithDoze> drugs;
+    private List<DrugRecipeDto> drugs;
     private String instruction;
+    private double price;
 }

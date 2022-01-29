@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DrugDtoWithDoze {
+public class DrugRecipeDto {
     String name;
     float doze;
+    String description;
 }

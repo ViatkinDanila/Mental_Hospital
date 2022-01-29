@@ -17,16 +17,16 @@
 
 <div class="container py-3">
     <div class="row flex-column align-items-center">
-        <form method="POST" name="loginForm"  action="${pageContext.request.contextPath}/MentalHospital?command=login" class="flex-box col-md-6">
-            <h1 class="text-center text-primary"><fmt:message key="login.log.in"/></h1>
-            <div class="mb-3">
+        <form method="POST" name="loginForm"  action="${pageContext.request.contextPath}/MentalHospital?command=login" class="flex-box h2 col-md-6">
+            <h1 class="text-center text-primary font-weight-bold"><fmt:message key="login.log.in"/></h1>
+            <div class="mb-4">
                 <span class="form-label"><fmt:message key="login.login"/></span>
-                <input type="email" name="login" minlength="5" maxlength="64" class="form-control" value="${login}" required>
+                <input type="email" name="login" minlength="5" maxlength="64" class="form-control mt-1" value="${login}" required style="font-size: 2rem">
             </div>
             <div class="mb-3">
                 <span class="form-label"><fmt:message key="login.password"/></span>
-                <input type="password" id="currentPass" name="password" class="form-control" minlength="8" maxlength="32" required>
-                <input type="checkbox" onclick="showPass()"> <fmt:message key="settings.current.password.show"/>
+                <input type="password" id="currentPass" name="password" class="form-control mt-1 mb-2" minlength="8" maxlength="32" required style="font-size: 2rem">
+                <input type="checkbox" onclick="showPass()" > <fmt:message key="settings.current.password.show"/>
                 <script>
                     const currentPass = document.getElementById('currentPass');
                     function showPass() {
@@ -38,12 +38,12 @@
                     }
                 </script>
             </div>
-            <h3 class="text-danger error-message">
+            <h3 class="text-danger error-message mb-3">
                 <fmt:message key="login.error.${errorMessage}"/>
             </h3>
             <br/>
-            <button type="submit" name="Log in" class="btn btn-primary w-25 d-flex mx-auto justify-content-center">
-                <fmt:message key="login.submit"/>
+            <button type="submit" name="Log in" class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
+                <span class="h2 mb-0" style="line-height: 1.6"><fmt:message key="login.submit"/></span>
             </button>
         </form>
     </div>
