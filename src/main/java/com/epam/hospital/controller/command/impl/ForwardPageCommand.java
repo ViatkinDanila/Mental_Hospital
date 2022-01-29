@@ -17,6 +17,7 @@ public class ForwardPageCommand implements Command {
         commandPages.put(CommandName.HOME_PAGE, Page.HOME_PAGE);
         commandPages.put(CommandName.SIGN_UP_PAGE, Page.SIGN_UP_PAGE);
         commandPages.put(CommandName.LOGIN_PAGE, Page.LOGIN_PAGE);
+        commandPages.put(CommandName.CONSULTATION_REQUEST_PAGE, Page.REQUEST_CONSULTATION_PAGE);
     }
 
     @Override

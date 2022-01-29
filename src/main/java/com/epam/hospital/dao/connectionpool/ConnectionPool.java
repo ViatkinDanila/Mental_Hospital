@@ -8,30 +8,27 @@ import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
     private static ConnectionPool instance = null;
-    private final String driverName;
     private static BlockingQueue<PooledConnection> allConnections;
     private static BlockingQueue<PooledConnection> engagedConnections;
     private static int poolSize;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-        this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         try {
             poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
         } catch (NumberFormatException e) {
             poolSize = 5;
         }
-
     }
 
-    public static ConnectionPool getInstance(){
-        if (instance == null){
+    public static ConnectionPool getInstance() {
+        if (instance == null) {
             instance = new ConnectionPool();
         }
         return instance;
     }
 
-    public void init(String url, String user, String password) throws ConnectionPoolException {
+    public void init(String url, String user, String password, String driverName) throws ConnectionPoolException {
         try {
             Class.forName(driverName);
             allConnections = new ArrayBlockingQueue<>(poolSize);

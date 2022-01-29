@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.util.logging.LogRecord;
 
 public class AccessFilter implements Filter{
 
@@ -25,14 +24,21 @@ public class AccessFilter implements Filter{
         String commandName = servletRequest.getParameter(Parameter.COMMAND);
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession();
-        String role = session.getAttribute(Attribute.ROLE).toString();
+        Object role = session.getAttribute(Attribute.ROLE);
 
-        boolean isAccessAllowed = isAccessAllowed(commandName, role);
-        if (isAccessAllowed) {
-            filterChain.doFilter(servletRequest, servletResponse);
-        } else {
-            ((HttpServletResponse) servletRequest).sendError(HttpServletResponse.SC_FORBIDDEN);
+        if (commandName != null && role != null) {
+            boolean isAccessAllowed = isAccessAllowed(commandName, role.toString());
+            if (!isAccessAllowed) {
+                ((HttpServletResponse) servletRequest).sendError(HttpServletResponse.SC_FORBIDDEN);
+            }
         }
+        doNextFilter(servletRequest, servletResponse, filterChain);
+    }
+
+    private void doNextFilter(ServletRequest servletRequest,
+                              ServletResponse servletResponse,
+                              FilterChain filterChain) throws ServletException, IOException {
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private boolean isAccessAllowed(String commandName, String role) {
@@ -44,6 +50,7 @@ public class AccessFilter implements Filter{
        }
         return true;
     }
+
     @Override
     public void destroy() {
         Filter.super.destroy();
