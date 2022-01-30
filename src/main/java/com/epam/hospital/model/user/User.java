@@ -15,8 +15,8 @@ public class User implements Entity {
     private int userId;
     private int userRoleId;
     private String email;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String number;
     private String hashedPassword;
     private boolean isBanned;

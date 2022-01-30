@@ -120,7 +120,7 @@
 
     <sc:access role="DOCTOR">
         <c:if test="${consultation.getConsultationStatus().toString().equals('PENDING')}">
-            <form class="d-flex align-items-center w-50 justify-content-around mt-4" method="POST" action="${pageContext.request.contextPath}/MentalHospital">
+            <form class="d-flex align-items-center w-50 justify-content-around mt-4" method="POST" action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
                 <button type="submit" name="command" value="consultation-approve"
                         class="btn btn-success btn-lg d-flex mx-auto justify-content-center">
                                     <span class="h1 mb-0" style="line-height: 1.6; width: 15rem"><fmt:message
@@ -130,6 +130,7 @@
                         class="btn btn-danger btn-sm d-flex mx-auto justify-content-center">
                                     <span class="h1 mb-0" style="line-height: 1.6; width: 15rem"><fmt:message
                                             key="consultation.reject.button"/></span>
+                </button>
             </form>
         </c:if>
         <c:if test="${consultation.getConsultationStatus().toString().equals('APPROVED')}">

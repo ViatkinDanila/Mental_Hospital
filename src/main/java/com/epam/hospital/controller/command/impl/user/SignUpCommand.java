@@ -42,9 +42,9 @@ public class SignUpCommand implements Command {
             User user = User.builder()
                     .email(login)
                     .hashedPassword(hashedPassword)
-                    .firstname(ParameterExtractor.extractString(Parameter.FIRST_NAME, requestContext))
+                    .firstName(ParameterExtractor.extractString(Parameter.FIRST_NAME, requestContext))
                     .isBanned(false)
-                    .lastname(ParameterExtractor.extractString(Parameter.LAST_NAME, requestContext))
+                    .lastName(ParameterExtractor.extractString(Parameter.LAST_NAME, requestContext))
                     .userRoleId(USER_ROLE_ID)
                     .number(ParameterExtractor.extractString(Parameter.PHONE_NUMBER, requestContext))
                     .build();

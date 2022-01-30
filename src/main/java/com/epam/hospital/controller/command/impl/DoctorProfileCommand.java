@@ -29,8 +29,8 @@ public class DoctorProfileCommand implements Command {
         User doctor = userService.getUserById(doctorId);
 
         DoctorDto doctorDto = DoctorDto.builder()
-                .lastname(doctor.getLastname())
-                .firstname(doctor.getFirstname())
+                .lastname(doctor.getLastName())
+                .firstname(doctor.getFirstName())
                 .email(doctor.getEmail())
                 .number(doctor.getNumber())
                 .userRole(DOCTOR_ROLE)

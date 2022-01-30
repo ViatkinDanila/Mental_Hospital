@@ -73,10 +73,10 @@ public class ConsultationPageCommand implements Command {
                 .communicationType(consultation.getCommunicationType().toString())
                 .date(consultation.getDate())
                 .duration(consultation.getDuration())
-                .doctorFirstName(doctor.getFirstname())
-                .doctorLastName(doctor.getLastname())
-                .patientFirstName(user.getFirstname())
-                .patientLastName(user.getLastname())
+                .doctorFirstName(doctor.getFirstName())
+                .doctorLastName(doctor.getLastName())
+                .patientFirstName(user.getFirstName())
+                .patientLastName(user.getLastName())
                 .consultationStatus(consultation.getStatus());
 
 

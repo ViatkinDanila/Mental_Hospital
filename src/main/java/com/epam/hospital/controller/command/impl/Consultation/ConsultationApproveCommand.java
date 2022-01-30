@@ -38,12 +38,12 @@ public class ConsultationApproveCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         int consultationId = ParameterExtractor.extractInt(Parameter.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);
-
-        int price = ParameterExtractor.extractInt(Parameter.PRICE, requestContext);
+        consultation.setTreatmentCourseId(null);
+//        int price = ParameterExtractor.extractInt(Parameter.PRICE, requestContext);
         ConsultationStatus consultationStatus = ConsultationStatus.valueOf(CONSULTATION_STATUS_APPROVED);
 
         consultation.setStatus(consultationStatus);
-        consultation.setPrice(price);
+//        consultation.setPrice(price);
         consultationService.update(consultation);
         return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);
     }

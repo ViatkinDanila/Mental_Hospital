@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Array;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +42,7 @@ public class ConsultationRequestCommand implements Command {
         //patientCardIdStr можно брать из сессии
         //
         log.info(ParameterExtractor.extractString("isOnline", requestContext));
-        String patentCardIdStr = ParameterExtractor.extractString(Attribute.PATIENT_CARD_ID, requestContext);
+        String patentCardIdStr = requestContext.getSessionAttribute(Attribute.PATIENT_CARD_ID).toString();
         int patientCardId = Integer.parseInt(patentCardIdStr);
         String communicationTypeStr = ParameterExtractor.extractString(Parameter.COMMUNICATION_TYPE, requestContext);
         CommunicationType communicationType;
@@ -52,16 +52,17 @@ public class ConsultationRequestCommand implements Command {
             communicationType = CommunicationType.FACE_TO_FACE;
         }
 
-        String doctorName = ParameterExtractor.extractString(Parameter.NAME, requestContext);
+        String doctorName = ParameterExtractor.extractString(Parameter.DOCTOR, requestContext);
         List<String> fullName = new ArrayList<String>(Arrays.asList(doctorName.split(" ")));
         User doctor = userService.getUserByFullName(fullName.get(0), fullName.get(1));
 
         Consultation consultation = new Consultation().builder()
                 .communicationType(communicationType)
-                .date(ParameterExtractor.extractDate(Parameter.DATE, requestContext))
+                .date(new Date())
                 .doctorId(doctor.getUserId())
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)
+                .treatmentCourseId(null)
                 .build();
         consultationService.save(consultation);
         return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND);

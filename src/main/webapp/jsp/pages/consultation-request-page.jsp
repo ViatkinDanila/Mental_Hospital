@@ -42,7 +42,7 @@
                 <select name="doctor" class="form-select form-control form-select-lg mt-1" aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                     <option selected><fmt:message key="consultation.doctor.select"/></option>
                     <c:forEach items="${doctors}" var="doctor" varStatus="counter">
-                        <option value="${doctor.getFullName()}">${doctor.getFullName()}</option>
+                        <option value="${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}">${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}</option>
                     </c:forEach>
                 </select>
             </div>

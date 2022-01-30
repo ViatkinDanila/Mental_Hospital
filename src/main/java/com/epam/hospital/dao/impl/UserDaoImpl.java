@@ -174,8 +174,8 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {
-        statement.setString(1, user.getFirstname());
-        statement.setString(2, user.getLastname());
+        statement.setString(1, user.getFirstName());
+        statement.setString(2, user.getLastName());
         statement.setString(3, user.getNumber());
         statement.setString(4, user.getEmail());
         statement.setString(5, user.getHashedPassword());

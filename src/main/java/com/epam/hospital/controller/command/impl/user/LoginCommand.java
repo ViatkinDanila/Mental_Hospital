@@ -26,7 +26,7 @@ import static com.epam.hospital.controller.command.impl.user.SignUpCommand.salt;
 public class LoginCommand implements Command {
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
-    private static final String USER_PATIENT_ROLE = "PATIENT";
+    private static final String USER_ROLE = "USER";
     private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE;
 
 
@@ -49,7 +49,7 @@ public class LoginCommand implements Command {
                 int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
                 requestContext.addSession(Attribute.USER_ID, user.getUserId());
                 requestContext.addSession(Attribute.ROLE, role);
-                if (role.equals(USER_PATIENT_ROLE)){
+                if (role.equals(USER_ROLE)){
                     requestContext.addSession(Attribute.PATIENT_CARD_ID, patientCardId);
                 }
                 return CommandResult.redirect(HOME_PAGE_COMMAND);

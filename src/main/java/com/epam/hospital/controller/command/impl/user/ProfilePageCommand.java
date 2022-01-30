@@ -39,7 +39,7 @@ public class ProfilePageCommand implements Command {
         User user = userService.getUserById(userId);
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
-                .fullName(user.getFirstname() + " " + user.getLastname())
+                .fullName(user.getFirstName() + " " + user.getLastName())
                 .role(role)
                 .status(user.isBanned() ? "BANNED" : "ACTIVE")
                 .email(user.getEmail())
@@ -78,11 +78,11 @@ public class ProfilePageCommand implements Command {
                     .id(consultation.getConsultationId());
             if (role.equalsIgnoreCase("USER")) {
                 User doctor = userService.getUserById(consultation.getDoctorId());
-                shortConsultationDtoBuilder.doctorFullName(doctor.getFirstname() + " " + doctor.getLastname());
+                shortConsultationDtoBuilder.doctorFullName(doctor.getFirstName() + " " + doctor.getLastName());
             } else {
                 PatientCard patientCard = patientCardService.getPatientCardById(consultation.getPatientId());
                 User patient = userService.getUserById(patientCard.getUserId());
-                shortConsultationDtoBuilder.patientFullName(patient.getFirstname() + " " + patient.getLastname());
+                shortConsultationDtoBuilder.patientFullName(patient.getFirstName() + " " + patient.getLastName());
             }
             consultationDtoList.add(shortConsultationDtoBuilder.build());
         }

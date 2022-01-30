@@ -79,10 +79,10 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
 
     private void setParams(PreparedStatement statement, Consultation consultation, String action) throws SQLException {
         statement.setString(1, String.valueOf(consultation.getCommunicationType()));
-        statement.setInt(2, consultation.getTreatmentCourseId());
+        statement.setObject(2, consultation.getTreatmentCourseId());
         statement.setInt(3, consultation.getDoctorId());
         statement.setInt(4, consultation.getPatientId());
-        statement.setDate(5, consultation.getDate());
+        statement.setDate(5, new Date(consultation.getDate().getTime()));
         statement.setInt(6, consultation.getDuration());
         statement.setDouble(7, consultation.getPrice());
         statement.setString(8, String.valueOf(consultation.getStatus()));

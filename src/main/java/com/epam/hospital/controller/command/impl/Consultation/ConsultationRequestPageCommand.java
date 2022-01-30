@@ -18,7 +18,7 @@ public class ConsultationRequestPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<User> doctors = userService.getAllDoctors();
+        List<User> doctors = userService.getAllDoctors(3);
         requestContext.addAttribute(Attribute.DOCTORS, doctors);
 
         return CommandResult.forward(Page.REQUEST_CONSULTATION_PAGE);

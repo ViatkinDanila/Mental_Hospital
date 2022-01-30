@@ -55,7 +55,7 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
         try (PreparedStatement statement = pooledConnection.prepareStatement(query);) {
             statement.setObject(1, value);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
+            while(resultSet.next()) {
                 entities.add(builder.build(resultSet));
             }
         } catch (SQLException e) {
