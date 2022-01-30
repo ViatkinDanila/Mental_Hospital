@@ -8,6 +8,7 @@ public final class Parameter {
     public static final String EMAIL = "email";
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
+    public static final String NAME = "name";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ID = "id";
     public static final String USER_ID = "id";

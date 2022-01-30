@@ -12,4 +12,5 @@ public interface UserService {
     String getUserRoleById(int id) throws ServiceException;
     boolean isUserExistByLogin(String login) throws ServiceException;
     DoctorInfo getDoctorInfoById(int id) throws ServiceException;
+    User getUserByFullName(String firstName, String lastName) throws ServiceException;
 }

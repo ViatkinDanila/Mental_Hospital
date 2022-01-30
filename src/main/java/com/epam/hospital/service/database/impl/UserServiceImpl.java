@@ -87,4 +87,15 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Can't get doctor info by doctor id.", e);
         }
     }
+
+    @Override
+    public User getUserByFullName(String firstName, String lastName) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findByFullName(firstName,lastName);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get doctor info by doctor id.", e);
+        }
+    }
 }
