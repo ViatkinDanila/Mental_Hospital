@@ -137,7 +137,7 @@
 
             <form class="bg-info d-flex flex-column flex-box col-md-6 w-50 border border-dark mt-4 row align-items-center mb-5"
                   method="POST"
-                  style="width: 55%; border-radius: 6rem" action="${pageContext.request.contextPath}/MentalHospital">
+                  style="width: 55%; border-radius: 6rem" action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
                 <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
                 <div class="py-3 pt-3 h2 w-75 mb-3" style="margin-left: 3rem">
                     <span class="form-label"><fmt:message key="consultation.instructions.label"/></span>

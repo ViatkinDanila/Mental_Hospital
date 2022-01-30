@@ -18,16 +18,16 @@ public class AccessTag extends TagSupport {
     public int doStartTag() {
         HttpSession session =   pageContext.getSession();
         Object role = session.getAttribute(Attribute.ROLE);
-        return EVAL_BODY_INCLUDE;
 
-//        if (role == null) {
-//            if (GUEST.equalsIgnoreCase(this.role)) {
-//                return EVAL_BODY_INCLUDE;
-//            }
-//        } else if (role.toString().equalsIgnoreCase(this.role)
-//                || NOT_GUEST.equalsIgnoreCase(this.role)) {
-//            return EVAL_BODY_INCLUDE;
-//        }
-//        return SKIP_BODY;
+
+        if (role == null) {
+            if (GUEST.equalsIgnoreCase(this.role)) {
+                return EVAL_BODY_INCLUDE;
+            }
+        } else if (role.toString().equalsIgnoreCase(this.role)
+                || NOT_GUEST.equalsIgnoreCase(this.role)) {
+            return EVAL_BODY_INCLUDE;
+        }
+        return SKIP_BODY;
     }
 }

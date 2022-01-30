@@ -6,6 +6,7 @@ import com.epam.hospital.dao.connectionpool.PooledConnection;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.Entity;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T> {
     private final EntityBuilder<T> builder;
     protected PooledConnection pooledConnection;
@@ -58,7 +59,7 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
                 entities.add(builder.build(resultSet));
             }
         } catch (SQLException e) {
-//            LOGGER.error("Can't find entity by id.",e);
+           log.error("Can't find entity by id.",e);
             throw new DaoException("Can't find by id.", e);
         }
         return entities;

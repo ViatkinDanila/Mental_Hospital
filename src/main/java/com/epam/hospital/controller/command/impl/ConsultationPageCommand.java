@@ -62,12 +62,14 @@ public class ConsultationPageCommand implements Command {
         String consultationIdString = ParameterExtractor.extractString(Parameter.CONSULTATION_ID, requestContext);
         int consultationId = Integer.parseInt(consultationIdString);
 
+        requestContext.addAttribute(Attribute.CONSULTATION_ID, consultationId);
+
         Consultation consultation = consultationService.getConsultationById(consultationId);
         User doctor = userService.getUserById(consultation.getDoctorId());
         int userId = patientCardService.getPatientCardById(consultation.getPatientId()).getUserId();
         User user = userService.getUserById(userId);
 
-        ConsultationDto consultationDto = ConsultationDto.builder()
+        ConsultationDto.ConsultationDtoBuilder consultationDtoBuilder = ConsultationDto.builder()
                 .communicationType(consultation.getCommunicationType().toString())
                 .date(consultation.getDate())
                 .duration(consultation.getDuration())
@@ -75,7 +77,8 @@ public class ConsultationPageCommand implements Command {
                 .doctorLastName(doctor.getLastname())
                 .patientFirstName(user.getFirstname())
                 .patientLastName(user.getLastname())
-                .build();
+                .consultationStatus(consultation.getStatus());
+
 
         if (consultation.getStatus().equals(ConsultationStatus.COMPLETED)) {
             TreatmentCourse treatmentCourse = treatmentCourseService.getTreatmentCourseById(consultation.getTreatmentCourseId());
@@ -87,6 +90,7 @@ public class ConsultationPageCommand implements Command {
                 DiseaseWithSymptomsDto diseaseWithSymptomsDto = DiseaseWithSymptomsDto.builder()
                         .name(disease.getName())
                         .id(diseaseId)
+                        .symptoms(diseaseSymptom.getSymptoms())
                         .build();
                 diseaseWithSymptomsDtos.add(diseaseWithSymptomsDto);
             }
@@ -100,16 +104,18 @@ public class ConsultationPageCommand implements Command {
                 DrugRecipeDto drugDtoWithDoze = DrugRecipeDto.builder().
                         name(name)
                         .doze(drugRecipe.getDose())
+                        .description(drugRecipe.getDescription())
                         .build();
                 drugDtoWithDozes.add(drugDtoWithDoze);
             }
-            consultationDto = ConsultationDto.builder()
+            consultationDtoBuilder
                     .diseases(diseaseWithSymptomsDtos)
                     .drugs(drugDtoWithDozes)
-                    .instruction(treatmentCourse.getInstruction())
-                    .build();
+                    .price(consultation.getPrice())
+
+                    .instruction(treatmentCourse.getInstruction());
         }
-        requestContext.addAttribute("consultation", consultationDto);
+        requestContext.addAttribute("consultation", consultationDtoBuilder.build());
         return CommandResult.forward(Page.CONSULTATION_PAGE);
     }
 }

@@ -31,17 +31,17 @@ public class ConsultationRequestCommand implements Command {
         //
         String patentCardIdStr = ParameterExtractor.extractString(Attribute.PATIENT_CARD_ID, requestContext);
         int patientCardId = Integer.parseInt(patentCardIdStr);
-        //проверить
+        //TODO приходит значени null или on(String)
         String communicationTypeStr = ParameterExtractor.extractString(Parameter.COMMUNICATION_TYPE, requestContext);
         CommunicationType communicationType = CommunicationType.valueOf(communicationTypeStr);
 
         Consultation consultation = new Consultation().builder()
                 .communicationType(communicationType)
                 .date(ParameterExtractor.extractDate(Parameter.DATE, requestContext))
+                //TODO приходит иям доктора а не ид
                 .doctorId(ParameterExtractor.extractInt(Parameter.DOCTOR_ID, requestContext))
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)
-                .treatmentCourseId(WAITING_TREATMENT_COURSE_ID)
                 .build();
         consultationService.save(consultation);
         return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND);

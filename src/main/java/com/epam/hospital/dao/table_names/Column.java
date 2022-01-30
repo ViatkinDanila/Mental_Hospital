@@ -73,7 +73,7 @@ public class Column {
 
     public static final String USER_ID = "id";
     public static final String USER_ROLE_ID = "user_role_id";
-    public static final String USER_PASWORD = "password";
+    public static final String USER_PASSWORD = "password";
     public static final String USER_EMAIL = "email";
     public static final String USER_FIRS_NAME = "first_name";
     public static final String USER_LAST_NAME = "last_name";

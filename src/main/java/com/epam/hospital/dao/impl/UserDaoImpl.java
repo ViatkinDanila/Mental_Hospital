@@ -2,21 +2,15 @@ package com.epam.hospital.dao.impl;
 
 import com.epam.hospital.dao.UserDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
-import com.epam.hospital.dao.connectionpool.ConnectionPool;
-import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.dao.table_names.Table;
-import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public static final String SAVE_USER_QUERY = String.format(
@@ -26,10 +20,9 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Column.USER_LAST_NAME,
             Column.USER_NUMBER,
             Column.USER_EMAIL,
-            Column.USER_PASWORD,
+            Column.USER_PASSWORD,
             Column.USER_ROLE_ID,
             Column.USER_IS_BANNED
-
     );
     public final static String UPDATE_USER_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
@@ -38,7 +31,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Column.USER_LAST_NAME,
             Column.USER_NUMBER,
             Column.USER_EMAIL,
-            Column.USER_PASWORD,
+            Column.USER_PASSWORD,
             Column.USER_ROLE_ID,
             Column.USER_IS_BANNED,
             Column.USER_ID
@@ -53,7 +46,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.USER_TABLE,
             Column.USER_EMAIL,
-            Column.USER_PASWORD
+            Column.USER_PASSWORD
     );
     public final static String FIND_ROLE_BY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
@@ -62,7 +55,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     );
     public final static String IS_USER_EXIST_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
-            Table.USER_ROLES_TABLE,
+            Table.USER_TABLE,
             Column.USER_EMAIL
     );
     public final static String FIND_DOCTOR_INFO_BY_ID_QUERY = String.format(
@@ -151,12 +144,12 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return false;
+                return true;
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by email and password.", e);
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -181,8 +174,9 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
         statement.setString(4, user.getEmail());
         statement.setString(5, user.getHashedPassword());
         statement.setInt(6, user.getUserRoleId());
+        statement.setBoolean(7, user.isBanned());
         if (action.equals(UPDATE_USER_QUERY)) {
-            statement.setInt(7, user.getUserId());
+            statement.setInt(8, user.getUserId());
         }
     }
 }

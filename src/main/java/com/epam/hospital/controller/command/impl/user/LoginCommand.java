@@ -21,8 +21,9 @@ import com.epam.hospital.util.constant.Attribute;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+import static com.epam.hospital.controller.command.impl.user.SignUpCommand.salt;
+
 public class LoginCommand implements Command {
-    private static final byte[] salt = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
     private static final String USER_PATIENT_ROLE = "PATIENT";
@@ -43,7 +44,7 @@ public class LoginCommand implements Command {
 
         User user = userService.login(email, hashPassword);
         if (user != null){
-            if (user.isBanned()) {
+            if (!user.isBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
                 int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
                 requestContext.addSession(Attribute.USER_ID, user.getUserId());
@@ -58,6 +59,7 @@ public class LoginCommand implements Command {
         } else {
             requestContext.addAttribute(Attribute.ERROR_MESSAGE, INCORRECT_DATA_KEY);
         }
-        return CommandResult.redirect(Page.SIGN_IN_PAGE);
+        return CommandResult.forward(Page.LOGIN_PAGE);
+
     }
 }

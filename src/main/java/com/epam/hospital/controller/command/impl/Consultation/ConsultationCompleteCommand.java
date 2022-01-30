@@ -9,6 +9,7 @@ import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
 import com.epam.hospital.model.treatment.DrugRecipe;
 import com.epam.hospital.model.treatment.TreatmentCourse;
+import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.service.database.ConsultationService;
 import com.epam.hospital.service.database.DiseaseService;
 import com.epam.hospital.service.database.DrugService;
@@ -30,7 +31,7 @@ public class ConsultationCompleteCommand implements Command {
     private static final TreatmentCourseService treatmentCourseService = TreatmentCourseServiceImpl.getInstance();
     private static final DiseaseService diseaseService = DiseaseServiceImpl.getInstance();
     private static final DrugService drugService = DrugServiceImpl.getInstance();
-    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE;
+    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE ;
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
 
@@ -89,9 +90,10 @@ public class ConsultationCompleteCommand implements Command {
         int consultationId = ParameterExtractor.extractInt(Parameter.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);
         consultation.setTreatmentCourseId(treatmentCourseId);
+        consultation.setStatus(ConsultationStatus.COMPLETED);
         consultationService.update(consultation);
 
-        return CommandResult.redirect(CONSULTATION_PAGE_COMMAND);
+        return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);
     }
 
     private List<String> getStringList(String parameterName, RequestContext requestContext){

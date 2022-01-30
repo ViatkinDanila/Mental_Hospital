@@ -7,6 +7,7 @@ public final class CommandName {
     public static final String CONSULTATION_APPROVE = "consultation-approve";
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
+    public static final String ALL_USERS = "all-users";
     public static final String LOGIN_PAGE = "login-page";
     public static final String CONSULTATION_PAGE = "consultation";
     public static final String HOME_PAGE = "home-page";

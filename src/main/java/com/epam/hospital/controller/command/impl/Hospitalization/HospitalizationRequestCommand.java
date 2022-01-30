@@ -20,8 +20,6 @@ import com.epam.hospital.util.constant.Attribute;
 import com.epam.hospital.util.constant.Parameter;
 
 public class HospitalizationRequestCommand implements Command {
-    private static final int DEFAULT_HOSPITAL_ID = 1;
-    private static final String HOSPITALIZATION_STATUS_PENDING = "PENDING";
     private static final String HOSPITALIZATION_REQUEST_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_REQUEST_PAGE;
     private static final String CHAMBER_TYPE_UNAVAILABLE = "unavailable";
     private static final HospitalizationService hospitalizationService = HospitalizationServiceImpl.getInstance();
@@ -36,7 +34,8 @@ public class HospitalizationRequestCommand implements Command {
         String chamberTypeIdSet = ParameterExtractor.extractString(Parameter.CHAMBER_ID, requestContext);
         int chamberTypeId = Integer.parseInt(chamberTypeIdSet);
         ChamberType chamberType = chamberService.getChamberTypeById(chamberTypeId);
-        if(chamberType.getNumberOfFreeRooms() != 0) {
+
+        if(chamberType.getNumberOfFreeRooms() >= 1) {
 
             Chamber chamber = chamberService.getAvailableChamber(chamberTypeId);
             int chamberId = chamber.getChamberId();
@@ -48,10 +47,10 @@ public class HospitalizationRequestCommand implements Command {
             chamber.setNumberOfFreeBeds(chamber.getNumberOfFreeBeds()-1);
             chamberService.updateChamber(chamber);
 
-            HospitalizationStatus hospitalizationStatus = HospitalizationStatus.valueOf(HOSPITALIZATION_STATUS_PENDING);
             Hospitalization hospitalization = Hospitalization.builder()
                     .patientId(patientCardId)
-                    .status(hospitalizationStatus)
+                    .status(HospitalizationStatus.PENDING)
+                    //TODO придет только имя доктора
                     .doctorId(ParameterExtractor.extractInt(Parameter.DOCTOR_ID,requestContext))
                     .build();
 

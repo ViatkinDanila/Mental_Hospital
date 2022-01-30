@@ -50,6 +50,19 @@
                 <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="12" maxlength="18"
                        class="form-control mt-1" style="font-size: 2rem">
             </div>
+            <div class="mb-4">
+                <span class="form-label"><fmt:message key="signup.sex"/></span>
+                <input type="text" name="sex" minlength="2" maxlength="32" class="form-control mt-1" required style="font-size: 2rem">
+            </div>
+            <div class="mb-4">
+                <span class="form-label"><fmt:message key="signup.age"/></span>
+                <input type="number" name="age" min="18" max="150" class="form-control mt-1" required style="font-size: 2rem">
+            </div>
+            <div class="mb-5">
+                <span class="form-label"><fmt:message key="signup.spare.phone.number"/></span>
+                <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="sparePhoneNumber" minlength="12" maxlength="18"
+                       class="form-control mt-1" style="font-size: 2rem">
+            </div>
             <h3 class="text-danger error-message mb-4">
                 <fmt:message key="login.error.${errorMessage}"/>
             </h3>

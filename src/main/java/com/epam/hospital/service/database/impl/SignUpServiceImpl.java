@@ -28,6 +28,7 @@ public class SignUpServiceImpl implements SignUpService {
             user = userDao.findByEmail(user.getEmail());
             patientCard.setUserId(user.getUserId());
             patientCardDao.save(patientCard);
+            transaction.commit();
         } catch (DaoException e){
             throw new ServiceException("Can't get user by login.", e);
         }

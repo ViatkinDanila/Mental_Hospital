@@ -9,8 +9,9 @@ public class Attribute {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String NUMBER = "number";
-    public static final String ERROR_MESSAGE = "error-message";
+    public static final String ERROR_MESSAGE = "errorMessage";
     public static final String PATIENT_CARD_ID = "patientCardId";
     public static final String DOCTOR_ID = "doctorId";
+    public static final String CONSULTATION_ID = "consultationId";
 
 }
