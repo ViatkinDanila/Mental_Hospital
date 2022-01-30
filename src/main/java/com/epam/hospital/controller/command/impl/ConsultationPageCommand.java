@@ -8,7 +8,7 @@ import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.dto.ConsultationDto;
 import com.epam.hospital.model.dto.DiseaseWithSymptomsDto;
-import com.epam.hospital.model.dto.DrugDtoWithDoze;
+import com.epam.hospital.model.dto.DrugRecipeDto;
 import com.epam.hospital.model.treatment.*;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;

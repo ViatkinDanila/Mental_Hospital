@@ -18,8 +18,8 @@
 <body>
 <c:import url="/jsp/elements/navbar.jsp"/>
 
-<div class="container d-flex flex-column">
-    <span class="h5 text-dark m-auto p-5">HOME PAGE</span>
+<div class="container d-flex flex-column h3">
+    <span class="h1 text-dark m-auto p-5">HOME PAGE</span>
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=1">Get consultation by id=1</a>
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=1">Get hospitalization by id=1</a>
 

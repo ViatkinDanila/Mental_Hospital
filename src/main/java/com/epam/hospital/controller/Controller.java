@@ -36,6 +36,10 @@ public class Controller extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        if (true) {
+            super.init();
+            return;
+        }
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
 

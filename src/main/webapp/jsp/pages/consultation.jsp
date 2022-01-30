@@ -20,65 +20,72 @@
 <c:import url="/jsp/elements/navbar.jsp"/>
 
 <div class="container-fluid d-flex justify-content-center flex-column align-items-center" style="text-decoration: none">
-    <div class="w-50 rounded d-flex flex-column mt-4 justify-content-center" style="background-color: #16CAEE">
-        <div class="rounded-top" style="background-color: #4f7a9f">
-            <div class="d-flex text-light justify-content-between pt-2 px-3 h4">
-            <span> <sc:date-formatter date="${consultation.getDate()}"
-                                      formatType="${sessionScope.lang}"></sc:date-formatter></span>
-                <span>${consultation.getCommunicationType()}</span>
+    <div class="w-50 d-flex flex-column mt-4 justify-content-center" style="background-color: #16CAEE; border-radius: 2rem">
+        <div style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+            <div class="d-flex text-light justify-content-between pt-2 px-3 h1">
+            <span style="line-height: 1.5"> <sc:date-formatter date="${consultation.getDate()}"
+                                                               formatType="${sessionScope.lang}"></sc:date-formatter></span>
+                <span style="line-height: 1.5">${consultation.getCommunicationType()}</span>
             </div>
         </div>
         <div class="container d-flex w-75 flex-column">
-            <div class="d-flex py-2 pt-4 h5" style="margin-left: 32%">
+            <div class="d-flex py-3 pt-5 h2 justify-content-center">
                 <span><fmt:message key="consultation.doctor"/></span>
                 <a href="${pageContext.request.contextPath}/MentalHospital?command=doctor?id=${consultation.getDoctorId()}"
                    class="font-weight-bold">
-                    <span class="ml-2">${consultation.getDoctorFirstName()} ${consultation.getDoctorLastName()}</span>
+                    <span class="ml-3">${consultation.getDoctorFirstName()} ${consultation.getDoctorLastName()}</span>
                 </a>
             </div>
-            <div class="d-flex py-2 h5" style="margin-left: 32%">
+            <div class="d-flex py-3 h2 justify-content-center">
                 <span><fmt:message key="consultation.patient"/></span>
                 <a href="${pageContext.request.contextPath}/MentalHospital?command=user?id=${consultation.getUserId()}"
                    class="font-weight-bold">
-                    <span class="ml-2">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
+                    <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>
             </div>
-            <div class="d-flex py-2 pb-3 h5" style="margin-left: 32%">
+            <div class="d-flex py-3 pb-4 h2 justify-content-center">
                 <span><fmt:message key="consultation.duration"/></span>
-                <span class="ml-2">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
+                <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
+            </div>
+            <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                <span><fmt:message key="consultation.price"/></span>
+                <span class="ml-3">${consultation.getPrice()}</span>
+                <span class="glyphicon glyphicon-usd"></span>
             </div>
         </div>
         <c:choose>
             <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">
-                <div class="d-flex justify-content-center h3 bg-danger mb-0 rounded-end">
-                    <span class="py-2 text-center text-white">${consultation.getConsultationStatus().toString()}</span>
+                <div class="d-flex justify-content-center h3 bg-danger mb-0" style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                    <span class="py-3 text-center text-white h1 mb-0"
+                          style="line-height: 1.5">${consultation.getConsultationStatus().toString()}</span>
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="d-flex justify-content-center h3 bg-success mb-0 rounded-end">
-                    <span class="py-2 text-center text-white">${consultation.getConsultationStatus().toString()}</span>
+                <div class="d-flex justify-content-center h3 bg-success mb-0" style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                    <span class="py-3 text-center text-white h1 mb-0"
+                          style="line-height: 1.5">${consultation.getConsultationStatus().toString()}</span>
                 </div>
             </c:otherwise>
         </c:choose>
     </div>
 
-    <span class="mt-4 h-2 glyphicon glyphicon-arrow-down"></span>
+    <span class="mt-4 h1 glyphicon glyphicon-arrow-down"></span>
 
     <c:if test="${consultation.getConsultationStatus().toString().equals('COMPLETED')}">
-        <div class="bg-info d-flex flex-column w-50  border  border-dark  rounded mt-4" style="width: 55%">
-            <span class="h4 pb-2 pt-3 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
-            <div class="d-flex py-2 pt-1" style="margin-left: 10%">
+        <div class="bg-info d-flex flex-column w-50  border  border-dark mt-4" style="width: 55%; border-radius: 6rem">
+            <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
+            <div class="d-flex py-3 pt-3 h2" style="margin-left: 3rem">
                 <span><fmt:message key="consultation.instructions"/></span>
                 <span class="ml-2">${consultation.getInstruction()}</span>
             </div>
-            <div class="d-flex py-2" style="margin-left: 10%">
+            <div class="d-flex py-3 h2" style="margin-left: 3rem">
                 <div class="d-flex flex-column">
-                    <span><fmt:message key="consultation.symptoms-with-diseases"/></span>
+                    <span class="mb-2"><fmt:message key="consultation.symptoms-with-diseases"/></span>
                     <c:forEach items="${consultation.getDiseases()}" var="disease" varStatus="counter">
-                        <div>
-                            <span class="glyphicon glyphicon-pushpin mr-2 ml-3"></span>
+                        <div class="mb-1">
+                            <span class="glyphicon glyphicon-pushpin mr-3 ml-4"></span>
                             <span>${disease.getSymptoms()} </span>
-                            <span class="glyphicon glyphicon-hand-right mx-2"></span>
+                            <span class="glyphicon glyphicon-hand-right mx-3 h3" style="margin-top: 1px; margin-left: 1px"></span>
                             <a href="${pageContext.request.contextPath}/MentalHospital?command=disease?id=${disease.getId()}"
                                class="text-dark font-weight-bold">
                                     ${disease.getName()}
@@ -87,19 +94,22 @@
                     </c:forEach>
                 </div>
             </div>
-            <div class="d-flex py-2 pb-3" style="margin-left: 10%">
-                <span><fmt:message key="consultation.drugs"/></span>
-                <span class="d-flex ml-2">
-                     <c:forEach items="${consultation.getDrugs()}" var="drug" varStatus="counter">
-                         <c:if test="${counter.index != 0}">
-                             <span class="mr-1">,</span>
-                         </c:if>
-                         <a href="https://www.google.by/search?q=${drug.getName()}+drug" class="text-dark font-weight-bold">
-                                 ${drug.getName()}
-                         </a>
-                         <span>(${drug.getDoze()} mg)</span>
-                     </c:forEach>
-                </span>
+            <div class="d-flex py-3 pb-4 h2" style="margin-left: 3rem">
+                <div class="d-flex flex-column">
+                    <span class="mb-2"><fmt:message key="consultation.drug.recipes"/></span>
+                    <c:forEach items="${consultation.getDrugs()}" var="drug" varStatus="counter">
+                        <div class="mb-1">
+                            <span class="glyphicon glyphicon-hand-right mx-3 ml-4"></span>
+                            <a href="https://www.google.by/search?q=${drug.getName()}+drug"
+                               class="text-dark font-weight-bold">
+                                    ${drug.getName()}
+                            </a>
+                            <span>(${drug.getDoze()} mg)</span>
+                            <span class="glyphicon glyphicon-minus h2"></span>
+                            <span>${drug.getDescription()}</span>
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </c:if>
