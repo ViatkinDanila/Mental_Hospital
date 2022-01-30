@@ -31,7 +31,7 @@ import java.util.List;
 @Slf4j
 public class ConsultationApproveCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
-    private static final String PROFILE_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
+    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE ;
     private static final String CONSULTATION_STATUS_APPROVED = "APPROVED";
 
     @Override
@@ -45,6 +45,6 @@ public class ConsultationApproveCommand implements Command {
         consultation.setStatus(consultationStatus);
         consultation.setPrice(price);
         consultationService.update(consultation);
-        return CommandResult.redirect(PROFILE_PAGE_COMMAND);
+        return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);
     }
 }

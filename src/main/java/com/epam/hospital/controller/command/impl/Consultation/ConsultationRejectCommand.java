@@ -14,7 +14,7 @@ import com.epam.hospital.util.constant.Parameter;
 
 public class ConsultationRejectCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
-    private static final String PROFILE_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
+    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE ;
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
@@ -22,6 +22,6 @@ public class ConsultationRejectCommand implements Command {
         Consultation consultation = consultationService.getConsultationById(consultationId);;
         consultation.setStatus(ConsultationStatus.REJECTED);
         consultationService.update(consultation);
-        return CommandResult.redirect(PROFILE_PAGE_COMMAND);
+        return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);
     }
 }

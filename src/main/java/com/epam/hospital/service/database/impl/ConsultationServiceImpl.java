@@ -8,6 +8,8 @@ import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.service.database.ConsultationService;
 import com.epam.hospital.service.exception.ServiceException;
 
+import java.util.List;
+
 public class ConsultationServiceImpl implements ConsultationService {
     private static final ConsultationService instance = new ConsultationServiceImpl();
 
@@ -46,6 +48,28 @@ public class ConsultationServiceImpl implements ConsultationService {
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             consultationDao.update(consultation);
+        } catch(DaoException e){
+            throw new SecurityException("Can't update consultation.", e);
+        }
+    }
+
+    @Override
+    public List<Consultation> getAllConsultationsByPatientCardId(int patientCardId) throws ServiceException {
+        ConsultationDao consultationDao = new ConsultationDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(true, consultationDao);
+            return consultationDao.findByPatientId(patientCardId);
+        } catch(DaoException e){
+            throw new SecurityException("Can't update consultation.", e);
+        }
+    }
+
+    @Override
+    public List<Consultation> getAllConsultationsByDoctorId(int doctorId) throws ServiceException {
+        ConsultationDao consultationDao = new ConsultationDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(true, consultationDao);
+            return consultationDao.findByDoctorId(doctorId);
         } catch(DaoException e){
             throw new SecurityException("Can't update consultation.", e);
         }
