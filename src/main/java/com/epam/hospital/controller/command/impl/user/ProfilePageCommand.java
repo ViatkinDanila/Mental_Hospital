@@ -74,7 +74,8 @@ public class ProfilePageCommand implements Command {
             ShortConsultationDto.ShortConsultationDtoBuilder shortConsultationDtoBuilder = ShortConsultationDto.builder()
                     .date(consultation.getDate())
                     .communicationType(consultation.getCommunicationType().toString())
-                    .consultationStatus(consultation.getStatus());
+                    .consultationStatus(consultation.getStatus())
+                    .id(consultation.getConsultationId());
             if (role.equalsIgnoreCase("USER")) {
                 User doctor = userService.getUserById(consultation.getDoctorId());
                 shortConsultationDtoBuilder.doctorFullName(doctor.getFirstname() + " " + doctor.getLastname());

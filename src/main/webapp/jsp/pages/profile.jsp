@@ -69,7 +69,7 @@
         <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-center">
             <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="consultations.label"/></span>
             <c:forEach items="${consultations}" var="consultation" varStatus="counter">
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=${counter}" class="text-center w-50 mb-5" style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=${consultation.getId()}" class="text-center w-50 mb-5" style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
                     <div class="d-flex text-light justify-content-between pt-2 px-3 h2" style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
                         <span style="line-height: 1.5"><sc:date-formatter date="${consultation.getDate()}"
                                                                           formatType="${sessionScope.lang}"></sc:date-formatter></span>
