@@ -60,7 +60,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             transaction.initTransaction(true, consultationDao);
             return consultationDao.findByPatientId(patientCardId);
         } catch(DaoException e){
-            throw new SecurityException("Can't update consultation.", e);
+            throw new SecurityException("Can't get consultations by patient id.", e);
         }
     }
 
@@ -71,7 +71,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             transaction.initTransaction(true, consultationDao);
             return consultationDao.findByDoctorId(doctorId);
         } catch(DaoException e){
-            throw new SecurityException("Can't update consultation.", e);
+            throw new SecurityException("Can't get consultations by doctor id.", e);
         }
     }
 }

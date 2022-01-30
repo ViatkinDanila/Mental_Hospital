@@ -4,6 +4,8 @@ import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
 
+import java.util.List;
+
 public interface UserDao extends AbstractDao<User> {
     User findByEmail(String email) throws DaoException;
     User findByFullName(String firstName, String lastName) throws DaoException;
@@ -11,4 +13,5 @@ public interface UserDao extends AbstractDao<User> {
     String findUserRole(int id) throws DaoException;
     boolean isUserExist(String login) throws DaoException;
     DoctorInfo findDoctorInfoById (int id) throws DaoException;
+    List<User> findAllDoctors (int id) throws DaoException;
 }

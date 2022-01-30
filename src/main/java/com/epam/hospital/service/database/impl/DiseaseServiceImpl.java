@@ -42,4 +42,15 @@ public class DiseaseServiceImpl implements DiseaseService {
             throw new SecurityException("Can't get consultation.", e);
         }
     }
+
+    @Override
+    public List<Disease> getAll() throws ServiceException {
+        DiseaseDao diseaseDao = new DiseaseDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(diseaseDao);
+            return diseaseDao.findAll();
+        } catch(DaoException e){
+            throw new SecurityException("Can't get consultation.", e);
+        }
+    }
 }

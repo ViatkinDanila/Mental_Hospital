@@ -41,7 +41,7 @@ public class ProfilePageCommand implements Command {
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .fullName(user.getFirstname() + " " + user.getLastname())
                 .role(role)
-                .status(user.isBanned() ? "ACTIVE" : "BANNED")
+                .status(user.isBanned() ? "BANNED" : "ACTIVE")
                 .email(user.getEmail())
                 .build();
         requestContext.addAttribute(Attribute.USER_INFO, userInfoDto);

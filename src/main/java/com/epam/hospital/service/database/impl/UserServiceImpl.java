@@ -11,6 +11,8 @@ import com.epam.hospital.model.user.info.DoctorInfo;
 import com.epam.hospital.service.database.UserService;
 import com.epam.hospital.service.exception.ServiceException;
 
+import java.util.List;
+
 public class UserServiceImpl implements UserService {
     private final static UserService instance = new UserServiceImpl();
 
@@ -94,6 +96,17 @@ public class UserServiceImpl implements UserService {
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(userDao);
             return userDao.findByFullName(firstName,lastName);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get doctor info by doctor id.", e);
+        }
+    }
+
+    @Override
+    public List<User> getAllDoctors(int doctorRoleId) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findAllDoctors(doctorRoleId);
         } catch (DaoException e){
             throw new ServiceException("Can't get doctor info by doctor id.", e);
         }

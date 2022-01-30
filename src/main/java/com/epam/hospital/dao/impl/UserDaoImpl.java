@@ -11,6 +11,7 @@ import com.epam.hospital.model.user.info.DoctorInfo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public static final String SAVE_USER_QUERY = String.format(
@@ -165,6 +166,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             throw new DaoException("Can't find doctor info by doctor id.", e);
         }
         return doctorInfo;
+    }
+
+    @Override
+    public List<User> findAllDoctors(int id) throws DaoException {
+        return findByField(Column.USER_ROLE_ID, id);
     }
 
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {
