@@ -18,6 +18,7 @@ import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
 import com.epam.hospital.util.constant.Parameter;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Array;
 import java.sql.Date;
@@ -26,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //TESTED
+@Slf4j
 public class ConsultationRequestCommand implements Command {
     private static final String CONSULTATION_PENDING_STATUS = "PENDING";
     private static final int WAITING_TREATMENT_COURSE_ID = 1;
@@ -38,6 +40,7 @@ public class ConsultationRequestCommand implements Command {
         //
         //patientCardIdStr можно брать из сессии
         //
+        log.info(ParameterExtractor.extractString("isOnline", requestContext));
         String patentCardIdStr = ParameterExtractor.extractString(Attribute.PATIENT_CARD_ID, requestContext);
         int patientCardId = Integer.parseInt(patentCardIdStr);
         String communicationTypeStr = ParameterExtractor.extractString(Parameter.COMMUNICATION_TYPE, requestContext);

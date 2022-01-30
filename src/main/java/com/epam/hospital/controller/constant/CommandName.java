@@ -5,6 +5,7 @@ public final class CommandName {
     public static final String LOGIN = "login";
     public static final String CONSULTATION_COMPLETE = "consultation-complete";
     public static final String CONSULTATION_APPROVE = "consultation-approve";
+    public static final String CONSULTATION_REQUEST = "consultation-request";
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
     public static final String ALL_USERS = "all-users";
@@ -13,5 +14,6 @@ public final class CommandName {
     public static final String HOME_PAGE = "home-page";
     public static final String PROFILE_PAGE = "profile-page";
     public static final String CONSULTATION_REQUEST_PAGE = "consultation-request-page";
+    public static final String USER_PROFILE_PAGE = "user-profile-page";
     public static final String HOSPITALIZATION_REQUEST_PAGE = "hospitalization-request-page";
 }

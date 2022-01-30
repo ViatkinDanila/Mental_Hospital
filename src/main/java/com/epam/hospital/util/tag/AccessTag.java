@@ -16,7 +16,7 @@ public class AccessTag extends TagSupport {
 
     @Override
     public int doStartTag() {
-        HttpSession session =   pageContext.getSession();
+        HttpSession session = pageContext.getSession();
         Object role = session.getAttribute(Attribute.ROLE);
 
 

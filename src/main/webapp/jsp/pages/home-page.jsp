@@ -25,6 +25,8 @@
 
     <a class="h1 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=1">COMPLETE CONSULTATION by id=1</a>
 
+    <a class="h1 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile-page">PROFILE</a>
+
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=consultation">Get all consultations (profile page)</a>
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=hospitalization">Get all hospitalizations (profile page)</a>
 

@@ -48,4 +48,6 @@ public class PatientCardServiceImpl implements PatientCardService {
             throw new ServiceException("Can't update patient card.", e);
         }
     }
+
+
 }

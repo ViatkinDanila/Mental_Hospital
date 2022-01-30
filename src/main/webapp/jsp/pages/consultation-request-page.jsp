@@ -20,7 +20,7 @@
 
 <div class="container py-3">
     <div class="row flex-column align-items-center">
-        <form method="POST" action="${pageContext.request.contextPath}/MentalHospital?command=request-consultation"
+        <form method="POST" action="${pageContext.request.contextPath}/MentalHospital?command=consultation-request"
               class="flex-box col-md-6 h2">
             <h1 class="text-center text-primary font-weight-bold"><fmt:message key="consultation.request"/></h1>
             <div class="mb-4">
