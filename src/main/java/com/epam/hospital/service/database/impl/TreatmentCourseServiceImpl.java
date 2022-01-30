@@ -68,7 +68,7 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
         DrugRecipeDao drugRecipeDao = new DrugRecipeDaoImpl();
         DiseaseSymptomDao diseaseSymptomDao = new DiseaseSymptomDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
-            transaction.initTransaction(treatmentCourseDao, diseaseSymptomDao, drugRecipeDao);
+            transaction.initTransaction(false, treatmentCourseDao, diseaseSymptomDao, drugRecipeDao);
 
             treatmentCourseDao.save(treatmentCourse);
             treatmentCourse = treatmentCourseDao.findTreatmentCourseByInstruction(treatmentCourse.getInstruction());
@@ -85,6 +85,7 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
                     drugRecipeDao.save(drugRecipe);
                 }
             }
+            transaction.commit();
             return treatmentCourseId;
         } catch (DaoException e) {
             throw new ServiceException("Can't get drug recipes.", e);

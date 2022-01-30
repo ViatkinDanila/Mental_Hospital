@@ -11,7 +11,7 @@ import com.epam.hospital.model.treatment.Drug;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> {
+public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> implements ChamberTypeDao{
     private final String SAVE_CHAMBER_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
             Table.CHAMBERS_TYPE_TABLE,
@@ -53,6 +53,11 @@ public class ChamberTypeDaoImpl extends AbstractDaoImpl<ChamberType> {
         } catch (SQLException e) {
             throw new DaoException("Can't save chamber type.", e);
         }
+    }
+
+    @Override
+    public boolean isChamberTypeAvailable(int chamberTypeId) throws DaoException {
+        return findByField(Column.CHAMBERS_TYPE_ID, chamberTypeId).get(0).getNumberOfFreeRooms() != 0;
     }
 
     private void setParams(PreparedStatement statement, ChamberType chamberType, String action) throws SQLException {

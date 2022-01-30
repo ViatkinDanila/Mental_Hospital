@@ -24,7 +24,7 @@
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=1">Get hospitalization by id=1</a>
 
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=consultation">Get all consultations (profile page)</a>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalizations&elements=hospitalization">Get all hospitalizations (profile page)</a>
+    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=hospitalization">Get all hospitalizations (profile page)</a>
 
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctor&id=1">Get doctor by id=1</a>
     <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctors">Get all doctors</a>

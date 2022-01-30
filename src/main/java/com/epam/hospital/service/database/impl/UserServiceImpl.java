@@ -7,6 +7,7 @@ import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.TreatmentCourseDaoImpl;
 import com.epam.hospital.dao.impl.UserDaoImpl;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.model.user.info.DoctorInfo;
 import com.epam.hospital.service.database.UserService;
 import com.epam.hospital.service.exception.ServiceException;
 
@@ -73,6 +74,17 @@ public class UserServiceImpl implements UserService {
             return userDao.isUserExist(login);
         } catch (DaoException e){
             throw new ServiceException("Can't get user by login.", e);
+        }
+    }
+
+    @Override
+    public DoctorInfo getDoctorInfoById(int id) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            return userDao.findDoctorInfoById(id);
+        } catch (DaoException e){
+            throw new ServiceException("Can't get doctor info by doctor id.", e);
         }
     }
 }

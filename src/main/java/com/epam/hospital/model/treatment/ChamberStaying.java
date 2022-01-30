@@ -13,8 +13,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 public class ChamberStaying implements Entity {
-    private int hospitalization_id;
-    private int chamber_id;
+    private int hospitalizationId;
+    private int chamberId;
     private Date dateIn;
     private Date dateOut;
 }

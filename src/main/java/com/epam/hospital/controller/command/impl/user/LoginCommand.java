@@ -25,7 +25,9 @@ public class LoginCommand implements Command {
     private static final byte[] salt = UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8);
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
+    private static final String USER_PATIENT_ROLE = "PATIENT";
     private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+
 
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final PatientCardService patientCardService = PatientCardServiceImpl.getInstance();
@@ -44,9 +46,11 @@ public class LoginCommand implements Command {
             if (user.isBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
                 int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
-                requestContext.addSession(Attribute.PATIENT_CARD_ID, patientCardId);
                 requestContext.addSession(Attribute.USER_ID, user.getUserId());
                 requestContext.addSession(Attribute.ROLE, role);
+                if (role.equals(USER_PATIENT_ROLE)){
+                    requestContext.addSession(Attribute.PATIENT_CARD_ID, patientCardId);
+                }
                 return CommandResult.redirect(HOME_PAGE_COMMAND);
             } else {
                 requestContext.addAttribute(Attribute.ERROR_MESSAGE, BANNED_USER_KEY);

@@ -38,7 +38,7 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
     @Override
     public void save(DrugRecipe entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DRUG_RECIPE_QUERY);) {
-            setParams(statement, entity, SAVE_DRUG_RECIPE_QUERY);
+            setParams(statement, entity);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Can't save drug recipe.", e);
@@ -48,14 +48,14 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
     @Override
     public void update(DrugRecipe entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_DRUG_RECIPE_QUERY);) {
-            setParams(statement, entity, UPDATE_DRUG_RECIPE_QUERY);
+            setParams(statement, entity);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException("Can't update drug recipe.", e);
         }
     }
 
-    private void setParams(PreparedStatement statement, DrugRecipe drugRecipe, String action) throws SQLException{
+    private void setParams(PreparedStatement statement, DrugRecipe drugRecipe) throws SQLException{
         statement.setString(1, drugRecipe.getDescription());
         statement.setInt(2, drugRecipe.getDose());
         statement.setInt(3, drugRecipe.getTreatmentCourseId());

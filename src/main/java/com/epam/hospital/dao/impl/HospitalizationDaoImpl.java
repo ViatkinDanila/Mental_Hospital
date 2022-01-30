@@ -60,6 +60,11 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
         return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId);
     }
 
+    @Override
+    public int getHospitalizationIdByPatientId(int patientId) throws DaoException {
+        return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId).get(0).getHospitalizationId();
+    }
+
     private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException{
         statement.setInt(1,hospitalization.getPatientId());
         statement.setInt(2,hospitalization.getDoctorId());

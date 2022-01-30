@@ -24,7 +24,7 @@ public class PatientCardServiceImpl implements PatientCardService {
             transaction.initTransaction(patientCardDao);
             return patientCardDao.findById(id);
         } catch (DaoException e) {
-            throw new ServiceException("Can't get treatment course.", e);
+            throw new ServiceException("Can't get patient card.", e);
         }
     }
     @Override
@@ -34,7 +34,18 @@ public class PatientCardServiceImpl implements PatientCardService {
             transaction.initTransaction(patientCardDao);
             return patientCardDao.findPatientCardIdByUserId(userId);
         } catch (DaoException e) {
-            throw new ServiceException("Can't get treatment course.", e);
+            throw new ServiceException("Can't get patient card by user id.", e);
+        }
+    }
+
+    @Override
+    public void update(PatientCard patientCard) throws ServiceException {
+        PatientCardDao patientCardDao = new PatientCardDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(patientCardDao);
+            patientCardDao.update(patientCard);
+        } catch (DaoException e) {
+            throw new ServiceException("Can't update patient card.", e);
         }
     }
 }

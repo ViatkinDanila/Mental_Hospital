@@ -14,7 +14,7 @@ public final class CommandProvider {
     private final Map<String, Command> commands = new HashMap<>();
 
     public CommandProvider() {
-        commands.put(CommandName.GOTO_CONSULTATION_PAGE, new ConsultationPageCommand());
+        commands.put(CommandName.CONSULTATION_PAGE, new ConsultationPageCommand());
         commands.put(CommandName.SIGN_UP, new SignUpCommand());
         commands.put(CommandName.LOGIN, new LoginCommand());
 

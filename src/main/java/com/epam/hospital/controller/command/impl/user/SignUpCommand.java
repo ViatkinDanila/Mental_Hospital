@@ -31,12 +31,12 @@ public class SignUpCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        String login = ParameterExtractor.extractString(Attribute.LOGIN, requestContext);
+        String login = ParameterExtractor.extractString(Parameter.LOGIN, requestContext);
         boolean isUserExist = userService.isUserExistByLogin(login);
         if (!isUserExist){
             requestContext.addAttribute(Attribute.LOGIN, login);
 
-            String password = ParameterExtractor.extractString(Attribute.PASSWORD, requestContext);
+            String password = ParameterExtractor.extractString(Parameter.PASSWORD, requestContext);
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hashString(password, salt);
             User user = User.builder()

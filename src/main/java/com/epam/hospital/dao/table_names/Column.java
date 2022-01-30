@@ -36,10 +36,10 @@ public class Column {
     public static final String DISEASES_NAME = "name";
     public static final String DISEASES_DESCRIPTION = "description";
 
-    public static final String DOCTOR_INFO_ID = "id";
+    public static final String DOCTOR_INFO_ID = "doctor_id";
     public static final String DOCTOR_INFO_SPECIALIZATION = "specialization";
     public static final String DOCTOR_INFO_WORK_EXPERIENCE = "work_experience";
-    public static final String DOCTOR_INFO_CLASSIFICATION = "dose";
+    public static final String DOCTOR_INFO_CLASSIFICATION = "classification";
 
     public static final String DRUG_RECIPES_TREATMENT_COURSE_ID = "treatment_course_id";
     public static final String DRUG_RECIPES_DRUG_ID = "drug_id";

@@ -17,4 +17,7 @@ public interface TreatmentCourseService {
 
     int saveTreatmentCourse(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException;
 
+
+
+
 }

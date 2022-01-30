@@ -9,6 +9,7 @@ import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.dao.table_names.Table;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.model.user.info.DoctorInfo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,6 +65,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Table.USER_ROLES_TABLE,
             Column.USER_EMAIL
     );
+    public final static String FIND_DOCTOR_INFO_BY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?",
+            Table.DOCTOR_INFO_TABLE,
+            Column.DOCTOR_INFO_ID
+    );
 
     public UserDaoImpl() {
         super(BuilderFactory.getUserBuilder(), Table.USER_TABLE, Column.USER_ID);
@@ -101,7 +107,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             statement.setString(2, lastName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-
+                user = BuilderFactory.getUserBuilder().build(resultSet);
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by full name.", e);
@@ -151,6 +157,21 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             throw new DaoException("Can't find user by email and password.", e);
         }
         return true;
+    }
+
+    @Override
+    public DoctorInfo findDoctorInfoById(int id) throws DaoException {
+        DoctorInfo doctorInfo = new DoctorInfo();
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_DOCTOR_INFO_BY_ID_QUERY);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                doctorInfo = BuilderFactory.getDoctorInfoBuilder().build(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find doctor info by doctor id.", e);
+        }
+        return doctorInfo;
     }
 
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {

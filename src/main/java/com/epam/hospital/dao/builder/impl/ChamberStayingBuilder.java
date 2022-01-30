@@ -11,8 +11,8 @@ public class ChamberStayingBuilder implements EntityBuilder<ChamberStaying> {
     @Override
     public ChamberStaying build(ResultSet resultSet) throws SQLException {
         ChamberStaying chamberStaying = new ChamberStaying();
-        chamberStaying.setChamber_id(resultSet.getInt(Column.CHAMBER_STAYING_CHAMBER_ID));
-        chamberStaying.setHospitalization_id((resultSet.getInt(Column.CHAMBER_STAYING_HOSPITALIZATION_ID)));
+        chamberStaying.setChamberId(resultSet.getInt(Column.CHAMBER_STAYING_CHAMBER_ID));
+        chamberStaying.setHospitalizationId((resultSet.getInt(Column.CHAMBER_STAYING_HOSPITALIZATION_ID)));
         chamberStaying.setDateIn(resultSet.getDate(Column.CHAMBER_STAYING_DATE_IN));
         chamberStaying.setDateOut(resultSet.getDate(Column.CHAMBER_STAYING_DATE_OUT));
         return chamberStaying;

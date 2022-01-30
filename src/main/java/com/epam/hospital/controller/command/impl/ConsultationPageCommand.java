@@ -2,6 +2,7 @@ package com.epam.hospital.controller.command.impl;
 
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
+import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.constant.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.dao.table_names.Column;
@@ -14,6 +15,8 @@ import com.epam.hospital.model.user.User;
 import com.epam.hospital.service.database.*;
 import com.epam.hospital.service.database.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.util.constant.Attribute;
+import com.epam.hospital.util.constant.Parameter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,39 +59,13 @@ public class ConsultationPageCommand implements Command {
 //            return CommandResult.forward(Page.CONSULTATION_PAGE);
 //        }
 
-        String consultationIdString = requestContext.getRequestParameter(Column.ID);
+        String consultationIdString = ParameterExtractor.extractString(Parameter.CONSULTATION_ID, requestContext);
         int consultationId = Integer.parseInt(consultationIdString);
 
         Consultation consultation = consultationService.getConsultationById(consultationId);
-        TreatmentCourse treatmentCourse = treatmentCourseService.getTreatmentCourseById(consultation.getTreatmentCourseId());
         User doctor = userService.getUserById(consultation.getDoctorId());
         int userId = patientCardService.getPatientCardById(consultation.getPatientId()).getUserId();
         User user = userService.getUserById(userId);
-
-        List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
-        List<DiseaseWithSymptomsDto> diseaseWithSymptomsDtos = new ArrayList<>();
-        for (DiseaseSymptom diseaseSymptom : diseaseSymptoms) {
-            int diseaseId = diseaseSymptom.getDiseaseId();
-            Disease disease = diseaseService.getDiseaseById(diseaseId);
-            DiseaseWithSymptomsDto diseaseWithSymptomsDto = DiseaseWithSymptomsDto.builder()
-                    .name(disease.getName())
-                    .id(diseaseId)
-                    .build();
-            diseaseWithSymptomsDtos.add(diseaseWithSymptomsDto);
-        }
-
-        List<DrugRecipe> drugRecipes = treatmentCourseService.getDrugRecipes(treatmentCourse.getTreatmentCourseId());
-        List<DrugDtoWithDoze> drugDtoWithDozes = new ArrayList<>();
-        for (DrugRecipe drugRecipe : drugRecipes) {
-            int drugId = drugRecipe.getDrugId();
-            Drug drugById = drugService.getDrugById(drugId);
-            String name = drugById.getName();
-            DrugDtoWithDoze drugDtoWithDoze = DrugDtoWithDoze.builder().
-                    name(name)
-                    .doze(drugRecipe.getDose())
-                    .build();
-            drugDtoWithDozes.add(drugDtoWithDoze);
-        }
 
         ConsultationDto consultationDto = ConsultationDto.builder()
                 .communicationType(consultation.getCommunicationType().toString())
@@ -98,11 +75,39 @@ public class ConsultationPageCommand implements Command {
                 .doctorLastName(doctor.getLastname())
                 .patientFirstName(user.getFirstname())
                 .patientLastName(user.getLastname())
-                .diseases(diseaseWithSymptomsDtos)
-                .drugs(drugDtoWithDozes)
-                .instruction(treatmentCourse.getInstruction())
                 .build();
+        if (consultation.getStatus().equals("COMPLETED")) {
+            TreatmentCourse treatmentCourse = treatmentCourseService.getTreatmentCourseById(consultation.getTreatmentCourseId());
+            List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
+            List<DiseaseWithSymptomsDto> diseaseWithSymptomsDtos = new ArrayList<>();
+            for (DiseaseSymptom diseaseSymptom : diseaseSymptoms) {
+                int diseaseId = diseaseSymptom.getDiseaseId();
+                Disease disease = diseaseService.getDiseaseById(diseaseId);
+                DiseaseWithSymptomsDto diseaseWithSymptomsDto = DiseaseWithSymptomsDto.builder()
+                        .name(disease.getName())
+                        .id(diseaseId)
+                        .build();
+                diseaseWithSymptomsDtos.add(diseaseWithSymptomsDto);
+            }
 
+            List<DrugRecipe> drugRecipes = treatmentCourseService.getDrugRecipes(treatmentCourse.getTreatmentCourseId());
+            List<DrugDtoWithDoze> drugDtoWithDozes = new ArrayList<>();
+            for (DrugRecipe drugRecipe : drugRecipes) {
+                int drugId = drugRecipe.getDrugId();
+                Drug drugById = drugService.getDrugById(drugId);
+                String name = drugById.getName();
+                DrugDtoWithDoze drugDtoWithDoze = DrugDtoWithDoze.builder().
+                        name(name)
+                        .doze(drugRecipe.getDose())
+                        .build();
+                drugDtoWithDozes.add(drugDtoWithDoze);
+            }
+            consultationDto = ConsultationDto.builder()
+                    .diseases(diseaseWithSymptomsDtos)
+                    .drugs(drugDtoWithDozes)
+                    .instruction(treatmentCourse.getInstruction())
+                    .build();
+        }
         requestContext.addAttribute("consultation", consultationDto);
         return CommandResult.forward(Page.CONSULTATION_PAGE);
     }

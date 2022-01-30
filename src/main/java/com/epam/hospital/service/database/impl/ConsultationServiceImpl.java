@@ -36,7 +36,18 @@ public class ConsultationServiceImpl implements ConsultationService {
             transaction.initTransaction(true, consultationDao);
             consultationDao.save(consultation);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new SecurityException("Can't save consultation.", e);
+        }
+    }
+
+    @Override
+    public void update(Consultation consultation) throws ServiceException {
+        ConsultationDao consultationDao = new ConsultationDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(true, consultationDao);
+            consultationDao.update(consultation);
+        } catch(DaoException e){
+            throw new SecurityException("Can't update consultation.", e);
         }
     }
 }
