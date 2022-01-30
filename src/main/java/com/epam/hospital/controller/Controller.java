@@ -47,6 +47,7 @@ public class Controller extends HttpServlet {
         String user = dbResourceManager.getValue(DBParameter.DB_USER);
         String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         String driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
+
         int repeatCounter = 0;
         boolean isDone = false;
         log.info("[DB] Starting connection pool init logic");

@@ -21,12 +21,14 @@ import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
 import com.epam.hospital.util.constant.Parameter;
+import lombok.extern.slf4j.Slf4j;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class ConsultationApproveCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
     private static final String PROFILE_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
@@ -34,7 +36,6 @@ public class ConsultationApproveCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-
         int consultationId = ParameterExtractor.extractInt(Parameter.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);
         ConsultationStatus consultationStatus = ConsultationStatus.valueOf(CONSULTATION_STATUS_APPROVED);

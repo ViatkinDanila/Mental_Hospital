@@ -20,7 +20,8 @@
 <c:import url="/jsp/elements/navbar.jsp"/>
 
 <div class="container-fluid d-flex justify-content-center flex-column align-items-center" style="text-decoration: none">
-    <div class="w-50 d-flex flex-column mt-4 justify-content-center" style="background-color: #16CAEE; border-radius: 2rem">
+    <div class="w-50 d-flex flex-column mt-4 justify-content-center"
+         style="background-color: #16CAEE; border-radius: 2rem">
         <div style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
             <div class="d-flex text-light justify-content-between pt-2 px-3 h1">
             <span style="line-height: 1.5"> <sc:date-formatter date="${consultation.getDate()}"
@@ -47,21 +48,23 @@
                 <span><fmt:message key="consultation.duration"/></span>
                 <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
             </div>
-            <div class="d-flex py-3 pb-4 h2 justify-content-center">
+            <div class="d-flex py-2 pb-4 h2 justify-content-center">
                 <span><fmt:message key="consultation.price"/></span>
                 <span class="ml-3">${consultation.getPrice()}</span>
-                <span class="glyphicon glyphicon-usd"></span>
+                <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
             </div>
         </div>
         <c:choose>
             <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">
-                <div class="d-flex justify-content-center h3 bg-danger mb-0" style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                <div class="d-flex justify-content-center h3 bg-danger mb-0"
+                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
                     <span class="py-3 text-center text-white h1 mb-0"
                           style="line-height: 1.5">${consultation.getConsultationStatus().toString()}</span>
                 </div>
             </c:when>
             <c:otherwise>
-                <div class="d-flex justify-content-center h3 bg-success mb-0" style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                <div class="d-flex justify-content-center h3 bg-success mb-0"
+                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
                     <span class="py-3 text-center text-white h1 mb-0"
                           style="line-height: 1.5">${consultation.getConsultationStatus().toString()}</span>
                 </div>
@@ -69,9 +72,9 @@
         </c:choose>
     </div>
 
-    <span class="mt-4 h1 glyphicon glyphicon-arrow-down"></span>
-
     <c:if test="${consultation.getConsultationStatus().toString().equals('COMPLETED')}">
+        <span class="mt-4 h1 glyphicon glyphicon-arrow-down"></span>
+
         <div class="bg-info d-flex flex-column w-50  border  border-dark mt-4" style="width: 55%; border-radius: 6rem">
             <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
             <div class="d-flex py-3 pt-3 h2" style="margin-left: 3rem">
@@ -85,7 +88,8 @@
                         <div class="mb-1">
                             <span class="glyphicon glyphicon-pushpin mr-3 ml-4"></span>
                             <span>${disease.getSymptoms()} </span>
-                            <span class="glyphicon glyphicon-hand-right mx-3 h3" style="margin-top: 1px; margin-left: 1px"></span>
+                            <span class="glyphicon glyphicon-hand-right mx-3 h3"
+                                  style="margin-top: 1px; margin-left: 1px"></span>
                             <a href="${pageContext.request.contextPath}/MentalHospital?command=disease?id=${disease.getId()}"
                                class="text-dark font-weight-bold">
                                     ${disease.getName()}
@@ -113,7 +117,131 @@
             </div>
         </div>
     </c:if>
-</div>
 
+    <sc:access role="DOCTOR">
+        <c:if test="${consultation.getConsultationStatus().toString().equals('PENDING')}">
+            <form class="d-flex align-items-center w-50 justify-content-around mt-4" method="POST" action="${pageContext.request.contextPath}/MentalHospital">
+                <button type="submit" name="command" value="consultation-approve"
+                        class="btn btn-success btn-lg d-flex mx-auto justify-content-center">
+                                    <span class="h1 mb-0" style="line-height: 1.6; width: 15rem"><fmt:message
+                                            key="consultation.approve.button"/></span>
+                </button>
+                <button type="submit" name="command" value="consultation-reject"
+                        class="btn btn-danger btn-sm d-flex mx-auto justify-content-center">
+                                    <span class="h1 mb-0" style="line-height: 1.6; width: 15rem"><fmt:message
+                                            key="consultation.reject.button"/></span>
+            </form>
+        </c:if>
+        <c:if test="${consultation.getConsultationStatus().toString().equals('APPROVED')}">
+            <span class="mt-4 h1 glyphicon glyphicon-arrow-down"></span>
+
+            <form class="bg-info d-flex flex-column flex-box col-md-6 w-50 border border-dark mt-4 row align-items-center mb-5"
+                  method="POST"
+                  style="width: 55%; border-radius: 6rem" action="${pageContext.request.contextPath}/MentalHospital">
+                <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
+                <div class="py-3 pt-3 h2 w-75 mb-3" style="margin-left: 3rem">
+                    <span class="form-label"><fmt:message key="consultation.instructions.label"/></span>
+                    <input type="text" name="instructions" minlength="1" maxlength="320" class="form-control mt-1" required
+                           style="font-size: 2rem">
+                </div>
+
+                <div class="col-md-12 w-75 column container mb-3">
+                    <table class="table table-bordered table-hover mb-0" id="tab_logic">
+                        <thead>
+                        <tr class="h2">
+                            <th class="text-center">
+                                Patient symptoms
+                            </th>
+                            <th class="text-center">
+                                Patient disease
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id='diseaseSymptom0'>
+                            <td>
+                                <input type="text" name='symptoms-0' placeholder='Enter patient symptoms'
+                                       class="form-control mx-auto" style="font-size: 1.5rem; width: 82%" required/>
+                            </td>
+                            <td>
+                                <input type="text" name='disease-0' placeholder='Enter patient disease'
+                                       class="form-control mx-auto" style="font-size: 1.5rem; width: 82%" required/>
+                            </td>
+                        </tr>
+                        <tr id='diseaseSymptom1'></tr>
+                        </tbody>
+                    </table>
+                    <a id="add_row" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus text-white"></span>
+                    </a>
+                    <a id='delete_row' class="btn btn-danger">
+                        <span class="glyphicon glyphicon-minus text-white"></span>
+                    </a>
+                </div>
+
+                <div class="col-md-12 w-75 column container mb-5">
+                    <table class="table table-bordered table-hover mb-0" id="tab_logic_1">
+                        <thead>
+                        <tr class="h2">
+                            <th class="text-center">
+                                Drug
+                            </th>
+                            <th class="text-center">
+                                Dose
+                            </th>
+                            <th class="text-center">
+                                Description
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id='drugRecipe0'>
+                            <td>
+                                <input type="text" name='drug-0' placeholder='Enter drug' class="form-control mx-auto"
+                                       style="font-size: 1.5rem; width: 82%" required/>
+                            </td>
+                            <td>
+                                <input type="text" name='dose-0' placeholder='Enter dose' class="form-control mx-auto"
+                                       style="font-size: 1.5rem; width: 82%" required/>
+                            </td>
+                            <td>
+                                <input type="text" name='description-0' placeholder='Enter description'
+                                       class="form-control mx-auto" style="font-size: 1.5rem; width: 82%"/>
+                            </td>
+                        </tr>
+                        <tr id='drugRecipe1'></tr>
+                        </tbody>
+                    </table>
+                    <a id="add_row_1" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus text-white"></span>
+                    </a>
+                    <a id='delete_row_2' class="btn btn-danger">
+                        <span class="glyphicon glyphicon-minus text-white"></span>
+                    </a>
+                </div>
+
+                <div class="d-flex w-75 justify-content-between mb-4">
+                    <button type="submit" name="command" value="consultation-complete"
+                            class="btn btn-success btn-lg d-flex mx-auto justify-content-center">
+                            <span class="h3 mb-0" style="line-height: 1.5"><fmt:message
+                                    key="consultation.complete.button"/></span>
+                    </button>
+                    <button type="submit" name="command" value="consultation-complete-without-course"
+                            class="btn btn-primary btn-sm d-flex mx-auto justify-content-center">
+                            <span class="h3 mb-0" style="line-height: 1.5"><fmt:message
+                                    key="consultation.complete-without-course.button"/></span>
+                    </button>
+                    <button type="submit" name="command" value="consultation-reject"
+                            class="btn btn-danger btn-lg d-flex mx-auto justify-content-center">
+                            <span class="h3 mb-0" style="line-height: 1.5"><fmt:message
+                                    key="consultation.reject.button"/></span>
+                    </button>
+                </div>
+
+            </form>
+        </c:if>
+        </sc:access>
+</div>
+<script src="/js/complete-consultation-dynamic-table.js"></script>
 </body>
 </html>

@@ -45,13 +45,13 @@ public class ConsultationPageCommand implements Command {
 //                    .patientLastName("Pidobir")
 //                    .doctorFirstName("Alex")
 //                    .doctorLastName("Voroshilov")
-//                    .consultationStatus(ConsultationStatus.COMPLETED)
+//                    .consultationStatus(ConsultationStatus.PENDING)
 //                    .doctorId(2)
 //                    .userId(3)
 //                    .drugs(List.of(
-//                            DrugDtoWithDoze.builder().name("MARIHYANA").doze(0.5f).build(),
-//                            DrugDtoWithDoze.builder().name("ASPERIN").doze(0.2f).build(),
-//                            DrugDtoWithDoze.builder().name("KRAHMAL KARTOSHKI").doze(3f).build()
+//                            DrugRecipeDto.builder().name("MARIHYANA").doze(0.5f).build(),
+//                            DrugRecipeDto.builder().name("ASPERIN").doze(0.2f).build(),
+//                            DrugRecipeDto.builder().name("KRAHMAL KARTOSHKI").doze(3f).build()
 //                    ))
 //                    .instruction("Snimat' plenki s glaz")
 //                    .build();
@@ -76,7 +76,8 @@ public class ConsultationPageCommand implements Command {
                 .patientFirstName(user.getFirstname())
                 .patientLastName(user.getLastname())
                 .build();
-        if (consultation.getStatus().equals("COMPLETED")) {
+
+        if (consultation.getStatus().equals(ConsultationStatus.COMPLETED)) {
             TreatmentCourse treatmentCourse = treatmentCourseService.getTreatmentCourseById(consultation.getTreatmentCourseId());
             List<DiseaseSymptom> diseaseSymptoms = treatmentCourseService.getDiseaseSymptoms(treatmentCourse.getTreatmentCourseId());
             List<DiseaseWithSymptomsDto> diseaseWithSymptomsDtos = new ArrayList<>();
@@ -91,12 +92,12 @@ public class ConsultationPageCommand implements Command {
             }
 
             List<DrugRecipe> drugRecipes = treatmentCourseService.getDrugRecipes(treatmentCourse.getTreatmentCourseId());
-            List<DrugDtoWithDoze> drugDtoWithDozes = new ArrayList<>();
+            List<DrugRecipeDto> drugDtoWithDozes = new ArrayList<>();
             for (DrugRecipe drugRecipe : drugRecipes) {
                 int drugId = drugRecipe.getDrugId();
                 Drug drugById = drugService.getDrugById(drugId);
                 String name = drugById.getName();
-                DrugDtoWithDoze drugDtoWithDoze = DrugDtoWithDoze.builder().
+                DrugRecipeDto drugDtoWithDoze = DrugRecipeDto.builder().
                         name(name)
                         .doze(drugRecipe.getDose())
                         .build();

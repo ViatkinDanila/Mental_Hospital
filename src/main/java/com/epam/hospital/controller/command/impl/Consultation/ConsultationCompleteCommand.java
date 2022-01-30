@@ -19,10 +19,12 @@ import com.epam.hospital.service.database.impl.DrugServiceImpl;
 import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Parameter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 //TESTED
+@Slf4j
 public class ConsultationCompleteCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
     private static final TreatmentCourseService treatmentCourseService = TreatmentCourseServiceImpl.getInstance();
@@ -40,8 +42,7 @@ public class ConsultationCompleteCommand implements Command {
             diseasesId.add(diseaseId);
         }
 
-        List<String> symptoms = getStringList(Parameter.SYMPTOM, requestContext);
-
+        List<String> symptoms = getStringList(Parameter.SYMPTOMS, requestContext);
 
         List<DiseaseSymptom> diseaseSymptoms = new ArrayList<DiseaseSymptom>();
         for(int i = 0; i < symptoms.size() && i < diseasesId.size(); i++){
@@ -52,11 +53,11 @@ public class ConsultationCompleteCommand implements Command {
             diseaseSymptoms.add(diseaseSymptom);
         }
 
-        List<DrugRecipe> drugsRecipes = new ArrayList<DrugRecipe>();
+        List<DrugRecipe> drugsRecipes = new ArrayList<>();
         List<String> drugsNames = getStringList(Parameter.DRUG, requestContext);
         if (drugsNames.size() > 0) {
 
-            List<Integer> drugsId = new ArrayList<Integer>();
+            List<Integer> drugsId = new ArrayList<>();
             for (String drugName : drugsNames) {
                 int drugId = drugService.getDrugIdByName(drugName);
                 drugsId.add(drugId);
@@ -64,7 +65,7 @@ public class ConsultationCompleteCommand implements Command {
 
             List<String> descriptions = getStringList(Parameter.DESCRIPTION, requestContext);
 
-            List<Integer> doses = new ArrayList<Integer>();
+            List<Integer> doses = new ArrayList<>();
             List<String> dosesListStr = getStringList(Parameter.DOSE, requestContext);
             for (String dose : dosesListStr) {
                 doses.add(Integer.parseInt(dose));

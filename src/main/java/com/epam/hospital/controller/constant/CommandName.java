@@ -3,6 +3,8 @@ package com.epam.hospital.controller.constant;
 public final class CommandName {
     public static final String SIGN_UP = "sign-up";
     public static final String LOGIN = "login";
+    public static final String CONSULTATION_COMPLETE = "consultation-complete";
+    public static final String CONSULTATION_APPROVE = "consultation-approve";
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
     public static final String LOGIN_PAGE = "login-page";

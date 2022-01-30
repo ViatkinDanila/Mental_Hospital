@@ -25,7 +25,7 @@ public final class Parameter {
     public static final String COMMUNICATION_TYPE = "communicationYype";
     public static final String DATE = "date";
     public static final String DOCTOR_ID = "doctorId";
-    public static final String SYMPTOM = "symptom";
+    public static final String SYMPTOMS = "symptoms";
     public static final String INSTRUCTION = "instruction";
     public static final String DRUG = "drug";
     public static final String DISEASE = "disease";
