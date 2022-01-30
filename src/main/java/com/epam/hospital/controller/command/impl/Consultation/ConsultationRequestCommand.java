@@ -10,6 +10,7 @@ import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.model.user.info.DoctorInfo;
 import com.epam.hospital.service.database.ConsultationService;
 import com.epam.hospital.service.database.UserService;
 import com.epam.hospital.service.database.impl.ConsultationServiceImpl;

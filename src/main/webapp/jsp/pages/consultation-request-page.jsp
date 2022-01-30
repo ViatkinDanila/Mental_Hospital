@@ -41,9 +41,9 @@
                 <span class="form-label"><fmt:message key="consultation.doctor.label"/></span>
                 <select name="doctor" class="form-select form-control form-select-lg mt-1" aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                     <option selected><fmt:message key="consultation.doctor.select"/></option>
-                    <option value="1">Alex Bros</option>
-                    <option value="2">Viatkin Daniiiiiiellaaa</option>
-                    <option value="3">Huan</option>
+                    <c:forEach items="${doctors}" var="doctor" varStatus="counter">
+                        <option value="${doctor.getFullName()}">${doctor.getFullName()}</option>
+                    </c:forEach>
                 </select>
             </div>
 

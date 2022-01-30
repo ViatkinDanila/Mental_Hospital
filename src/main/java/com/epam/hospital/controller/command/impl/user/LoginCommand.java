@@ -27,7 +27,7 @@ public class LoginCommand implements Command {
     private static final String INCORRECT_DATA_KEY = "incorrect";
     private static final String BANNED_USER_KEY = "banned";
     private static final String USER_PATIENT_ROLE = "PATIENT";
-    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+    private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE;
 
 
     private static final UserService userService = UserServiceImpl.getInstance();
