@@ -1,5 +1,6 @@
 create table chambres_type
 (
+
     id                        int auto_increment
         primary key,
     title                     varchar(45) not null,
