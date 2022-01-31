@@ -54,14 +54,49 @@ public class AccessFilter implements Filter{
         if (commandName == null){
             return true;
         }
-       switch (commandName){
+       if (role.equals(GUEST_ROLE)) {
+           return CommandName.SIGN_UP.equals(commandName) ||
+                   CommandName.SIGN_UP_PAGE.equals(commandName) ||
+                   CommandName.HOME_PAGE.equals(commandName) ||
+                   CommandName.DISEASES.equals(commandName) ||
+                   CommandName.DOCTORS.equals(commandName) ||
+                   CommandName.LOGIN.equals(commandName) ||
+                   CommandName.PROFILE_PAGE.equals(commandName) ||
+                   CommandName.LOGIN_PAGE.equals(commandName);
+       }
+
+       if (role.equals(USER_ROLE)) {
+           return CommandName.CONSULTATION_PAGE.equals(commandName) ||
+                  CommandName.CONSULTATION_REQUEST_PAGE.equals(commandName) ||
+                  CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
+                   CommandName.HOME_PAGE.equals(commandName) ||
+                   CommandName.DISEASES.equals(commandName) ||
+                   CommandName.DOCTORS.equals(commandName) ||
+                   CommandName.SIGN_OUT.equals(commandName) ||
+                   CommandName.PROFILE_PAGE.equals(commandName) ||
+                   CommandName.LOGIN_PAGE.equals(commandName);
+       }
+
+       if (role.equals(DOCTOR_ROLE)) {
+           return CommandName.CONSULTATION_PAGE.equals(commandName) ||
+                   CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
+                   CommandName.DOCTORS.equals(commandName) ||
+                   CommandName.DISEASES.equals(commandName) ||
+                   CommandName.PROFILE_PAGE.equals(commandName) ||
+                   CommandName.HOME_PAGE.equals(commandName) ||
+                   CommandName.SIGN_OUT.equals(commandName) ||
+                   CommandName.CONSULTATION_COMPLETE.equals(commandName) ||
+                   CommandName.CONSULTATION_REJECT.equals(commandName) ||
+                   CommandName.CONSULTATION_APPROVE.equals(commandName);
+       }
 //           case CommandName.SIGN_UP:
 //           case CommandName.SIGN_UP_PAGE:
 //           case CommandName.LOGIN_PAGE:
 //               return role.equalsIgnoreCase(GUEST_ROLE);
-//           case CommandName.CONSULTATION_PAGE:
-//           case CommandName.CONSULTATION_REQUEST_PAGE:
-//           case CommandName.HOSPITALIZATION_REQUEST_PAGE:
+//            CommandName.CONSULTATION_PAGE:
+//            CommandName.CONSULTATION_REQUEST_PAGE:
+//            CommandName.HOSPITALIZATION_REQUEST_PAGE:
+//            CommandName.PROFILE_PAGE:
 //               return role.equalsIgnoreCase(USER_ROLE);
 //           case CommandName.CONSULTATION_COMPLETE:
 //           case CommandName.CONSULTATION_APPROVE:
@@ -70,7 +105,6 @@ public class AccessFilter implements Filter{
 //           case CommandName.BAN_USER:
 //           case CommandName.UNBAN_USER:
 //                return role.equalsIgnoreCase(ADMIN_ROLE);
-       }
         return true;
     }
 
