@@ -24,7 +24,7 @@ public class GetAllDoctorsCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<User> doctorsList = userService.getAllDoctors(3);
         List<DoctorInfo> doctorsInfoList = new ArrayList<>();
-        for(User doctor : doctorsList){
+        for (User doctor : doctorsList){
             int doctorId = doctor.getUserId();
             doctorsInfoList.add(userService.getDoctorInfoById(doctorId));
         }

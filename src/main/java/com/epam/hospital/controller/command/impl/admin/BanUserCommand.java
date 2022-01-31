@@ -14,7 +14,8 @@ import com.epam.hospital.util.constant.Parameter;
 public class BanUserCommand implements Command {
     private static final AdminService adminService = AdminServiceImpl.getInstance();
     private static final String USER_ALREADY_BANNED = "user already banned";
-    private static final String ALL_USERS_COMMAND = "MentalHospital?command=" + CommandName.ALL_USERS;
+    private static final String ALL_USERS_COMMAND = "MentalHospital?command=" + CommandName.USERS;
+
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         int userId = ParameterExtractor.extractInt(Parameter.USER_ID, requestContext);

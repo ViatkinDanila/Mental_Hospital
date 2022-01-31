@@ -8,9 +8,11 @@ public final class CommandName {
     public static final String CONSULTATION_APPROVE = "consultation-approve";
     public static final String CONSULTATION_REQUEST = "consultation-request";
     public static final String CONSULTATION_REJECT = "consultation-reject";
+    public static final String BAN = "ban";
+    public static final String UNBAN = "unban";
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
-    public static final String ALL_USERS = "all-users";
+    public static final String USERS = "users";
     public static final String DOCTORS = "doctors";
     public static final String DISEASES = "diseases";
     public static final String LOGIN_PAGE = "login-page";

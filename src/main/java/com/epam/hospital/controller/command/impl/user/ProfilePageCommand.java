@@ -58,7 +58,7 @@ public class ProfilePageCommand implements Command {
 
         List<Consultation> consultations;
         if (role.equalsIgnoreCase("USER")) {
-            int patientCardId = (int) requestContext.getSessionAttribute(Attribute.PATIENT_CARD_ID);
+            int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
             PatientCard patientCard = patientCardService.getPatientCardById(patientCardId);
             PatientInfoDto patientInfoDto = PatientInfoDto.builder()
                     .age(patientCard.getAge())

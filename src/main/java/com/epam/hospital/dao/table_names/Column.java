@@ -42,7 +42,7 @@ public class Column {
     public static final String DOCTOR_INFO_CLASSIFICATION = "classification";
 
     public static final String DRUG_RECIPES_TREATMENT_COURSE_ID = "treatment_course_id";
-    public static final String DRUG_RECIPES_DRUG_ID = "id";
+    public static final String DRUG_RECIPES_DRUG_ID = "drug_id";
     public static final String DRUG_RECIPES_DESCRIPTION = "description";
     public static final String DRUG_RECIPES_DOSE = "dose";
 

@@ -22,18 +22,22 @@
     <div class="d-flex justify-content-center">
         <div class="d-flex flex-column align-items-center rounded text-center mt-5 p-3 mr-5"
              style="background-color: #16CAEE;height: 100%;">
-            <sc:access role="DOCTOR">
-                <img src="https://static.zerochan.net/Miyaura.Sanshio.full.1963705.jpg" alt="notPhoto"
-                     class="rounded-circle" width="260">
-            </sc:access>
-            <sc:access role="NOT_DOCTOR">
-                <img src="https://i1.sndcdn.com/artworks-000457003131-wkr02i-t500x500.jpg" alt="notPhoto"
-                     class="rounded-circle" width="260">
-            </sc:access>
+            <c:choose>
+                <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
+                    <img src="https://static.zerochan.net/Miyaura.Sanshio.full.1963705.jpg" alt="notPhoto"
+                         class="rounded-circle" width="260">
+                </c:when>
+                <c:when test="${userInfo.getRole().toString().equals('USER')}">
+                    <img src="https://i1.sndcdn.com/artworks-000457003131-wkr02i-t500x500.jpg" alt="notPhoto"
+                         class="rounded-circle" width="260">
+                </c:when>
+            </c:choose>
+
             <div class="mt-4 h2">
                 <h4 class="h1">${userInfo.getFullName()}</h4>
                 <p class="text-muted mt-3 h2">${userInfo.getRole()}</p>
-                <p class="mt-3 h2 <c:choose>
+                <p class="mt-3 h2
+                    <c:choose>
                     <c:when test="${userInfo.getStatus() == 'ACTIVE'}">text-success</c:when><c:otherwise>text-danger</c:otherwise>
                     </c:choose>">
                     ${userInfo.getStatus()}

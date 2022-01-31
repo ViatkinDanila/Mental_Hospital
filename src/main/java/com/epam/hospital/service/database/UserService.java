@@ -16,4 +16,5 @@ public interface UserService {
     DoctorInfo getDoctorInfoById(int id) throws ServiceException;
     User getUserByFullName(String firstName, String lastName) throws ServiceException;
     List<User> getAllDoctors(int doctorRoleId) throws ServiceException;
+    List<User> getAll() throws ServiceException;
 }
