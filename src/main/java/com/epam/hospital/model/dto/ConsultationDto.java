@@ -22,7 +22,7 @@ public class ConsultationDto implements Entity {
     private String doctorFirstName;
     private String doctorLastName;
     private int doctorId;
-    private int userId;
+    private int patientId;
     private String patientFirstName;
     private String patientLastName;
     private List<DiseaseWithSymptomsDto> diseases;

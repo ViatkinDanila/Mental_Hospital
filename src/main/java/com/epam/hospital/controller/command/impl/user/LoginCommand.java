@@ -46,7 +46,7 @@ public class LoginCommand implements Command {
         if (user != null){
             if (!user.isBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
-                requestContext.addSession(Attribute.USER_ID, user.getUserId());
+                requestContext.addSession(Attribute.USER_ID, Integer.valueOf(user.getUserId()));
                 requestContext.addSession(Attribute.ROLE, role);
                 if (role.equals(USER_ROLE)){
                     int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());

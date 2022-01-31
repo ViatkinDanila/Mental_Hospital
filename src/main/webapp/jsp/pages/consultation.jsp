@@ -39,7 +39,7 @@
             </div>
             <div class="d-flex py-3 h2 justify-content-center">
                 <span><fmt:message key="consultation.patient"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getUserId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getPatientId()}"
                    class="font-weight-bold">
                     <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>

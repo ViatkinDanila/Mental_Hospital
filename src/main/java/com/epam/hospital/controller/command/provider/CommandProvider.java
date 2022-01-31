@@ -33,7 +33,7 @@ public final class CommandProvider {
         commands.put(CommandName.DOCTORS, new GetAllDoctorsCommand());
         commands.put(CommandName.DISEASES, new GetAllDiseasesCommand());
         commands.put(CommandName.USERS, new GetAllUsersCommand());
-        commands.put(CommandName.USER_PROFILE_PAGE, new ProfilePageCommand());
+        commands.put(CommandName.PROFILE_PAGE, new ProfilePageCommand());
         commands.put(CommandName.CONSULTATION_REQUEST_PAGE, new ConsultationRequestPageCommand());
 
     }

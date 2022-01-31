@@ -134,7 +134,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
                 return resultSet.getString(Column.USER_ROLES_NAME);
             }
         } catch (SQLException e) {
-            throw new DaoException("Can't find user by email and password.", e);
+            throw new DaoException("Can't find user role by role id.", e);
         }
         return null;
     }

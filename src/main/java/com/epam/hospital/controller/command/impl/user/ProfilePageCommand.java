@@ -38,19 +38,20 @@ public class ProfilePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        int userId;
+        int profileId;
         if (requestContext.getRequestParameter(Parameter.USER_ID) != null) {
-            userId = ParameterExtractor.extractInt(Parameter.USER_ID, requestContext);
+            profileId = ParameterExtractor.extractInt(Parameter.USER_ID, requestContext);
         } else {
-            userId = (int) requestContext.getSessionAttribute(Attribute.USER_ID);
+            profileId = (int) requestContext.getSessionAttribute(Attribute.USER_ID);
         }
-        User user = userService.getUserById(userId);
-        //TODO: to improve this
+        User user = userService.getUserById(profileId);
+        //TODO: to improve this реализовать метод брать имя роли с бд по ид
         String role = user.getUserRoleId() == 1 ? "USER" : "DOCTOR";
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .fullName(user.getFirstName() + " " + user.getLastName())
                 .role(role)
+                .id(profileId)
                 .status(user.isBanned() ? "BANNED" : "ACTIVE")
                 .email(user.getEmail())
                 .build();
@@ -68,7 +69,7 @@ public class ProfilePageCommand implements Command {
 
             consultations = consultationService.getAllConsultationsByPatientCardId(patientCard.getCardId());
         } else {
-            DoctorInfo doctorInfo = userService.getDoctorInfoById(userId);
+            DoctorInfo doctorInfo = userService.getDoctorInfoById(profileId);
             DoctorInfoDto doctorInfoDto = DoctorInfoDto.builder()
                     .specialization(doctorInfo.getSpecialization())
                     .classification(doctorInfo.getClassification())
@@ -76,7 +77,7 @@ public class ProfilePageCommand implements Command {
                     .build();
 
             requestContext.addAttribute(Attribute.DOCTOR_INFO, doctorInfoDto);
-            consultations = consultationService.getAllConsultationsByDoctorId(userId);
+            consultations = consultationService.getAllConsultationsByDoctorId(profileId);
         }
 
         List<ShortConsultationDto> consultationDtoList = new ArrayList<>();

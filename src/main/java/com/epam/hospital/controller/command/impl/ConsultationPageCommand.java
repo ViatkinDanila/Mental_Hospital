@@ -67,17 +67,19 @@ public class ConsultationPageCommand implements Command {
 
         Consultation consultation = consultationService.getConsultationById(consultationId);
         User doctor = userService.getUserById(consultation.getDoctorId());
-        int userId = patientCardService.getPatientCardById(consultation.getPatientId()).getUserId();
-        User user = userService.getUserById(userId);
+        int patientId = patientCardService.getPatientCardById(consultation.getPatientId()).getUserId();
+        User patient = userService.getUserById(patientId);
 
         ConsultationDto.ConsultationDtoBuilder consultationDtoBuilder = ConsultationDto.builder()
                 .communicationType(consultation.getCommunicationType().equals(CommunicationType.FACE_TO_FACE) ? "FACE TO FACE" : "ONLINE")
                 .date(consultation.getDate())
+                .patientId(patient.getUserId())
+                .doctorId(doctor.getUserId())
                 .duration(consultation.getDuration())
                 .doctorFirstName(doctor.getFirstName())
                 .doctorLastName(doctor.getLastName())
-                .patientFirstName(user.getFirstName())
-                .patientLastName(user.getLastName())
+                .patientFirstName(patient.getFirstName())
+                .patientLastName(patient.getLastName())
                 .consultationStatus(consultation.getStatus());
 
 
