@@ -9,4 +9,5 @@ public final class Page {
     public static final String SIGN_IN_PAGE = "jsp/pages/signin.jsp";
     public static final String REQUEST_CONSULTATION_PAGE = "jsp/pages/consultation-request-page.jsp";
     public static final String ERROR = "jsp/error.jsp";
+    public static final String DISEASES = "jsp/diseases.jsp";
 }

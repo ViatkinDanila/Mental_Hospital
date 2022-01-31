@@ -13,5 +13,6 @@ public class Attribute {
     public static final String PATIENT_CARD_ID = "patientCardId";
     public static final String DOCTOR_ID = "doctorId";
     public static final String CONSULTATION_ID = "consultationId";
+    public static final String ALL_DISEASES = "allDiseases";
 
 }

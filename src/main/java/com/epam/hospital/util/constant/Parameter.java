@@ -13,6 +13,7 @@ public final class Parameter {
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String ID = "id";
     public static final String USER_ID = "id";
+    public static final String DISEASE_ID = "id";
     public static final String COMMAND = "command";
     public static final String LANGUAGE = "locale";
     public static final String PAGE = "p";
