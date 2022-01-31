@@ -44,20 +44,25 @@
                     <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>
             </div>
-            <c:when test="${consultation.getConsultationStatus().toString().equals('COMPLETED')}">
-                <div class="d-flex py-3 pb-4 h2 justify-content-center">
-                    <span><fmt:message key="consultation.duration"/></span>
-                    <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
-                </div>
-            </c:when>
-            <c:when test="${!consultation.getConsultationStatus().toString().equals('PENDING')}">
-                <div class="d-flex py-3 pb-4 h2 justify-content-center">
-                    <span><fmt:message key="consultation.price"/></span>
-                    <span class="ml-3">${consultation.getPrice()}</span>
-                    <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
-                </div>
-            </c:when>
-
+            <c:choose>
+                <c:when test="${consultation.getConsultationStatus().toString().equals('COMPLETED')}">
+                    <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                        <span><fmt:message key="consultation.duration"/></span>
+                        <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
+                    </div>
+                </c:when>
+                    <c:otherwise>
+                        <c:choose>
+                            <c:when test="${!consultation.getConsultationStatus().toString().equals('PENDING')}">
+                            <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                                <span><fmt:message key="consultation.price"/></span>
+                                <span class="ml-3">${consultation.getPrice()}</span>
+                                <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
+                            </div>
+                            </c:when>
+                        </c:choose>
+                    </c:otherwise>
+            </c:choose>
         </div>
         <c:choose>
             <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">

@@ -8,7 +8,7 @@ import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
 
 public class SignOutCommand implements Command {
-    private static final String HOME_PAGE_COMMAND = "controller?command=" + CommandName.HOME_PAGE;
+    private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE;
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         requestContext.addSession(Attribute.INVALID_ATTRIBUTE, true);
