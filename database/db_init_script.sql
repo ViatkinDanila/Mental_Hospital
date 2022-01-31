@@ -1,218 +1,47 @@
-create table chambres_type
-(
-
-    id                        int auto_increment
-        primary key,
-    title                     varchar(45) not null,
-    num_of_beds               int         not null,
-    price                     int         not null,
-    num_of_available_chambers int         not null
-);
-
-create table diseases
-(
-    id          int auto_increment
-        primary key,
-    name        varchar(70)   not null,
-    description varchar(3000) not null
-);
-
-create table drugs
-(
-    id   int auto_increment
-        primary key,
-    name varchar(45) not null
-);
-
-create table hospitals
-(
-    id           int auto_increment
-        primary key,
-    address      varchar(100) not null,
-    phone_number varchar(45)  not null
-);
-
-create table chambers
-(
-    id               int auto_increment
-        primary key,
-    chambres_type_id int not null,
-    hospital_id      int not null,
-    num_free_beds    int not null,
-    constraint fk_chambers_chambres_type1
-        foreign key (chambres_type_id) references chambres_type (id),
-    constraint fk_chambers_hospital1
-        foreign key (hospital_id) references hospitals (id)
-);
-
-create index fk_chambers_chambres_type1_idx
-    on chambers (chambres_type_id);
-
-create index fk_chambers_hospital1_idx
-    on chambers (hospital_id);
-
-create table role
-(
-    id        int auto_increment
-        primary key,
-    role_name varchar(45) not null,
-    constraint name_UNIQUE
-        unique (role_name)
-);
-
-create table treatment_courses
-(
-    id           int auto_increment
-        primary key,
-    instructions varchar(500) not null
-);
-
-create table disease_symptoms
-(
-    treatment_course_id int          not null,
-    diseases_id         int          not null,
-    symptoms            varchar(200) not null,
-    constraint fk_treatment_course_has_diseases_diseases1
-        foreign key (diseases_id) references diseases (id),
-    constraint fk_treatment_course_has_diseases_treatment_course1
-        foreign key (treatment_course_id) references treatment_courses (id)
-);
-
-create index fk_treatment_course_has_diseases_diseases1_idx
-    on disease_symptoms (diseases_id);
-
-create index fk_treatment_course_has_diseases_treatment_course1_idx
-    on disease_symptoms (treatment_course_id);
-
-create table drug_recipes
-(
-    treatment_course_id int          not null,
-    drug_id             int          not null,
-    description         varchar(400) not null,
-    dose                int          not null,
-    constraint fk_treatment_courses_has_drugs_drugs1
-        foreign key (drug_id) references drugs (id),
-    constraint fk_treatment_courses_has_drugs_treatment_courses1
-        foreign key (treatment_course_id) references treatment_courses (id)
-);
-
-create index fk_treatment_courses_has_drugs_drugs1_idx
-    on drug_recipes (drug_id);
-
-create index fk_treatment_courses_has_drugs_treatment_courses1_idx
-    on drug_recipes (treatment_course_id);
-
-create table user_roles
-(
-    id   int         not null
-        primary key,
-    name varchar(45) not null
-);
-
-create table users
-(
-    id           int auto_increment
-        primary key,
-    user_role_id int          not null,
-    email        varchar(45)  not null,
-    password     varchar(550) not null,
-    first_name   varchar(45)  not null,
-    last_name    varchar(45)  not null,
-    number       varchar(45)  not null,
-    is_banned    tinyint(1)   null,
-    constraint fk_users_user_roles1
-        foreign key (user_role_id) references user_roles (id)
-);
-
-create table doctor_info
-(
-    doctor_id       int         not null
-        primary key,
-    specialization  varchar(45) not null,
-    work_experience int         not null,
-    classification  int         not null,
-    constraint fk_DoctorInfo_users1
-        foreign key (doctor_id) references users (id)
-);
-
-create index fk_DoctorInfo_users1_idx
-    on doctor_info (doctor_id);
-
-create table patient_cards
-(
-    id           int auto_increment
-        primary key,
-    user_id      int         not null,
-    spare_number varchar(45) not null,
-    age          int         not null,
-    sex          varchar(45) not null,
-    constraint fk_outpatient_card_users1
-        foreign key (user_id) references users (id)
-);
-
-create table consultations
-(
-    id                  int auto_increment
-        primary key,
-    doctor_id           int                                                   not null,
-    patient_id          int                                                   not null,
-    treatment_course_id int                                                   null,
-    communication_type  enum ('ONLINE', 'FACE_TO_FACE')                       not null,
-    date                datetime                                              not null,
-    duration            int                                                   not null,
-    price               double                                                null,
-    status              enum ('APPROVED', 'PENDING', 'COMPLETED', 'REJECTED') null,
-    constraint fk_consultation_outpatient_card1
-        foreign key (patient_id) references patient_cards (id),
-    constraint fk_consultations_treatment_courses1
-        foreign key (treatment_course_id) references treatment_courses (id),
-    constraint fk_consultations_users1
-        foreign key (doctor_id) references users (id)
-);
-
-create index fk_consultation_outpatient_card1_idx
-    on consultations (patient_id);
-
-create index fk_consultations_treatment_courses1_idx
-    on consultations (treatment_course_id);
-
-create index fk_consultations_users1_idx
-    on consultations (doctor_id);
-
-create table hospitalizations
-(
-    id            int auto_increment
-        primary key,
-    patient_id    int        not null,
-    active_status tinyint(1) null,
-    constraint fk_hospitalization_outpatient_card1
-        foreign key (patient_id) references patient_cards (id)
-);
-
-create table chamber_staying
-(
-    hospitalization_id   int  not null,
-    chamber_id           int  not null,
-    hospitalization_date date not null,
-    discharge_date       date not null,
-    constraint fk_hospitalization_has_chambers_chambers1
-        foreign key (chamber_id) references chambers (id),
-    constraint fk_hospitalization_has_chambers_hospitalization1
-        foreign key (hospitalization_id) references hospitalizations (id)
-);
-
-create index fk_hospitalization_has_chambers_chambers1_idx
-    on chamber_staying (chamber_id);
-
-create index fk_hospitalization_has_chambers_hospitalization1_idx
-    on chamber_staying (hospitalization_id);
-
-create index fk_hospitalization_outpatient_card1_idx
-    on hospitalizations (patient_id);
-
-create index fk_outpatient_card_users1_idx
-    on patient_cards (user_id);
-
-create index fk_users_user_roles1_idx
-    on users (user_role_id);
-
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (16, 2, 6, 30, 'ONLINE', '2022-01-31 00:00:00', 45, 0, 'COMPLETED');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (17, 13, 6, null, 'ONLINE', '2022-01-31 00:00:00', 0, 0, 'PENDING');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (18, 13, 6, null, 'ONLINE', '2022-01-31 00:00:00', 0, 0, 'PENDING');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (19, 2, 9, null, 'ONLINE', '2022-01-31 00:00:00', 0, 0, 'REJECTED');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (20, 2, 9, null, 'ONLINE', '2022-01-31 00:00:00', 0, 0, 'PENDING');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (21, 2, 10, null, 'ONLINE', '2022-01-31 00:00:00', 0, 0, 'REJECTED');
+INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (22, 2, 10, 31, 'ONLINE', '2022-01-31 00:00:00', 45, 0, 'COMPLETED');
+INSERT INTO mental_hospital.disease_symptoms (treatment_course_id, diseases_id, symptoms) VALUES (30, 4, 'Понижение работоспособности.');
+INSERT INTO mental_hospital.disease_symptoms (treatment_course_id, diseases_id, symptoms) VALUES (31, 4, 'Понижение работоспособности.');
+INSERT INTO mental_hospital.diseases (id, name, description) VALUES (1, 'Биполярное расстройство', 'Биполярное расстройство, известное так же, как маниакально-депрессивный психоз, является психическим заболеванием, которое характеризуется нетипичной сменой настроений, перепадами энергетического уровня и способности функционировать. IN MY EYES');
+INSERT INTO mental_hospital.diseases (id, name, description) VALUES (2, 'Депрессия ', 'Под депрессией понимают расстройство психического здоровья тогда, когда наблюдаются продолжительное подавленное настроение и другие симптомы, затрагивающие мысли, чувства, поведение и весь организм. Когда в повседневной жизни люди говорят о депрессии, под этим словом может пониматься множество проблем.');
+INSERT INTO mental_hospital.diseases (id, name, description) VALUES (3, 'Бессонница', 'Бессонница — это расстройство сна, которое характеризуется его недостаточной продолжительностью, неудовлетворенностью его качеством, невозможностью заснуть или сочетанием этих факторов на протяжении долгого времени.');
+INSERT INTO mental_hospital.diseases (id, name, description) VALUES (4, 'Depression ', 'Грусть');
+INSERT INTO mental_hospital.doctor_info (doctor_id, specialization, work_experience, classification) VALUES (2, 'Мастер по вкручиваниям', 20, 4);
+INSERT INTO mental_hospital.drug_recipes (treatment_course_id, drug_id, description, dose) VALUES (30, 3, 'posle edi', 123);
+INSERT INTO mental_hospital.drug_recipes (treatment_course_id, drug_id, description, dose) VALUES (31, 3, 'За 2 часа до сна.', 12);
+INSERT INTO mental_hospital.drugs (id, name) VALUES (1, 'Antipsychotics');
+INSERT INTO mental_hospital.drugs (id, name) VALUES (2, 'Tranquillisers');
+INSERT INTO mental_hospital.drugs (id, name) VALUES (3, 'Antidepressants');
+INSERT INTO mental_hospital.drugs (id, name) VALUES (4, 'Нейролептики');
+INSERT INTO mental_hospital.drugs (id, name) VALUES (5, 'Транквилизаторы');
+INSERT INTO mental_hospital.drugs (id, name) VALUES (6, 'Антидипрессанты');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (1, 1, 'asd', 13, 'yes');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (3, 4, '+123123123123123', 18, 'yes');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (5, 6, '+123123123123123', 28, 'yes');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (6, 7, '+123123123123123', 54, 'USER');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (7, 8, '+123123123123123', 20, 'Male');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (8, 12, '+37529123123321', 18, 'Male');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (9, 14, '+123123123123', 18, 'Male');
+INSERT INTO mental_hospital.patient_cards (id, user_id, spare_number, age, sex) VALUES (10, 15, '+123123123123123', 18, 'Male');
+INSERT INTO mental_hospital.treatment_courses (id, instructions) VALUES (1, '');
+INSERT INTO mental_hospital.treatment_courses (id, instructions) VALUES (30, 'how di ho');
+INSERT INTO mental_hospital.treatment_courses (id, instructions) VALUES (31, 'Пейте больше воды');
+INSERT INTO mental_hospital.user_roles (id, name) VALUES (1, 'USER');
+INSERT INTO mental_hospital.user_roles (id, name) VALUES (2, 'ADMIN');
+INSERT INTO mental_hospital.user_roles (id, name) VALUES (3, 'DOCTOR');
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (1, 1, 'sucker@mail.ru', 'suckerasd', 'sucker', 'sss', 'sss', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (2, 3, 'lilice@mail.ru', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'Zaharov', 'Eduard', 'asd', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (4, 3, 'bookmaker@gmail.com', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'Danila', 'Viatkin', '+123123123123123', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (6, 3, 'bookmaker@sucker.com', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'Danila', 'Viatkin', '+123123123123123', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (7, 1, 'user@gmail.com', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'USER', 'USER', '+123123123123123', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (8, 1, 'privit@mail.ru', '5110a9c4d3ebae27e1c745f5420e994c8ff4d21a8cf7582c9782cdfaef90106ec3553602f2bc880e81b7f34f9ea7b6b7bd433649fc5c29fd400b10ef0c22c7ae', 'Alex', 'Varashilov', '+14881441881111', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (9, 2, 'admin@admin.ru', '5110a9c4d3ebae27e1c745f5420e994c8ff4d21a8cf7582c9782cdfaef90106ec3553602f2bc880e81b7f34f9ea7b6b7bd433649fc5c29fd400b10ef0c22c7ae', 'admin', 'admin', '+111111111111111', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (12, 1, 'user@mail.ru', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'User', 'User', '+37529123123123', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (13, 3, 'doctor@mail.ru', '5110a9c4d3ebae27e1c745f5420e994c8ff4d21a8cf7582c9782cdfaef90106ec3553602f2bc880e81b7f34f9ea7b6b7bd433649fc5c29fd400b10ef0c22c7ae', 'Doctor', 'Doctor', '+1222222222222', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (14, 1, 'useruser@gmail.com', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'Dada', 'Dada', '+123123123123', 0);
+INSERT INTO mental_hospital.users (id, user_role_id, email, password, first_name, last_name, number, is_banned) VALUES (15, 1, 'user123@mail.ru', '86f344855ebaec97a9e2d54843e2bf06457ea9c1ac2ad0921c14ff2c2e5f788f7ba4729bbfc5a9bd32c21e34a7ce28aa91e5148cfdfb04c436c5d06be644994a', 'nett', 'nett', '+123123123123123', 0);
