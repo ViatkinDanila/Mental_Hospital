@@ -12,7 +12,7 @@
             <div class="container align-items-center d-flex justify-content-lg-center">
                 <a class="mr-4 ml-5 pr-5" href="${pageContext.request.contextPath}/MentalHospital?command=home-page">
                     <img style="width:8rem"
-                         src="https://sun1-94.userapi.com/impg/rtxx1D38IgGogEgvRSqWsNfHSXCtbkimRhHlWA/MNlGT-PNr1s.jpg?size=200x0&quality=90&crop=0,0,640,640&sign=322336ead46fdbe67e140d62dde4294b&ava=1">
+                         src="https://w7.pngwing.com/pngs/112/449/png-transparent-medical-college-of-wisconsin-physician-medicine-clinic-staff-of-hermes-symbol-miscellaneous-logo-hospital.png?size=200x0&quality=90&crop=0,0,640,640&sign=322336ead46fdbe67e140d62dde4294b&ava=1">
                 </a>
                 <span class="text-info h2 mb-0 ml-5 pl-5"><fmt:message key="navbar.address"/></span>
             </div>

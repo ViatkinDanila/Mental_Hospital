@@ -11,6 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AccessFilter implements Filter{
+    private static final String GUEST_ROLE = "GUEST";
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String USER_ROLE = "USER";
+    private static final String DOCTOR_ROLE = "DOCTOR";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -21,13 +25,14 @@ public class AccessFilter implements Filter{
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
+
         String commandName = servletRequest.getParameter(Parameter.COMMAND);
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession();
-        Object role = session.getAttribute(Attribute.ROLE);
+        String role = session.getAttribute(Attribute.ROLE).toString();
 
         if (commandName != null && role != null) {
-            boolean isAccessAllowed = isAccessAllowed(commandName, role.toString());
+            boolean isAccessAllowed = isAccessAllowed(commandName, role);
             if (!isAccessAllowed) {
                 ((HttpServletResponse) servletRequest).sendError(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -47,6 +52,23 @@ public class AccessFilter implements Filter{
         }
        switch (commandName){
            case CommandName.HOME_PAGE:
+           case CommandName.SIGN_UP:
+           case CommandName.SIGN_UP_PAGE:
+           case CommandName.LOGIN:
+           case CommandName.LOGIN_PAGE:
+               return role.equalsIgnoreCase(GUEST_ROLE);
+           case CommandName.CONSULTATION_PAGE:
+           case CommandName.PROFILE_PAGE:
+           case CommandName.CONSULTATION_REQUEST_PAGE:
+           case CommandName.HOSPITALIZATION_REQUEST_PAGE:
+               return role.equalsIgnoreCase(USER_ROLE);
+           case CommandName.CONSULTATION_COMPLETE:
+           case CommandName.CONSULTATION_APPROVE:
+           case CommandName.CONSULTATION_REQUEST:
+               return role.equalsIgnoreCase(DOCTOR_ROLE);
+           case CommandName.BAN_USER:
+           case CommandName.UNBAN_USER:
+                return role.equalsIgnoreCase(ADMIN_ROLE);
        }
         return true;
     }
