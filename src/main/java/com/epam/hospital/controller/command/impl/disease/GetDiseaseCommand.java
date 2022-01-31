@@ -22,6 +22,6 @@ public class GetDiseaseCommand implements Command {
         int diseasesId = Integer.parseInt(diseaseIdStr);
         Disease diseaseList = diseaseService.getDiseaseById(diseasesId);
         requestContext.addAttribute(Attribute.ALL_DISEASES, diseaseList);
-        return CommandResult.forward(Page.DISEASES);
+        return CommandResult.forward(Page.DOCTORS);
     }
 }

@@ -1,10 +1,10 @@
 package com.epam.hospital.controller.command.provider;
 
 import com.epam.hospital.controller.command.Command;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationApproveCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationCompleteCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationRequestCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationRequestPageCommand;
+import com.epam.hospital.controller.command.impl.consultation.ConsultationApproveCommand;
+import com.epam.hospital.controller.command.impl.consultation.ConsultationCompleteCommand;
+import com.epam.hospital.controller.command.impl.consultation.ConsultationRequestCommand;
+import com.epam.hospital.controller.command.impl.consultation.ConsultationRequestPageCommand;
 import com.epam.hospital.controller.command.impl.ForwardPageCommand;
 import com.epam.hospital.controller.command.impl.user.LoginCommand;
 import com.epam.hospital.controller.command.impl.user.SignUpCommand;

@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.Consultation;
+package com.epam.hospital.controller.command.impl.consultation;
 
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;

@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.Consultation;
+package com.epam.hospital.controller.command.impl.consultation;
 
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
@@ -6,27 +6,12 @@ import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.constant.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Consultation;
-import com.epam.hospital.model.treatment.DiseaseSymptom;
-import com.epam.hospital.model.treatment.DrugRecipe;
-import com.epam.hospital.model.treatment.TreatmentCourse;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.service.database.ConsultationService;
-import com.epam.hospital.service.database.DiseaseService;
-import com.epam.hospital.service.database.DrugService;
-import com.epam.hospital.service.database.TreatmentCourseService;
 import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
-import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
-import com.epam.hospital.service.database.impl.DrugServiceImpl;
-import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.constant.Attribute;
 import com.epam.hospital.util.constant.Parameter;
 import lombok.extern.slf4j.Slf4j;
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 public class ConsultationApproveCommand implements Command {

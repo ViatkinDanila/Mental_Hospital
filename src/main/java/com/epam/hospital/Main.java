@@ -1,22 +1,5 @@
 package com.epam.hospital;
 
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationCompleteCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationRequestCommand;
-import com.epam.hospital.controller.request.RequestContext;
-import com.epam.hospital.dao.TreatmentCourseDao;
-import com.epam.hospital.dao.connectionpool.ConnectionPool;
-import com.epam.hospital.dao.connectionpool.PooledConnection;
-import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
-import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.impl.TreatmentCourseDaoImpl;
-import com.epam.hospital.model.treatment.TreatmentCourse;
-import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.constant.Parameter;
-
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class Main {
