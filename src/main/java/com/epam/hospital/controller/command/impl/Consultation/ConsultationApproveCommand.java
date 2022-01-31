@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ConsultationApproveCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
-    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE ;
+    private static final String CONSULTATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE;
     private static final String CONSULTATION_STATUS_APPROVED = "APPROVED";
 
     private static final int DEFAULT_PRICE = 10;

@@ -55,12 +55,12 @@
         </div>
         <div class="py-3 d-flex flex-wrap align-items-center justify-content-around bg-primary h4">
             <div class="container-30 d-flex mr-5">
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=home-page"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=doctors"
                    class="nav-link px-5 ml-5 mr-2 text-light">
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.doctors"/></span>
                 </a>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=login-page"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases"
                    class="nav-link px-5 ml-5 text-light">
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.diseases"/></span>

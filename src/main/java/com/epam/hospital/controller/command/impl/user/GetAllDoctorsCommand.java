@@ -5,19 +5,18 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.constant.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.dto.DoctorDto;
-import com.epam.hospital.model.treatment.Disease;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
-import com.epam.hospital.service.database.DiseaseService;
 import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
 import com.epam.hospital.service.database.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class GetAllDoctorsCommand implements Command {
     private final static UserService userService = UserServiceImpl.getInstance();
 
@@ -36,15 +35,18 @@ public class GetAllDoctorsCommand implements Command {
                     .specialization(doctorsInfoList.get(i).getSpecialization())
                     .classification(doctorsInfoList.get(i).getClassification())
                     .userRole("DOCTOR")
+                    .doctorId(doctorsInfoList.get(i).getDoctorId())
                     .number(doctorsList.get(i).getNumber())
-                    .firstname(doctorsList.get(i).getFirstName())
-                    .lastname(doctorsList.get(i).getLastName())
+                    .firstName(doctorsList.get(i).getFirstName())
+                    .lastName(doctorsList.get(i).getLastName())
                     .number(doctorsList.get(i).getNumber())
                     .build();
             doctorDtos.add(doctorDto);
         }
 
-        requestContext.addAttribute(Attribute.ALL_DOCTORS, doctorDtos);
+        log.info("doctors: {}", doctorDtos);
+
+        requestContext.addAttribute(Attribute.DOCTORS, doctorDtos);
         return CommandResult.forward(Page.DOCTORS);
     }
 }

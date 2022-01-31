@@ -3,6 +3,7 @@ package com.epam.hospital.controller.command.impl.Consultation;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.constant.Attribute;
+import com.epam.hospital.controller.constant.CommandName;
 import com.epam.hospital.controller.constant.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class ConsultationRequestPageCommand implements Command {
     private static final UserService userService = UserServiceImpl.getInstance();
+    private static final String REQUEST_CONSULTATION_PAGE_AE = "MentalHospital?command=" + CommandName.CONSULTATION_REQUEST ;
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {

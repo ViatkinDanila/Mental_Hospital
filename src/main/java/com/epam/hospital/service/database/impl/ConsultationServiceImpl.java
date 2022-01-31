@@ -32,6 +32,18 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
+    public Consultation getConsultationByDoctorId(int id) throws SecurityException {
+        ConsultationDao consultationDao = new ConsultationDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(true, consultationDao);
+            List<Consultation> consultations = consultationDao.findByDoctorId(id);
+            return consultations.get(consultations.size() - 1);
+        } catch(DaoException e){
+            throw new SecurityException("Can't get consultation.", e);
+        }
+    }
+
+    @Override
     public void save(Consultation consultation) throws ServiceException {
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){

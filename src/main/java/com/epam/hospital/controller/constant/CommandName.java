@@ -7,9 +7,12 @@ public final class CommandName {
     public static final String CONSULTATION_COMPLETE = "consultation-complete";
     public static final String CONSULTATION_APPROVE = "consultation-approve";
     public static final String CONSULTATION_REQUEST = "consultation-request";
+    public static final String CONSULTATION_REJECT = "consultation-reject";
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
     public static final String ALL_USERS = "all-users";
+    public static final String DOCTORS = "doctors";
+    public static final String DISEASES = "diseases";
     public static final String LOGIN_PAGE = "login-page";
     public static final String CONSULTATION_PAGE = "consultation";
     public static final String HOME_PAGE = "home-page";

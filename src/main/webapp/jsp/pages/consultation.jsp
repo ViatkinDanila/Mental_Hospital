@@ -32,14 +32,14 @@
         <div class="container d-flex w-75 flex-column">
             <div class="d-flex py-3 pt-5 h2 justify-content-center">
                 <span><fmt:message key="consultation.doctor"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=doctor&id=${consultation.getDoctorId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getDoctorId()}"
                    class="font-weight-bold">
                     <span class="ml-3">${consultation.getDoctorFirstName()} ${consultation.getDoctorLastName()}</span>
                 </a>
             </div>
             <div class="d-flex py-3 h2 justify-content-center">
                 <span><fmt:message key="consultation.patient"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=user&id=${consultation.getUserId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getUserId()}"
                    class="font-weight-bold">
                     <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>

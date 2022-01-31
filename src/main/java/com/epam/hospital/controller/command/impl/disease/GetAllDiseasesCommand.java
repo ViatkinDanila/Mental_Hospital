@@ -9,15 +9,19 @@ import com.epam.hospital.service.database.DiseaseService;
 import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class GetAllDiseasesCommand implements Command {
     private final static DiseaseService diseaseService = DiseaseServiceImpl.getInstance();
+
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Disease> diseaseList = diseaseService.getAll();
-        requestContext.addAttribute(Attribute.ALL_DISEASES, diseaseList);
+        log.info("diseases: {}", diseaseList);
+        requestContext.addAttribute(Attribute.DISEASES, diseaseList);
         return CommandResult.forward(Page.DISEASES);
     }
 }

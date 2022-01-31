@@ -8,6 +8,7 @@ public class AccessTag extends TagSupport {
     private static final String GUEST = "GUEST";
     private static final String NOT_GUEST = "NOT_GUEST";
     private static final String NOT_USER = "NOT_USER";
+    private static final String NOT_DOCTOR = "NOT_DOCTOR";
 
     private String role;
 
@@ -21,13 +22,17 @@ public class AccessTag extends TagSupport {
         Object sessionRole = session.getAttribute(Attribute.ROLE);
 
         if (sessionRole == null) {
-            if (GUEST.equalsIgnoreCase(this.role)) {
+            if (GUEST.equalsIgnoreCase(this.role)
+                    || NOT_USER.equalsIgnoreCase(role)
+                    || NOT_DOCTOR.equalsIgnoreCase(role)) {
                 return EVAL_BODY_INCLUDE;
             }
         } else if (sessionRole.toString().equalsIgnoreCase(this.role)
                 || NOT_GUEST.equalsIgnoreCase(this.role)) {
             return EVAL_BODY_INCLUDE;
         } else if (NOT_USER.equalsIgnoreCase(role) && !sessionRole.equals("USER")) {
+            return EVAL_BODY_INCLUDE;
+        } else if (NOT_DOCTOR.equalsIgnoreCase(role) && !sessionRole.equals("DOCTOR")) {
             return EVAL_BODY_INCLUDE;
         }
         return SKIP_BODY;

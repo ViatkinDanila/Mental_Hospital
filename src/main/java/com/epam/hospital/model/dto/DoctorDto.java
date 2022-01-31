@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DoctorDto {
     private String userRole;
+    private int doctorId;
     private String email;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String number;
     String specialization;
     int workExperience;

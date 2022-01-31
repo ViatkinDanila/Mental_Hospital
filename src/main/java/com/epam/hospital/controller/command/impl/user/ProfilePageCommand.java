@@ -2,8 +2,10 @@ package com.epam.hospital.controller.command.impl.user;
 
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
+import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.constant.Attribute;
 import com.epam.hospital.controller.constant.Page;
+import com.epam.hospital.controller.constant.RequestParameter;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.dto.DoctorInfoDto;
 import com.epam.hospital.model.dto.PatientInfoDto;
@@ -11,6 +13,7 @@ import com.epam.hospital.model.dto.ShortConsultationDto;
 import com.epam.hospital.model.dto.UserInfoDto;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.PatientCard;
+import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
@@ -21,6 +24,7 @@ import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
 import com.epam.hospital.service.database.impl.PatientCardServiceImpl;
 import com.epam.hospital.service.database.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.util.constant.Parameter;
 
 
 import java.util.ArrayList;
@@ -34,9 +38,15 @@ public class ProfilePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        int userId = (int) requestContext.getSessionAttribute(Attribute.USER_ID);
-        String role = (String) requestContext.getSessionAttribute(Attribute.ROLE);
+        int userId;
+        if (requestContext.getRequestParameter(Parameter.USER_ID) != null) {
+            userId = ParameterExtractor.extractInt(Parameter.USER_ID, requestContext);
+        } else {
+            userId = (int) requestContext.getSessionAttribute(Attribute.USER_ID);
+        }
         User user = userService.getUserById(userId);
+        //TODO: to improve this
+        String role = user.getUserRoleId() == 1 ? "USER" : "DOCTOR";
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .fullName(user.getFirstName() + " " + user.getLastName())
@@ -73,7 +83,7 @@ public class ProfilePageCommand implements Command {
         for (Consultation consultation : consultations) {
             ShortConsultationDto.ShortConsultationDtoBuilder shortConsultationDtoBuilder = ShortConsultationDto.builder()
                     .date(consultation.getDate())
-                    .communicationType(consultation.getCommunicationType().toString())
+                    .communicationType(consultation.getCommunicationType().equals(CommunicationType.FACE_TO_FACE) ? "FACE TO FACE" : "ONLINE")
                     .consultationStatus(consultation.getStatus())
                     .id(consultation.getConsultationId());
             if (role.equalsIgnoreCase("USER")) {

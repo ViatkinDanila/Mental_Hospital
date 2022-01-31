@@ -14,8 +14,6 @@ import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.constant.Attribute;
 import com.epam.hospital.util.constant.Parameter;
 
-import java.util.List;
-
 public class DoctorInformationCommand implements Command {
     private final static UserService userService = UserServiceImpl.getInstance();
     @Override
@@ -29,8 +27,8 @@ public class DoctorInformationCommand implements Command {
                 .classification(doctorInfo.getClassification())
                 .userRole("DOCTOR")
                 .number(doctor.getNumber())
-                .firstname(doctor.getFirstName())
-                .lastname(doctor.getLastName())
+                .firstName(doctor.getFirstName())
+                .lastName(doctor.getLastName())
                 .number(doctor.getNumber())
                 .build();
         requestContext.addAttribute(Attribute.DOCTOR, doctor);

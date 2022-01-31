@@ -1,15 +1,10 @@
 package com.epam.hospital.controller.command.provider;
 
 import com.epam.hospital.controller.command.Command;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationApproveCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationCompleteCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationRequestCommand;
-import com.epam.hospital.controller.command.impl.Consultation.ConsultationRequestPageCommand;
+import com.epam.hospital.controller.command.impl.Consultation.*;
 import com.epam.hospital.controller.command.impl.ForwardPageCommand;
-import com.epam.hospital.controller.command.impl.user.LoginCommand;
-import com.epam.hospital.controller.command.impl.user.SignOutCommand;
-import com.epam.hospital.controller.command.impl.user.SignUpCommand;
-import com.epam.hospital.controller.command.impl.user.ProfilePageCommand;
+import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
+import com.epam.hospital.controller.command.impl.user.*;
 import com.epam.hospital.controller.constant.CommandName;
 import com.epam.hospital.controller.command.impl.ConsultationPageCommand;
 
@@ -27,8 +22,11 @@ public final class CommandProvider {
         commands.put(CommandName.CONSULTATION_COMPLETE, new ConsultationCompleteCommand());
         commands.put(CommandName.CONSULTATION_APPROVE, new ConsultationApproveCommand());
         commands.put(CommandName.CONSULTATION_REQUEST, new ConsultationRequestCommand());
+        commands.put(CommandName.CONSULTATION_REJECT, new ConsultationRejectCommand());
         commands.put(CommandName.USER_PROFILE_PAGE, new ProfilePageCommand());
         commands.put(CommandName.CONSULTATION_REQUEST_PAGE, new ConsultationRequestPageCommand());
+        commands.put(CommandName.DOCTORS, new GetAllDoctorsCommand());
+        commands.put(CommandName.DISEASES, new GetAllDiseasesCommand());
 
         commands.put(CommandName.HOME_PAGE, new ForwardPageCommand());
         commands.put(CommandName.SIGN_UP_PAGE, new ForwardPageCommand());

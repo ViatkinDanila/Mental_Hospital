@@ -28,7 +28,7 @@ import java.util.List;
 public class ConsultationRequestCommand implements Command {
     private static final String CONSULTATION_PENDING_STATUS = "PENDING";
     private static final int WAITING_TREATMENT_COURSE_ID = 1;
-    private static final String CONSULTATION_REQUEST_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_REQUEST_PAGE;
+    private static final String CONSULTATION_REQUEST_PAGE_COMMAND = "MentalHospital?command=" + CommandName.CONSULTATION_PAGE;
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
     private static final UserService userService = UserServiceImpl.getInstance();
 
@@ -40,7 +40,7 @@ public class ConsultationRequestCommand implements Command {
         log.info(ParameterExtractor.extractString("isOnline", requestContext));
         String patentCardIdStr = requestContext.getSessionAttribute(Attribute.PATIENT_CARD_ID).toString();
         int patientCardId = Integer.parseInt(patentCardIdStr);
-        String communicationTypeStr = ParameterExtractor.extractString(Parameter.COMMUNICATION_TYPE, requestContext);
+        String communicationTypeStr = ParameterExtractor.extractString(Parameter.IS_ONLINE, requestContext);
         CommunicationType communicationType;
         if (communicationTypeStr != null){
             communicationType = CommunicationType.ONLINE;
@@ -54,13 +54,14 @@ public class ConsultationRequestCommand implements Command {
 
         Consultation consultation = new Consultation().builder()
                 .communicationType(communicationType)
-                .date(new Date())
+                .date(new Date(System.currentTimeMillis()))
                 .doctorId(doctor.getUserId())
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)
                 .treatmentCourseId(null)
                 .build();
         consultationService.save(consultation);
-        return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND);
+        int consultationId = consultationService.getConsultationByDoctorId(doctor.getUserId()).getConsultationId();
+        return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND + "&id=" + consultationId);
     }
 }

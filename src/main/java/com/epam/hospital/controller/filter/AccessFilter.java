@@ -29,10 +29,14 @@ public class AccessFilter implements Filter{
         String commandName = servletRequest.getParameter(Parameter.COMMAND);
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession();
-        String role = session.getAttribute(Attribute.ROLE).toString();
+        Object role = session.getAttribute(Attribute.ROLE);
 
-        if (commandName != null && role != null) {
-            boolean isAccessAllowed = isAccessAllowed(commandName, role);
+        if (commandName != null) {
+            if (role == null) {
+                role = "GUEST";
+            }
+            System.out.println(role);
+            boolean isAccessAllowed = isAccessAllowed(commandName, role.toString());
             if (!isAccessAllowed) {
                 ((HttpServletResponse) servletRequest).sendError(HttpServletResponse.SC_FORBIDDEN);
             }
@@ -51,24 +55,21 @@ public class AccessFilter implements Filter{
             return true;
         }
        switch (commandName){
-           case CommandName.HOME_PAGE:
-           case CommandName.SIGN_UP:
-           case CommandName.SIGN_UP_PAGE:
-           case CommandName.LOGIN:
-           case CommandName.LOGIN_PAGE:
-               return role.equalsIgnoreCase(GUEST_ROLE);
-           case CommandName.CONSULTATION_PAGE:
-           case CommandName.PROFILE_PAGE:
-           case CommandName.CONSULTATION_REQUEST_PAGE:
-           case CommandName.HOSPITALIZATION_REQUEST_PAGE:
-               return role.equalsIgnoreCase(USER_ROLE);
-           case CommandName.CONSULTATION_COMPLETE:
-           case CommandName.CONSULTATION_APPROVE:
-           case CommandName.CONSULTATION_REQUEST:
-               return role.equalsIgnoreCase(DOCTOR_ROLE);
-           case CommandName.BAN_USER:
-           case CommandName.UNBAN_USER:
-                return role.equalsIgnoreCase(ADMIN_ROLE);
+//           case CommandName.SIGN_UP:
+//           case CommandName.SIGN_UP_PAGE:
+//           case CommandName.LOGIN_PAGE:
+//               return role.equalsIgnoreCase(GUEST_ROLE);
+//           case CommandName.CONSULTATION_PAGE:
+//           case CommandName.CONSULTATION_REQUEST_PAGE:
+//           case CommandName.HOSPITALIZATION_REQUEST_PAGE:
+//               return role.equalsIgnoreCase(USER_ROLE);
+//           case CommandName.CONSULTATION_COMPLETE:
+//           case CommandName.CONSULTATION_APPROVE:
+//           case CommandName.CONSULTATION_REQUEST:
+//               return role.equalsIgnoreCase(DOCTOR_ROLE);
+//           case CommandName.BAN_USER:
+//           case CommandName.UNBAN_USER:
+//                return role.equalsIgnoreCase(ADMIN_ROLE);
        }
         return true;
     }

@@ -25,7 +25,7 @@ public final class Parameter {
     public static final String SPARE_PHONE_NUMBER = "sparePhoneNumber";
     public static final String CHAMBER_ID = "id";
     public static final String PATIENT_CARD_ID = "id";
-    public static final String COMMUNICATION_TYPE = "communicationType";
+    public static final String IS_ONLINE = "isOnline";
     public static final String DATE = "date";
     public static final String DOCTOR_ID = "id";
     public static final String SYMPTOMS = "symptoms";

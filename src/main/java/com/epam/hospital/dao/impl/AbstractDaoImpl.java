@@ -70,7 +70,7 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
         List<T> result = new ArrayList<>();
         try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_ALL_QUERY);
              ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 T entity = builder.build(resultSet);
                 result.add(entity);
             }

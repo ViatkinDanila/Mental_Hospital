@@ -10,6 +10,7 @@ import com.epam.hospital.model.dto.ConsultationDto;
 import com.epam.hospital.model.dto.DiseaseWithSymptomsDto;
 import com.epam.hospital.model.dto.DrugRecipeDto;
 import com.epam.hospital.model.treatment.*;
+import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.service.database.*;
@@ -70,7 +71,7 @@ public class ConsultationPageCommand implements Command {
         User user = userService.getUserById(userId);
 
         ConsultationDto.ConsultationDtoBuilder consultationDtoBuilder = ConsultationDto.builder()
-                .communicationType(consultation.getCommunicationType().toString())
+                .communicationType(consultation.getCommunicationType().equals(CommunicationType.FACE_TO_FACE) ? "FACE TO FACE" : "ONLINE")
                 .date(consultation.getDate())
                 .duration(consultation.getDuration())
                 .doctorFirstName(doctor.getFirstName())
