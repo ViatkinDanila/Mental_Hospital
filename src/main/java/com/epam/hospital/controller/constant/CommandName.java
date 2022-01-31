@@ -14,6 +14,6 @@ public final class CommandName {
     public static final String HOME_PAGE = "home-page";
     public static final String PROFILE_PAGE = "profile-page";
     public static final String CONSULTATION_REQUEST_PAGE = "consultation-request-page";
-    public static final String USER_PROFILE_PAGE = "user-profile-page";
+    public static final String USER_PROFILE_PAGE = "profile-page";
     public static final String HOSPITALIZATION_REQUEST_PAGE = "hospitalization-request-page";
 }

@@ -7,6 +7,7 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 public class AccessTag extends TagSupport {
     private static final String GUEST = "GUEST";
     private static final String NOT_GUEST = "NOT_GUEST";
+    private static final String NOT_USER = "NOT_USER";
 
     private String role;
 
@@ -17,15 +18,16 @@ public class AccessTag extends TagSupport {
     @Override
     public int doStartTag() {
         HttpSession session = pageContext.getSession();
-        Object role = session.getAttribute(Attribute.ROLE);
+        Object sessionRole = session.getAttribute(Attribute.ROLE);
 
-
-        if (role == null) {
+        if (sessionRole == null) {
             if (GUEST.equalsIgnoreCase(this.role)) {
                 return EVAL_BODY_INCLUDE;
             }
-        } else if (role.toString().equalsIgnoreCase(this.role)
+        } else if (sessionRole.toString().equalsIgnoreCase(this.role)
                 || NOT_GUEST.equalsIgnoreCase(this.role)) {
+            return EVAL_BODY_INCLUDE;
+        } else if (NOT_USER.equalsIgnoreCase(role) && !sessionRole.equals("USER")) {
             return EVAL_BODY_INCLUDE;
         }
         return SKIP_BODY;
