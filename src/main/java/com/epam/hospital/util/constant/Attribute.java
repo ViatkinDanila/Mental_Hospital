@@ -14,5 +14,6 @@ public class Attribute {
     public static final String DOCTOR_ID = "doctorId";
     public static final String CONSULTATION_ID = "consultationId";
     public static final String ALL_DISEASES = "allDiseases";
+    public static final String INVALID_ATTRIBUTE = "invalidate";
 
 }
