@@ -4,6 +4,7 @@ import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.constant.CommandName;
+import com.epam.hospital.controller.constant.RequestParameter;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
@@ -86,11 +87,14 @@ public class ConsultationCompleteCommand implements Command {
                 .instruction(ParameterExtractor.extractString(Parameter.INSTRUCTION, requestContext))
                 .build();
 
+        int duration = ParameterExtractor.extractInt(RequestParameter.DURATION, requestContext);
+
         int treatmentCourseId = treatmentCourseService.saveTreatmentCourse(treatmentCourse, diseaseSymptoms, drugsRecipes);
         int consultationId = ParameterExtractor.extractInt(Parameter.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);
         consultation.setTreatmentCourseId(treatmentCourseId);
         consultation.setStatus(ConsultationStatus.COMPLETED);
+        consultation.setDuration(duration);
         consultationService.update(consultation);
 
         return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);

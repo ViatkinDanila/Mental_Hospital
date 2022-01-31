@@ -32,10 +32,6 @@
                        placeholder="<fmt:message key="consultation.date.advice"/>"
                        name="date" value="${date}" style="font-size: 2rem" required>
             </div>
-            <div class="mb-5">
-                <span class="form-label"><fmt:message key="consultation.duration.label"/></span>
-                <input name="duration" class="form-control mt-1" type="number" value="${duration}" min="10" max="180" style="font-size: 2rem" required>
-            </div>
 
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="consultation.doctor.label"/></span>

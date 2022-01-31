@@ -44,15 +44,20 @@
                     <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>
             </div>
-            <div class="d-flex py-3 pb-4 h2 justify-content-center">
-                <span><fmt:message key="consultation.duration"/></span>
-                <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
-            </div>
-            <div class="d-flex py-2 pb-4 h2 justify-content-center">
-                <span><fmt:message key="consultation.price"/></span>
-                <span class="ml-3">${consultation.getPrice()}</span>
-                <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
-            </div>
+            <c:when test="${consultation.getConsultationStatus().toString().equals('COMPLETED')}">
+                <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                    <span><fmt:message key="consultation.duration"/></span>
+                    <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
+                </div>
+            </c:when>
+            <c:when test="${!consultation.getConsultationStatus().toString().equals('PENDING')}">
+                <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                    <span><fmt:message key="consultation.price"/></span>
+                    <span class="ml-3">${consultation.getPrice()}</span>
+                    <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
+                </div>
+            </c:when>
+
         </div>
         <c:choose>
             <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">
@@ -120,7 +125,8 @@
 
     <sc:access role="DOCTOR">
         <c:if test="${consultation.getConsultationStatus().toString().equals('PENDING')}">
-            <form class="d-flex align-items-center w-50 justify-content-around mt-4" method="POST" action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
+            <form class="d-flex align-items-center w-50 justify-content-around mt-4" method="POST"
+                  action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
                 <button type="submit" name="command" value="consultation-approve"
                         class="btn btn-success btn-lg d-flex mx-auto justify-content-center">
                                     <span class="h1 mb-0" style="line-height: 1.6; width: 15rem"><fmt:message
@@ -138,12 +144,19 @@
 
             <form class="bg-info d-flex flex-column flex-box col-md-6 w-50 border border-dark mt-4 row align-items-center mb-5"
                   method="POST"
-                  style="width: 55%; border-radius: 6rem" action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
+                  style="width: 55%; border-radius: 6rem"
+                  action="${pageContext.request.contextPath}/MentalHospital?id=${consultationId}">
                 <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="consultation.course"/></span>
                 <div class="py-3 pt-3 h2 w-75 mb-3" style="margin-left: 3rem">
                     <span class="form-label"><fmt:message key="consultation.instructions.label"/></span>
-                    <input type="text" name="instructions" minlength="1" maxlength="320" class="form-control mt-1" required
+                    <input type="text" name="instructions" minlength="1" maxlength="320" class="form-control mt-1"
+                           required
                            style="font-size: 2rem">
+                </div>
+                <div class="py-3 pt-3 h2 w-75 mb-3">
+                    <span class="form-label"><fmt:message key="consultation.duration.label"/></span>
+                    <input name="duration" class="form-control mt-1" type="number" min="10" max="180"
+                           style="font-size: 2rem" required>
                 </div>
 
                 <div class="col-md-12 w-75 column container mb-3">
@@ -241,7 +254,7 @@
 
             </form>
         </c:if>
-        </sc:access>
+    </sc:access>
 </div>
 <script src="/js/complete-consultation-dynamic-table.js"></script>
 </body>

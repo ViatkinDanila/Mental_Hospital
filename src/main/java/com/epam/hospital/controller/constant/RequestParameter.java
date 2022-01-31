@@ -11,4 +11,5 @@ public final class RequestParameter {
     public final static String LAST_NAME = "last-name";
     public final static String NUMBER = "number";
     public final static String AGE = "age";
+    public final static String DURATION = "duration";
 }
