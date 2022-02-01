@@ -4,7 +4,7 @@ import com.epam.hospital.dao.AbstractDao;
 import com.epam.hospital.dao.builder.EntityBuilder;
 import com.epam.hospital.dao.connectionpool.PooledConnection;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.table_names.Column;
+import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.model.Entity;
 import lombok.extern.slf4j.Slf4j;
 

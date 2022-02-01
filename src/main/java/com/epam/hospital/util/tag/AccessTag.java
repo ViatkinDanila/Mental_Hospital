@@ -1,6 +1,6 @@
 package com.epam.hospital.util.tag;
 
-import com.epam.hospital.util.constant.Attribute;
+import com.epam.hospital.constant.web.SessionAttributes;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.tagext.TagSupport;
 
@@ -20,7 +20,7 @@ public class AccessTag extends TagSupport {
     @Override
     public int doStartTag() {
         HttpSession session = pageContext.getSession();
-        Object sessionRole = session.getAttribute(Attribute.ROLE);
+        Object sessionRole = session.getAttribute(SessionAttributes.ROLE);
 
         if (sessionRole == null) {
             if (GUEST.equalsIgnoreCase(this.role)

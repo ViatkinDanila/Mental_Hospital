@@ -1,6 +1,6 @@
 package com.epam.hospital.controller.request;
 
-import com.epam.hospital.controller.constant.Attribute;
+import com.epam.hospital.constant.web.SessionAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -17,7 +17,7 @@ public class HttpRequestFiller {
 
         HttpSession session = request.getSession();
         Set<String> sessionAttributeNames = requestContext.getSessionAttributeNames();
-        if (sessionAttributeNames.contains(Attribute.INVALIDATE_ATTRIBUTE)) {
+        if (sessionAttributeNames.contains(SessionAttributes.INVALIDATE_ATTRIBUTE)) {
             session.invalidate();
         } else {
             for (String attributeName : sessionAttributeNames) {

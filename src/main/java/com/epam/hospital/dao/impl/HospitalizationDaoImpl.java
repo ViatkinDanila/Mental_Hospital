@@ -3,9 +3,8 @@ package com.epam.hospital.dao.impl;
 import com.epam.hospital.dao.HospitalizationDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.table_names.Column;
-import com.epam.hospital.dao.table_names.Table;
-import com.epam.hospital.model.treatment.Drug;
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.Hospitalization;
 
 import java.sql.PreparedStatement;

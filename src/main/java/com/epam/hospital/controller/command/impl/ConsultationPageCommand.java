@@ -1,11 +1,12 @@
 package com.epam.hospital.controller.command.impl;
 
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.controller.constant.Page;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
-import com.epam.hospital.dao.table_names.Column;
 import com.epam.hospital.model.dto.ConsultationDto;
 import com.epam.hospital.model.dto.DiseaseWithSymptomsDto;
 import com.epam.hospital.model.dto.DrugRecipeDto;
@@ -16,11 +17,8 @@ import com.epam.hospital.model.user.User;
 import com.epam.hospital.service.database.*;
 import com.epam.hospital.service.database.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.constant.Attribute;
-import com.epam.hospital.util.constant.Parameter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ConsultationPageCommand implements Command {
@@ -33,37 +31,10 @@ public class ConsultationPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-//        if (true) {
-//            ConsultationDto consultationDto = ConsultationDto.builder()
-//                    .duration(10)
-//                    .communicationType("ONLINE")
-//                    .date(new Date())
-//                    .diseases(List.of(
-//                            DiseaseWithSymptomsDto.builder().name("RAK MOZGA").id(1).symptoms("GOLOVeshka bolit o4en. Dota 2 player.").build(),
-//                            DiseaseWithSymptomsDto.builder().name("ICE ICE BABY").id(2).symptoms("Holodno pizdaaaaaa. Eshe net vozdyha.").build()
-//                    ))
-//                    .patientFirstName("Edik")
-//                    .patientLastName("Pidobir")
-//                    .doctorFirstName("Alex")
-//                    .doctorLastName("Voroshilov")
-//                    .consultationStatus(ConsultationStatus.PENDING)
-//                    .doctorId(2)
-//                    .userId(3)
-//                    .drugs(List.of(
-//                            DrugRecipeDto.builder().name("MARIHYANA").doze(0.5f).build(),
-//                            DrugRecipeDto.builder().name("ASPERIN").doze(0.2f).build(),
-//                            DrugRecipeDto.builder().name("KRAHMAL KARTOSHKI").doze(3f).build()
-//                    ))
-//                    .instruction("Snimat' plenki s glaz")
-//                    .build();
-//            requestContext.addAttribute("consultation", consultationDto);
-//            return CommandResult.forward(Page.CONSULTATION_PAGE);
-//        }
-
-        String consultationIdString = ParameterExtractor.extractString(Parameter.CONSULTATION_ID, requestContext);
+        String consultationIdString = ParameterExtractor.extractString(RequestParameters.CONSULTATION_ID, requestContext);
         int consultationId = Integer.parseInt(consultationIdString);
 
-        requestContext.addAttribute(Attribute.CONSULTATION_ID, consultationId);
+        requestContext.addAttribute(RequestAttributes.CONSULTATION_ID, consultationId);
 
         Consultation consultation = consultationService.getConsultationById(consultationId);
         User doctor = userService.getUserById(consultation.getDoctorId());

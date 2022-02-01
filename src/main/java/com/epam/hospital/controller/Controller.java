@@ -1,12 +1,12 @@
 package com.epam.hospital.controller;
 
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.provider.CommandProvider;
-import com.epam.hospital.controller.constant.Attribute;
-import com.epam.hospital.controller.constant.CommandName;
-import com.epam.hospital.controller.constant.Page;
-import com.epam.hospital.controller.constant.RequestParameter;
+import com.epam.hospital.constant.web.CommandName;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.HttpRequestFiller;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.controller.request.RequestContextMapper;
@@ -16,7 +16,6 @@ import com.epam.hospital.dao.connectionpool.DBResourceManager;
 import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +31,7 @@ import java.io.IOException;
 //http://localhost:8080/MentalHospital
 public class Controller extends HttpServlet {
     private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE +
-            "&" + RequestParameter.PAGE + "=1";
+            "&" + RequestParameters.PAGE + "=1";
 
     @Override
     public void init() throws ServletException {
@@ -50,7 +49,7 @@ public class Controller extends HttpServlet {
         log.info("[DB] Starting connection pool init logic");
         while (!isDone) {
             try {
-                log.info("[DB] try №{}: initialising connection pool", repeatCounter);
+                log.info("[DB] try №{}: initialising connection pool", repeatCounter + 1);
                 connectionPool.init(url, user, password, driverName);
                 isDone = true;
             } catch (ConnectionPoolException e) {
@@ -61,6 +60,7 @@ public class Controller extends HttpServlet {
                 }
             }
         }
+        log.info("[DB] Connection pool init successfully done");
         super.init();
     }
 
@@ -75,7 +75,7 @@ public class Controller extends HttpServlet {
     }
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getParameter(RequestParameter.COMMAND);
+        String commandName = request.getParameter(RequestParameters.COMMAND);
         CommandProvider commandProvider = new CommandProvider();
         Command command = commandProvider.getCommand(commandName);
         try {
@@ -109,7 +109,7 @@ public class Controller extends HttpServlet {
 
     private void handleException(HttpServletRequest req, HttpServletResponse resp, String errorMessage)
             throws IOException {
-        req.setAttribute(Attribute.ERROR_MESSAGE, errorMessage);
+        req.setAttribute(RequestAttributes.ERROR_MESSAGE, errorMessage);
         RequestDispatcher dispatcher = req.getRequestDispatcher(Page.ERROR);
         try {
             dispatcher.forward(req, resp);

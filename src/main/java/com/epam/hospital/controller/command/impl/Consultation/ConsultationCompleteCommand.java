@@ -1,10 +1,10 @@
 package com.epam.hospital.controller.command.impl.Consultation;
 
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.controller.constant.CommandName;
-import com.epam.hospital.controller.constant.RequestParameter;
+import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
@@ -20,7 +20,6 @@ import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
 import com.epam.hospital.service.database.impl.DrugServiceImpl;
 import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.constant.Parameter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class ConsultationCompleteCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
 
-        List<String> diseasesNames = getStringList(Parameter.DISEASE, requestContext);
+        List<String> diseasesNames = getStringList(RequestParameters.DISEASE, requestContext);
 
         List<Integer> diseasesId = new ArrayList<Integer>();
         for (String diseaseName : diseasesNames){
@@ -44,7 +43,7 @@ public class ConsultationCompleteCommand implements Command {
             diseasesId.add(diseaseId);
         }
 
-        List<String> symptoms = getStringList(Parameter.SYMPTOMS, requestContext);
+        List<String> symptoms = getStringList(RequestParameters.SYMPTOMS, requestContext);
 
         List<DiseaseSymptom> diseaseSymptoms = new ArrayList<DiseaseSymptom>();
         for(int i = 0; i < symptoms.size() && i < diseasesId.size(); i++){
@@ -56,7 +55,7 @@ public class ConsultationCompleteCommand implements Command {
         }
 
         List<DrugRecipe> drugsRecipes = new ArrayList<>();
-        List<String> drugsNames = getStringList(Parameter.DRUG, requestContext);
+        List<String> drugsNames = getStringList(RequestParameters.DRUG, requestContext);
         if (drugsNames.size() > 0) {
 
             List<Integer> drugsId = new ArrayList<>();
@@ -65,10 +64,10 @@ public class ConsultationCompleteCommand implements Command {
                 drugsId.add(drugId);
             }
 
-            List<String> descriptions = getStringList(Parameter.DESCRIPTION, requestContext);
+            List<String> descriptions = getStringList(RequestParameters.DESCRIPTION, requestContext);
 
             List<Integer> doses = new ArrayList<>();
-            List<String> dosesListStr = getStringList(Parameter.DOSE, requestContext);
+            List<String> dosesListStr = getStringList(RequestParameters.DOSE, requestContext);
             for (String dose : dosesListStr) {
                 doses.add(Integer.parseInt(dose));
             }
@@ -84,13 +83,13 @@ public class ConsultationCompleteCommand implements Command {
         }
 
         TreatmentCourse treatmentCourse = TreatmentCourse.builder()
-                .instruction(ParameterExtractor.extractString(Parameter.INSTRUCTION, requestContext))
+                .instruction(ParameterExtractor.extractString(RequestParameters.INSTRUCTION, requestContext))
                 .build();
 
-        int duration = ParameterExtractor.extractInt(RequestParameter.DURATION, requestContext);
+        int duration = ParameterExtractor.extractInt(RequestParameters.DURATION, requestContext);
 
         int treatmentCourseId = treatmentCourseService.saveTreatmentCourse(treatmentCourse, diseaseSymptoms, drugsRecipes);
-        int consultationId = ParameterExtractor.extractInt(Parameter.CONSULTATION_ID, requestContext);
+        int consultationId = ParameterExtractor.extractInt(RequestParameters.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);
         consultation.setTreatmentCourseId(treatmentCourseId);
         consultation.setStatus(ConsultationStatus.COMPLETED);

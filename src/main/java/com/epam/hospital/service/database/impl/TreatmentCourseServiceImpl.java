@@ -1,12 +1,10 @@
 package com.epam.hospital.service.database.impl;
 
 import com.epam.hospital.dao.*;
-import com.epam.hospital.dao.connectionpool.ConnectionPool;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.*;
-import com.epam.hospital.dao.table_names.Column;
-import com.epam.hospital.model.treatment.Disease;
+import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
 import com.epam.hospital.model.treatment.DrugRecipe;
 import com.epam.hospital.model.treatment.TreatmentCourse;

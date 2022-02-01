@@ -2,18 +2,14 @@ package com.epam.hospital.dao.impl;
 
 import com.epam.hospital.dao.DiseaseSymptomDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
-import com.epam.hospital.dao.builder.EntityBuilder;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.table_names.Column;
-import com.epam.hospital.dao.table_names.Table;
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
-import com.epam.hospital.model.treatment.DrugRecipe;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiseaseSymptomDaoImpl extends AbstractDaoImpl<DiseaseSymptom> implements DiseaseSymptomDao{
     private final static String SAVE_DISEASE_SYMPTOMS_QUERY = String.format(

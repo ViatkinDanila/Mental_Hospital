@@ -1,11 +1,12 @@
 package com.epam.hospital.controller.command.impl.user;
 
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
+import com.epam.hospital.constant.web.SessionAttributes;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.controller.constant.Attribute;
-import com.epam.hospital.controller.constant.Page;
-import com.epam.hospital.controller.constant.RequestParameter;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.dto.DoctorInfoDto;
 import com.epam.hospital.model.dto.PatientInfoDto;
@@ -14,7 +15,6 @@ import com.epam.hospital.model.dto.UserInfoDto;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.treatment.type.CommunicationType;
-import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
 import com.epam.hospital.service.database.ConsultationService;
@@ -24,11 +24,9 @@ import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
 import com.epam.hospital.service.database.impl.PatientCardServiceImpl;
 import com.epam.hospital.service.database.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.constant.Parameter;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ProfilePageCommand implements Command {
@@ -39,10 +37,10 @@ public class ProfilePageCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         int profileId;
-        if (requestContext.getRequestParameter(Parameter.USER_ID) != null) {
-            profileId = ParameterExtractor.extractInt(Parameter.USER_ID, requestContext);
+        if (requestContext.getRequestParameter(RequestParameters.ID) != null) {
+            profileId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);
         } else {
-            profileId = (int) requestContext.getSessionAttribute(Attribute.USER_ID);
+            profileId = (int) requestContext.getSessionAttribute(SessionAttributes.USER_ID);
         }
         User user = userService.getUserById(profileId);
         //TODO: to improve this реализовать метод брать имя роли с бд по ид
@@ -55,7 +53,7 @@ public class ProfilePageCommand implements Command {
                 .status(user.isBanned() ? "BANNED" : "ACTIVE")
                 .email(user.getEmail())
                 .build();
-        requestContext.addAttribute(Attribute.USER_INFO, userInfoDto);
+        requestContext.addAttribute(RequestAttributes.USER_INFO, userInfoDto);
 
         List<Consultation> consultations;
         if (role.equalsIgnoreCase("USER")) {
@@ -65,7 +63,7 @@ public class ProfilePageCommand implements Command {
                     .age(patientCard.getAge())
                     .spareNumber(patientCard.getSpareNumber())
                     .build();
-            requestContext.addAttribute(Attribute.PATIENT_INFO, patientInfoDto);
+            requestContext.addAttribute(RequestAttributes.PATIENT_INFO, patientInfoDto);
 
             consultations = consultationService.getAllConsultationsByPatientCardId(patientCard.getCardId());
         } else {
@@ -76,7 +74,7 @@ public class ProfilePageCommand implements Command {
                     .workExperience(doctorInfo.getWorkExperience())
                     .build();
 
-            requestContext.addAttribute(Attribute.DOCTOR_INFO, doctorInfoDto);
+            requestContext.addAttribute(RequestAttributes.DOCTOR_INFO, doctorInfoDto);
             consultations = consultationService.getAllConsultationsByDoctorId(profileId);
         }
 
@@ -97,7 +95,7 @@ public class ProfilePageCommand implements Command {
             }
             consultationDtoList.add(shortConsultationDtoBuilder.build());
         }
-        requestContext.addAttribute(Attribute.CONSULTATIONS, consultationDtoList);
+        requestContext.addAttribute(RequestAttributes.CONSULTATIONS, consultationDtoList);
 
         return CommandResult.forward(Page.PROFILE_PAGE);
     }

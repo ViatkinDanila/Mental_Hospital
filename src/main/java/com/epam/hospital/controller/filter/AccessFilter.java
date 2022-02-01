@@ -1,8 +1,9 @@
 package com.epam.hospital.controller.filter;
 
-import com.epam.hospital.controller.constant.CommandName;
-import com.epam.hospital.util.constant.Attribute;
-import com.epam.hospital.util.constant.Parameter;
+import com.epam.hospital.constant.web.CommandName;
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
+import com.epam.hospital.constant.web.SessionAttributes;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,10 +27,10 @@ public class AccessFilter implements Filter{
                          ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
 
-        String commandName = servletRequest.getParameter(Parameter.COMMAND);
+        String commandName = servletRequest.getParameter(RequestParameters.COMMAND);
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         HttpSession session = httpRequest.getSession();
-        Object role = session.getAttribute(Attribute.ROLE);
+        Object role = session.getAttribute(SessionAttributes.ROLE);
 
         if (commandName != null) {
             if (role == null) {
@@ -38,7 +39,9 @@ public class AccessFilter implements Filter{
             System.out.println(role);
             boolean isAccessAllowed = isAccessAllowed(commandName, role.toString());
             if (!isAccessAllowed) {
-                ((HttpServletResponse) servletRequest).sendError(HttpServletResponse.SC_FORBIDDEN);
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_FORBIDDEN);
+                servletRequest.setAttribute(RequestAttributes.ERROR_MESSAGE, "Permission denied");
+                return;
             }
         }
         doNextFilter(servletRequest, servletResponse, filterChain);
@@ -69,6 +72,7 @@ public class AccessFilter implements Filter{
            return CommandName.CONSULTATION_PAGE.equals(commandName) ||
                   CommandName.CONSULTATION_REQUEST_PAGE.equals(commandName) ||
                   CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
+                   CommandName.HOSPITALIZATION_REQUEST.equalsIgnoreCase(commandName) ||
                    CommandName.HOME_PAGE.equals(commandName) ||
                    CommandName.DISEASES.equals(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
@@ -110,7 +114,7 @@ public class AccessFilter implements Filter{
 
     @Override
     public void destroy() {
-        Filter.super.destroy();
+
     }
 
 }

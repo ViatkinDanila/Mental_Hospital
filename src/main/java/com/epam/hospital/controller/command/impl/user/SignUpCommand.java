@@ -1,10 +1,12 @@
 package com.epam.hospital.controller.command.impl.user;
 
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.controller.constant.CommandName;
-import com.epam.hospital.controller.constant.Page;
+import com.epam.hospital.constant.web.CommandName;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.user.User;
@@ -14,11 +16,9 @@ import com.epam.hospital.service.database.impl.SignUpServiceImpl;
 import com.epam.hospital.service.database.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
-import com.epam.hospital.util.constant.Attribute;
-import com.epam.hospital.util.constant.Parameter;
+
 
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 
 public class SignUpCommand implements Command {
     static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
@@ -31,33 +31,33 @@ public class SignUpCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        String login = ParameterExtractor.extractString(Parameter.LOGIN, requestContext);
+        String login = ParameterExtractor.extractString(RequestParameters.LOGIN, requestContext);
         boolean isUserExist = userService.isUserExistByLogin(login);
         if (!isUserExist){
-            requestContext.addAttribute(Attribute.LOGIN, login);
+            requestContext.addAttribute(RequestAttributes.LOGIN, login);
 
-            String password = ParameterExtractor.extractString(Parameter.PASSWORD, requestContext);
+            String password = ParameterExtractor.extractString(RequestParameters.PASSWORD, requestContext);
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hashString(password, salt);
             User user = User.builder()
                     .email(login)
                     .hashedPassword(hashedPassword)
-                    .firstName(ParameterExtractor.extractString(Parameter.FIRST_NAME, requestContext))
+                    .firstName(ParameterExtractor.extractString(RequestParameters.FIRST_NAME, requestContext))
                     .isBanned(false)
-                    .lastName(ParameterExtractor.extractString(Parameter.LAST_NAME, requestContext))
+                    .lastName(ParameterExtractor.extractString(RequestParameters.LAST_NAME, requestContext))
                     .userRoleId(USER_ROLE_ID)
-                    .number(ParameterExtractor.extractString(Parameter.PHONE_NUMBER, requestContext))
+                    .number(ParameterExtractor.extractString(RequestParameters.PHONE_NUMBER, requestContext))
                     .build();
             PatientCard patientCard = PatientCard.builder()
-                    .age(ParameterExtractor.extractInt(Parameter.AGE, requestContext))
-                    .sex(ParameterExtractor.extractString(Parameter.SEX, requestContext))
-                    .spareNumber(ParameterExtractor.extractString(Parameter.SPARE_PHONE_NUMBER, requestContext))
+                    .age(ParameterExtractor.extractInt(RequestParameters.AGE, requestContext))
+                    .sex(ParameterExtractor.extractString(RequestParameters.SEX, requestContext))
+                    .spareNumber(ParameterExtractor.extractString(RequestParameters.SPARE_PHONE_NUMBER, requestContext))
                     .build();
             signUpService.signUp(user, patientCard);
 
             return CommandResult.redirect(LOGIN_PAGE_COMMAND);
         } else {
-            requestContext.addAttribute(Attribute.ERROR_MESSAGE, INVALID_LOGIN_KEY);
+            requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, INVALID_LOGIN_KEY);
         }
         return CommandResult.forward(Page.SIGN_UP_PAGE);
     }

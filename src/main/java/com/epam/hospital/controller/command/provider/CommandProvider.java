@@ -3,11 +3,13 @@ package com.epam.hospital.controller.command.provider;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.impl.Consultation.*;
 import com.epam.hospital.controller.command.impl.ForwardPageCommand;
+import com.epam.hospital.controller.command.impl.Hospitalization.HospitalizationRequestCommand;
+import com.epam.hospital.controller.command.impl.Hospitalization.HospitalizationRequestPageCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;
 import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
 import com.epam.hospital.controller.command.impl.user.*;
-import com.epam.hospital.controller.constant.CommandName;
+import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.command.impl.ConsultationPageCommand;
 
 import java.util.HashMap;
@@ -24,6 +26,7 @@ public final class CommandProvider {
         commands.put(CommandName.CONSULTATION_COMPLETE, new ConsultationCompleteCommand());
         commands.put(CommandName.CONSULTATION_APPROVE, new ConsultationApproveCommand());
         commands.put(CommandName.CONSULTATION_REQUEST, new ConsultationRequestCommand());
+        commands.put(CommandName.HOSPITALIZATION_REQUEST, new HospitalizationRequestCommand());
         commands.put(CommandName.BAN, new BanUserCommand());
         commands.put(CommandName.UNBAN, new UnbanUserCommand());
 
@@ -35,6 +38,7 @@ public final class CommandProvider {
         commands.put(CommandName.USERS, new GetAllUsersCommand());
         commands.put(CommandName.PROFILE_PAGE, new ProfilePageCommand());
         commands.put(CommandName.CONSULTATION_REQUEST_PAGE, new ConsultationRequestPageCommand());
+        commands.put(CommandName.HOSPITALIZATION_REQUEST_PAGE, new HospitalizationRequestPageCommand());
 
     }
 

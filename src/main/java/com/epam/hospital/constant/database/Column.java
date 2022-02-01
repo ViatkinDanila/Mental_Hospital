@@ -1,4 +1,4 @@
-package com.epam.hospital.dao.table_names;
+package com.epam.hospital.constant.database;
 
 public class Column {
 
@@ -8,7 +8,7 @@ public class Column {
     public static final String CHAMBER_STAYING_DATE_OUT = "discharge_date";
 
     public static final String CHAMBER_ID = "id";
-    public static final String CHAMBER_CHAMBER_TYPE_ID = "chambers_type_id";
+    public static final String CHAMBER_CHAMBER_TYPE_ID = "chamber_type_id";
     public static final String CHAMBER_HOSPITAL_ID = "hospital_id";
     public static final String CHAMBER_FREE_BEDS = "num_free_beds";
 

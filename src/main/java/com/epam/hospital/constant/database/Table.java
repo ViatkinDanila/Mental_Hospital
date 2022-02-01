@@ -1,12 +1,11 @@
-package com.epam.hospital.dao.table_names;
+package com.epam.hospital.constant.database;
 
 public class Table {
     public static final String CHAMBERS_TABLE = "chambers";
-    public static final String CHAMBERS_TYPE_TABLE = "chambers_type";
+    public static final String CHAMBERS_TYPE_TABLE = "chamber_types";
     public static final String CONSULTATION_TABLE = "consultations";
     public static final String DISEASES_TABLE = "diseases";
     public static final String DRUGS_TABLE = "drugs";
-    public static final String HOSPITAL_TABLE = "hospitals";
     public static final String HOSPITALIZATION_TABLE = "hospitalizations";
     public static final String PATIENT_CARD_TABLE = "patient_cards";
     public static final String TREATMENT_COURSES_TABLE = "treatment_courses";

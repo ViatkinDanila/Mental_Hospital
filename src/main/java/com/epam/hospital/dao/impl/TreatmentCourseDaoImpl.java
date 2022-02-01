@@ -3,14 +3,12 @@ package com.epam.hospital.dao.impl;
 import com.epam.hospital.dao.TreatmentCourseDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.table_names.Column;
-import com.epam.hospital.dao.table_names.Table;
-import com.epam.hospital.model.treatment.PatientCard;
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.TreatmentCourse;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 public class TreatmentCourseDaoImpl extends AbstractDaoImpl<TreatmentCourse> implements TreatmentCourseDao {
     public static final String SAVE_TREATMENT_COURSE_QUERY = String.format(

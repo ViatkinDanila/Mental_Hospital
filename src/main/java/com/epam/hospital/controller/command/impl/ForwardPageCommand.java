@@ -1,10 +1,10 @@
 package com.epam.hospital.controller.command.impl;
 
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
-import com.epam.hospital.controller.constant.CommandName;
+import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.command.CommandResult;
-import com.epam.hospital.controller.constant.Page;
-import com.epam.hospital.controller.constant.RequestParameter;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class ForwardPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) {
-        String command = requestContext.getRequestParameter(RequestParameter.COMMAND);
+        String command = requestContext.getRequestParameter(RequestParameters.COMMAND);
         String page = commandPages.get(command);
         return CommandResult.forward(page);
     }

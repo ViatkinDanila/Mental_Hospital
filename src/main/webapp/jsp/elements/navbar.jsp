@@ -69,11 +69,18 @@
                 </a>
             </div>
             <sc:access role="USER">
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation-request-page"
-                   class="nav-link text-light ml-5">
+                <div class="d-flex">
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation-request-page"
+                       class="nav-link text-light ml-5 mr-2">
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.request.consultation"/></span>
-                </a>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization-request-page"
+                       class="nav-link text-light ml-5">
+                    <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
+                            key="navbar.request.hospitalization"/></span>
+                    </a>
+                </div>
             </sc:access>
             <sc:access role="ADMIN">
                 <a href="${pageContext.request.contextPath}/MentalHospital?command=users"
@@ -83,6 +90,11 @@
                 </a>
             </sc:access>
             <sc:access role="DOCTOR">
+                <div>
+                    <span class="h1 font-weight-bold"></span>
+                </div>
+            </sc:access>
+            <sc:access role="GUEST">
                 <div>
                     <span class="h1 font-weight-bold"></span>
                 </div>

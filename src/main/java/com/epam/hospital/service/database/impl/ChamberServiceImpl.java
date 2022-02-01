@@ -16,6 +16,8 @@ import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.service.database.ChamberService;
 import com.epam.hospital.service.exception.ServiceException;
 
+import java.util.List;
+
 
 public class ChamberServiceImpl implements ChamberService {
     private static final ChamberService instance = new ChamberServiceImpl();
@@ -98,6 +100,17 @@ public class ChamberServiceImpl implements ChamberService {
             return chamberStayingDao.findById(chamberId, hospitalizationId);
         } catch(DaoException e){
             throw new SecurityException("Can't get chamber staying.", e);
+        }
+    }
+
+    @Override
+    public List<ChamberType> getAllChamberTypes() throws ServiceException {
+        ChamberTypeDao chamberTypeDao = new ChamberTypeDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(chamberTypeDao);
+            return chamberTypeDao.findAll();
+        } catch(DaoException e){
+            throw new SecurityException("Can't update chamber type.", e);
         }
     }
 }
