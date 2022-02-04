@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -17,13 +16,13 @@ import java.util.Objects;
 @Builder
 public class Consultation implements Entity {
     //TODO онли ссылочные типы
-    private int consultationId;
-    private int doctorId;
-    private int patientId;
-    private CommunicationType communicationType;
-    private Date date;
-    private int duration;
-    private Integer treatmentCourseId;
-    private double price;
-    private ConsultationStatus status;
+     int consultationId;
+     int doctorId;
+     int patientId;
+     CommunicationType communicationType;
+     Date date;
+     int duration;
+     Integer treatmentCourseId;
+     double price;
+     ConsultationStatus status;
 }

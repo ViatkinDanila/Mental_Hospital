@@ -89,7 +89,7 @@ public class ConsultationPageCommand implements Command {
 
                     .instruction(treatmentCourse.getInstruction());
         }
-        requestContext.addAttribute("consultation", consultationDtoBuilder.build());
+        requestContext.addAttribute(RequestAttributes.CONSULTATION, consultationDtoBuilder.build());
         return CommandResult.forward(Page.CONSULTATION_PAGE);
     }
 }

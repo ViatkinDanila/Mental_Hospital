@@ -33,10 +33,7 @@ public class ConsultationRequestCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        //
-        //patientCardIdStr можно брать из сессии
-        //
-        log.info(ParameterExtractor.extractString("isOnline", requestContext));
+
         String patentCardIdStr = requestContext.getSessionAttribute(SessionAttributes.PATIENT_CARD_ID).toString();
         int patientCardId = Integer.parseInt(patentCardIdStr);
         String communicationTypeStr = ParameterExtractor.extractString(RequestParameters.IS_ONLINE, requestContext);
@@ -53,7 +50,7 @@ public class ConsultationRequestCommand implements Command {
 
         Consultation consultation = Consultation.builder()
                 .communicationType(communicationType)
-                .date(new Date(System.currentTimeMillis()))
+                .date(ParameterExtractor.extractDate(RequestParameters.DATE, requestContext))
                 .doctorId(doctor.getUserId())
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)
