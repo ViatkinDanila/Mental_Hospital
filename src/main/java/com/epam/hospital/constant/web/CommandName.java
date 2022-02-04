@@ -9,6 +9,9 @@ public final class CommandName {
     public static final String CONSULTATION_REQUEST = "consultation-request";
     public static final String CONSULTATION_REJECT = "consultation-reject";
     public static final String HOSPITALIZATION_REQUEST = "hospitalization-request";
+    public static final String HOSPITALIZATION_COMPLETE = "hospitalization-complete";
+    public static final String HOSPITALIZATION_REJECT = "hospitalization-reject";
+    public static final String HOSPITALIZATION_APPROVE = "hospitalization-approve";
     public static final String BAN = "ban";
     public static final String UNBAN = "unban";
 
@@ -19,6 +22,7 @@ public final class CommandName {
     public static final String DISEASES = "diseases";
     public static final String LOGIN_PAGE = "login-page";
     public static final String CONSULTATION_PAGE = "consultation";
+    public static final String HOSPITALIZATION_PAGE = "hospitalization";
     public static final String HOME_PAGE = "home-page";
     public static final String PROFILE_PAGE = "profile-page";
     public static final String CONSULTATION_REQUEST_PAGE = "consultation-request-page";

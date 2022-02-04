@@ -3,8 +3,8 @@ package com.epam.hospital.controller.command.provider;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.impl.Consultation.*;
 import com.epam.hospital.controller.command.impl.ForwardPageCommand;
-import com.epam.hospital.controller.command.impl.Hospitalization.HospitalizationRequestCommand;
-import com.epam.hospital.controller.command.impl.Hospitalization.HospitalizationRequestPageCommand;
+import com.epam.hospital.controller.command.impl.Hospitalization.*;
+import com.epam.hospital.controller.command.impl.HospitalizationPageCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;
 import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
@@ -20,6 +20,7 @@ public final class CommandProvider {
 
     public CommandProvider() {
         commands.put(CommandName.CONSULTATION_PAGE, new ConsultationPageCommand());
+        commands.put(CommandName.HOSPITALIZATION_PAGE, new HospitalizationPageCommand());
         commands.put(CommandName.SIGN_UP, new SignUpCommand());
         commands.put(CommandName.SIGN_OUT, new SignOutCommand());
         commands.put(CommandName.LOGIN, new LoginCommand());
@@ -27,6 +28,9 @@ public final class CommandProvider {
         commands.put(CommandName.CONSULTATION_APPROVE, new ConsultationApproveCommand());
         commands.put(CommandName.CONSULTATION_REQUEST, new ConsultationRequestCommand());
         commands.put(CommandName.HOSPITALIZATION_REQUEST, new HospitalizationRequestCommand());
+        commands.put(CommandName.HOSPITALIZATION_COMPLETE, new HospitalizationCompleteCommand());
+        commands.put(CommandName.HOSPITALIZATION_REJECT, new HospitalizationRejectCommand());
+        commands.put(CommandName.HOSPITALIZATION_APPROVE, new HospitalizationApproveCommand());
         commands.put(CommandName.BAN, new BanUserCommand());
         commands.put(CommandName.UNBAN, new UnbanUserCommand());
 

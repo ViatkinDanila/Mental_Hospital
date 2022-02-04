@@ -15,6 +15,7 @@ public class ChamberStayingBuilder implements EntityBuilder<ChamberStaying> {
         chamberStaying.setHospitalizationId((resultSet.getInt(Column.CHAMBER_STAYING_HOSPITALIZATION_ID)));
         chamberStaying.setDateIn(resultSet.getDate(Column.CHAMBER_STAYING_DATE_IN));
         chamberStaying.setDateOut(resultSet.getDate(Column.CHAMBER_STAYING_DATE_OUT));
+        chamberStaying.setPrice(resultSet.getDouble(Column.CHAMBER_STAYING_PRICE));
         return chamberStaying;
     }
 }

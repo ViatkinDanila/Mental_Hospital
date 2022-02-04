@@ -6,6 +6,7 @@ public class Column {
     public static final String CHAMBER_STAYING_HOSPITALIZATION_ID = "hospitalization_id";
     public static final String CHAMBER_STAYING_DATE_IN = "hospitalization_date";
     public static final String CHAMBER_STAYING_DATE_OUT = "discharge_date";
+    public static final String CHAMBER_STAYING_PRICE = "price";
 
     public static final String CHAMBER_ID = "id";
     public static final String CHAMBER_CHAMBER_TYPE_ID = "chamber_type_id";

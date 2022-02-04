@@ -11,11 +11,12 @@ import java.sql.SQLException;
 
 public class HospitalizationBuilder implements EntityBuilder<Hospitalization> {
     public Hospitalization build(ResultSet resultSet) throws SQLException {
-        Hospitalization hospitalization = new Hospitalization();
-        hospitalization.setHospitalizationId(resultSet.getInt(Column.HOSPITALIZATION_ID));
-        hospitalization.setPatientId(resultSet.getInt(Column.HOSPITALIZATION_PATIENT_ID));
-        hospitalization.setStatus(HospitalizationStatus.valueOf(resultSet.getString(Column.HOSPITALIZATION_STATUS)));
-        hospitalization.setDoctorId(resultSet.getInt(Column.HOSPITALIZATION_DOCTOR_ID));
+        Hospitalization hospitalization = Hospitalization.builder()
+        .id(resultSet.getInt(Column.HOSPITALIZATION_ID))
+        .patientId(resultSet.getInt(Column.HOSPITALIZATION_PATIENT_ID))
+        .status(HospitalizationStatus.valueOf(resultSet.getString(Column.HOSPITALIZATION_STATUS)))
+        .doctorId(resultSet.getInt(Column.HOSPITALIZATION_DOCTOR_ID))
+        .build();
         return hospitalization;
     }
 }

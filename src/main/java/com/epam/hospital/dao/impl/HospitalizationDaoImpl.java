@@ -56,12 +56,17 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
 
     @Override
     public List<Hospitalization> findByPatientId(int patientId) throws DaoException {
-        return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId);
+        return findByField(Column.HOSPITALIZATION_PATIENT_ID, patientId);
+    }
+
+    @Override
+    public List<Hospitalization> findByDoctorId(int doctorId) throws DaoException {
+        return findByField(Column.HOSPITALIZATION_DOCTOR_ID, doctorId);
     }
 
     @Override
     public int getHospitalizationIdByPatientId(int patientId) throws DaoException {
-        return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId).get(0).getHospitalizationId();
+        return findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId).get(0).getId();
     }
 
     private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException{
@@ -69,7 +74,7 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
         statement.setInt(2,hospitalization.getDoctorId());
         statement.setString(3,hospitalization.getStatus().toString());
         if (action.equals(UPDATE_HOSPITALIZATION_QUERY)){
-            statement.setInt(4, hospitalization.getHospitalizationId());
+            statement.setInt(4, hospitalization.getId());
         }
     }
 }

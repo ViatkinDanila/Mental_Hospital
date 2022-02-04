@@ -16,8 +16,8 @@ public class RequestContextMapper {
         Enumeration<String> attributeNames = request.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
             String attributeName = attributeNames.nextElement();
-            Object attribute = request.getAttribute(attributeName);
-            attributes.put(attributeName, attribute);
+            Object RequestAttributes = request.getAttribute(attributeName);
+            attributes.put(attributeName, RequestAttributes);
         }
 
         Map<String, String[]> parameters = request.getParameterMap();

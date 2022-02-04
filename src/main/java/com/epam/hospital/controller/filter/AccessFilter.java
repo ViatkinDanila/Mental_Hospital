@@ -73,17 +73,22 @@ public class AccessFilter implements Filter{
                   CommandName.CONSULTATION_REQUEST_PAGE.equals(commandName) ||
                   CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
                    CommandName.HOSPITALIZATION_REQUEST.equalsIgnoreCase(commandName) ||
+                   CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
                    CommandName.HOME_PAGE.equals(commandName) ||
                    CommandName.DISEASES.equals(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
                    CommandName.SIGN_OUT.equals(commandName) ||
                    CommandName.PROFILE_PAGE.equals(commandName) ||
+                   CommandName.CONSULTATION_REQUEST.equals(commandName) ||
                    CommandName.LOGIN_PAGE.equals(commandName);
        }
 
        if (role.equals(DOCTOR_ROLE)) {
            return CommandName.CONSULTATION_PAGE.equals(commandName) ||
-                   CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
+                   CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
+                   CommandName.HOSPITALIZATION_APPROVE.equalsIgnoreCase(commandName) ||
+                   CommandName.HOSPITALIZATION_REJECT.equalsIgnoreCase(commandName) ||
+                   CommandName.HOSPITALIZATION_COMPLETE.equalsIgnoreCase(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
                    CommandName.DISEASES.equals(commandName) ||
                    CommandName.PROFILE_PAGE.equals(commandName) ||
@@ -93,22 +98,6 @@ public class AccessFilter implements Filter{
                    CommandName.CONSULTATION_REJECT.equals(commandName) ||
                    CommandName.CONSULTATION_APPROVE.equals(commandName);
        }
-//           case CommandName.SIGN_UP:
-//           case CommandName.SIGN_UP_PAGE:
-//           case CommandName.LOGIN_PAGE:
-//               return role.equalsIgnoreCase(GUEST_ROLE);
-//            CommandName.CONSULTATION_PAGE:
-//            CommandName.CONSULTATION_REQUEST_PAGE:
-//            CommandName.HOSPITALIZATION_REQUEST_PAGE:
-//            CommandName.PROFILE_PAGE:
-//               return role.equalsIgnoreCase(USER_ROLE);
-//           case CommandName.CONSULTATION_COMPLETE:
-//           case CommandName.CONSULTATION_APPROVE:
-//           case CommandName.CONSULTATION_REQUEST:
-//               return role.equalsIgnoreCase(DOCTOR_ROLE);
-//           case CommandName.BAN_USER:
-//           case CommandName.UNBAN_USER:
-//                return role.equalsIgnoreCase(ADMIN_ROLE);
         return true;
     }
 

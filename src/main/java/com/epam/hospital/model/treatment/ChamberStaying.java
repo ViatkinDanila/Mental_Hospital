@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +15,7 @@ import java.sql.Date;
 public class ChamberStaying implements Entity {
     private int hospitalizationId;
     private int chamberId;
+    private double price;
     private Date dateIn;
     private Date dateOut;
 }

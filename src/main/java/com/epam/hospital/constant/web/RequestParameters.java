@@ -24,7 +24,9 @@ public final class RequestParameters {
     public static final String HOSPITALIZATION_ID = "id";
     public static final String DATE_IN = "dateIn";
     public static final String DATE_OUT = "dateOut";
+    public static final String DATE = "date";
     public final static String DURATION = "duration";
     public final static String ID = "id";
     public final static String PAGE = "page";
+    public final static String PRICE = "price";
 }

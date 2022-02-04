@@ -14,20 +14,20 @@ import com.epam.hospital.service.database.impl.HospitalizationServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 
 public class HospitalizationApproveCommand implements Command {
-    private static final String PROFILE_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
+    private static final String HOSPITALIZATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_PAGE ;
 
     HospitalizationService hospitalizationService = new HospitalizationServiceImpl();
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
 
-        int doctorId = Integer.parseInt(requestContext.getSessionAttribute(SessionAttributes.DOCTOR_ID).toString());
+        int doctorId = Integer.parseInt(requestContext.getSessionAttribute(SessionAttributes.USER_ID).toString());
 
         int hospitalizationId = ParameterExtractor.extractInt(RequestParameters.HOSPITALIZATION_ID, requestContext);
         Hospitalization hospitalization = hospitalizationService.getHospitalizationById(hospitalizationId);
 
         hospitalization.setDoctorId(doctorId);
-        hospitalization.setStatus(HospitalizationStatus.ACTIVE);
+        hospitalization.setStatus(HospitalizationStatus.APPROVED);
         hospitalizationService.update(hospitalization);
-        return CommandResult.redirect(PROFILE_PAGE_COMMAND);
+        return CommandResult.redirect(HOSPITALIZATION_PAGE_COMMAND + "&id=" + hospitalizationId);
     }
 }

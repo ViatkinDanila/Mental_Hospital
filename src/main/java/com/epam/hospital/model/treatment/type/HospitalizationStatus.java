@@ -2,7 +2,7 @@ package com.epam.hospital.model.treatment.type;
 
 public enum HospitalizationStatus {
     PENDING,
-    ACTIVE,
+    APPROVED,
     COMPLETED,
     REJECTED
 }

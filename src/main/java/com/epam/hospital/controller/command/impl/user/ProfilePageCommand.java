@@ -8,21 +8,16 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
-import com.epam.hospital.model.dto.DoctorInfoDto;
-import com.epam.hospital.model.dto.PatientInfoDto;
-import com.epam.hospital.model.dto.ShortConsultationDto;
-import com.epam.hospital.model.dto.UserInfoDto;
+import com.epam.hospital.model.dto.*;
+import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Consultation;
+import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
-import com.epam.hospital.service.database.ConsultationService;
-import com.epam.hospital.service.database.PatientCardService;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
-import com.epam.hospital.service.database.impl.PatientCardServiceImpl;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.database.*;
+import com.epam.hospital.service.database.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
 
 
@@ -33,6 +28,8 @@ public class ProfilePageCommand implements Command {
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final PatientCardService patientCardService = PatientCardServiceImpl.getInstance();
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
+    private static final HospitalizationService hospitalizationService = HospitalizationServiceImpl.getInstance();
+    private static final ChamberService chamberService = ChamberServiceImpl.getInstance();
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
@@ -43,8 +40,8 @@ public class ProfilePageCommand implements Command {
             profileId = (int) requestContext.getSessionAttribute(SessionAttributes.USER_ID);
         }
         User user = userService.getUserById(profileId);
-        //TODO: to improve this реализовать метод брать имя роли с бд по ид
-        String role = user.getUserRoleId() == 1 ? "USER" : "DOCTOR";
+        //TODO: проверить работу метода
+        String role = userService.getUserRoleById(user.getUserRoleId());
 
         UserInfoDto userInfoDto = UserInfoDto.builder()
                 .fullName(user.getFirstName() + " " + user.getLastName())
@@ -56,6 +53,8 @@ public class ProfilePageCommand implements Command {
         requestContext.addAttribute(RequestAttributes.USER_INFO, userInfoDto);
 
         List<Consultation> consultations;
+        List<Hospitalization> hospitalizations;
+        List<ChamberStaying> chamberStayings;
         if (role.equalsIgnoreCase("USER")) {
             int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
             PatientCard patientCard = patientCardService.getPatientCardById(patientCardId);
@@ -66,6 +65,8 @@ public class ProfilePageCommand implements Command {
             requestContext.addAttribute(RequestAttributes.PATIENT_INFO, patientInfoDto);
 
             consultations = consultationService.getAllConsultationsByPatientCardId(patientCard.getCardId());
+            hospitalizations = hospitalizationService.getAllHospitalizationsByPatientCardId(patientCard.getCardId());
+            chamberStayings = getAllChamberStayings(hospitalizations);
         } else {
             DoctorInfo doctorInfo = userService.getDoctorInfoById(profileId);
             DoctorInfoDto doctorInfoDto = DoctorInfoDto.builder()
@@ -75,7 +76,10 @@ public class ProfilePageCommand implements Command {
                     .build();
 
             requestContext.addAttribute(RequestAttributes.DOCTOR_INFO, doctorInfoDto);
+
             consultations = consultationService.getAllConsultationsByDoctorId(profileId);
+            hospitalizations = hospitalizationService.getAllHospitalizationsByDoctorCardId(profileId);
+            chamberStayings = getAllChamberStayings(hospitalizations);
         }
 
         List<ShortConsultationDto> consultationDtoList = new ArrayList<>();
@@ -97,6 +101,34 @@ public class ProfilePageCommand implements Command {
         }
         requestContext.addAttribute(RequestAttributes.CONSULTATIONS, consultationDtoList);
 
+        List<ShortHospitalizationDto> hospitalizationDtoList = new ArrayList<>();
+        for (int i = 0; i < hospitalizations.size() && i < chamberStayings.size(); i++) {
+            ShortHospitalizationDto.ShortHospitalizationDtoBuilder shortHospitalizationDtoBuilder = ShortHospitalizationDto.builder()
+                    .id(hospitalizations.get(i).getId())
+                    .hospitalizationStatus(hospitalizations.get(i).getStatus())
+                    .chamberNumber(chamberStayings.get(i).getChamberId());
+
+            if (role.equalsIgnoreCase("USER")) {
+                User doctor = userService.getUserById(hospitalizations.get(i).getDoctorId());
+                shortHospitalizationDtoBuilder.doctorFullName(doctor.getFirstName() + " " + doctor.getLastName());
+            } else {
+                PatientCard patientCard = patientCardService.getPatientCardById(hospitalizations.get(i).getPatientId());
+                User patient = userService.getUserById(patientCard.getUserId());
+                shortHospitalizationDtoBuilder.patientFullName(patient.getFirstName() + " " + patient.getLastName());
+            }
+            hospitalizationDtoList.add(shortHospitalizationDtoBuilder.build());
+        }
+        requestContext.addAttribute(RequestAttributes.HOSPITALIZATIONS, hospitalizationDtoList);
+
         return CommandResult.forward(Page.PROFILE_PAGE);
+    }
+
+    private List<ChamberStaying> getAllChamberStayings(List<Hospitalization> hospitalizations) throws ServiceException{
+        List<ChamberStaying> stayings = new ArrayList<>();
+            for (Hospitalization hospitalization : hospitalizations){
+                ChamberStaying chamberStaying = chamberService.getChamberStayingById(hospitalization.getId());
+                stayings.add(chamberStaying);
+            }
+       return stayings;
     }
 }

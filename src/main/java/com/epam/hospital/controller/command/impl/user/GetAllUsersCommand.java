@@ -28,7 +28,7 @@ public class GetAllUsersCommand implements Command {
                     .email(user.getEmail())
                     .fullName(user.getFirstName() + " " + user.getLastName())
                     .status(user.isBanned() ? "BANNED" : "ACTIVE")
-                    .role(user.getUserRoleId() == 1 ? "USER" : "ADMIN")
+                    .role(user.getUserRoleId() == 1 ? "USER" : user.getUserRoleId() == 2 ?  "ADMIN" : "DOCTOR")
                     .id(user.getUserId())
                     .build();
             userInfoDtos.add(userInfoDto);

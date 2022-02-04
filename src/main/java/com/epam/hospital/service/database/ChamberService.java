@@ -11,9 +11,10 @@ public interface ChamberService {
     boolean isChamberTypeAvailable(int chamberTypeId) throws ServiceException;
     ChamberType getChamberTypeById(int chamberTypeId)  throws ServiceException;
     Chamber getAvailableChamber(int chamberTypeId) throws ServiceException;
+    Chamber getChamberById(int chamberId) throws ServiceException;
     List<ChamberType> getAllChamberTypes() throws ServiceException;
-    ChamberStaying getChamberStayingById(int chamberId, int hospitalizationId) throws ServiceException;
+    ChamberStaying getChamberStayingById(int hospitalizationId) throws ServiceException;
     void updateChamber(Chamber chamber)  throws ServiceException;
-    void updateChamberType(ChamberType chabmerType) throws ServiceException;
+    void updateChamberType(ChamberType chamberType) throws ServiceException;
     void updateChamberStaying(ChamberStaying chamberStaying) throws ServiceException;
 }

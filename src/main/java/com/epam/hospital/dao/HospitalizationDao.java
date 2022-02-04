@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface HospitalizationDao extends AbstractDao<Hospitalization> {
     List<Hospitalization> findByPatientId(int patientId) throws DaoException;
+    List<Hospitalization> findByDoctorId(int doctorId) throws DaoException;
     int getHospitalizationIdByPatientId(int patientId) throws DaoException;
 }

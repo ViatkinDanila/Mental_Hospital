@@ -42,9 +42,7 @@ public class HospitalizationRequestCommand implements Command {
         String chamberTypeIdString = ParameterExtractor.extractString(RequestParameters.CHAMBER_TYPE_ID, requestContext);
         int chamberTypeId = Integer.parseInt(chamberTypeIdString);
         ChamberType chamberType = chamberService.getChamberTypeById(chamberTypeId);
-
         if(chamberType.getNumberOfFreeRooms() >= 1) {
-
             Chamber chamber = chamberService.getAvailableChamber(chamberTypeId);
             int chamberId = chamber.getChamberId();
             if (chamber.getNumberOfFreeBeds() == chamberType.getNumberOfBeds()){
@@ -68,6 +66,7 @@ public class HospitalizationRequestCommand implements Command {
             ChamberStaying chamberStaying = ChamberStaying.builder()
                     .chamberId(chamberId)
                     .dateIn(new Date(System.currentTimeMillis()))
+                    .dateOut(new Date(System.currentTimeMillis()))
                     .build();
 
             hospitalizationService.saveHospitalization(hospitalization, chamberStaying);

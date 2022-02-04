@@ -60,6 +60,17 @@ public class ChamberServiceImpl implements ChamberService {
     }
 
     @Override
+    public Chamber getChamberById(int chamberId) throws ServiceException {
+        ChamberDao chamberDao = new ChamberDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(true, chamberDao);
+            return chamberDao.findById(chamberId);
+        } catch(DaoException e){
+            throw new SecurityException("Can't ckeck is chamber available.", e);
+        }
+    }
+
+    @Override
     public void updateChamber(Chamber chamber) throws ServiceException {
         ChamberDao chamberDao = new ChamberDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
@@ -93,11 +104,11 @@ public class ChamberServiceImpl implements ChamberService {
     }
 
     @Override
-    public ChamberStaying getChamberStayingById(int chamberId, int hospitalizationId) throws ServiceException {
+    public ChamberStaying getChamberStayingById(int hospitalizationId) throws ServiceException {
         ChamberStayingDao chamberStayingDao = new ChamberStayingDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, chamberStayingDao);
-            return chamberStayingDao.findById(chamberId, hospitalizationId);
+            return chamberStayingDao.findById(hospitalizationId);
         } catch(DaoException e){
             throw new SecurityException("Can't get chamber staying.", e);
         }
@@ -113,4 +124,5 @@ public class ChamberServiceImpl implements ChamberService {
             throw new SecurityException("Can't update chamber type.", e);
         }
     }
+
 }

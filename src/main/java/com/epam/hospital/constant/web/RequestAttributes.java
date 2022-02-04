@@ -11,6 +11,10 @@ public class RequestAttributes {
     public static final String DOCTORS = "doctors";
     public static final String DOCTOR = "doctor";
     public static final String CONSULTATIONS = "consultations";
+    public static final String HOSPITALIZATIONS = "hospitalizations";
+    public static final String CONSULTATION = "consultation";
+    public static final String HOSPITALIZATION = "hospitalization";
+    public static final String HOSPITALIZATION_ID = "hospitalizationId";
     public static final String USER_INFO = "userInfo";
     public static final String DOCTOR_INFO = "doctorInfo";
     public static final String PATIENT_INFO = "patientInfo";

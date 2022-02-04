@@ -14,8 +14,7 @@ import com.epam.hospital.service.exception.ServiceException;
 
 public class HospitalizationRejectCommand implements Command {
     HospitalizationService hospitalizationService = new HospitalizationServiceImpl();
-    //TODO куда переходим?
-    private static final String PROFILE_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
+    private static final String HOSPITALIZATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_PAGE ;
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
@@ -23,6 +22,6 @@ public class HospitalizationRejectCommand implements Command {
         Hospitalization hospitalization = hospitalizationService.getHospitalizationById(hospitalizationId);
         hospitalization.setStatus(HospitalizationStatus.REJECTED);
         hospitalizationService.update(hospitalization);
-        return CommandResult.redirect(PROFILE_PAGE_COMMAND);
+        return CommandResult.redirect(HOSPITALIZATION_PAGE_COMMAND);
     }
 }

@@ -14,8 +14,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Hospitalization implements Entity {
-    private int hospitalizationId;
-    private int patientId;
-    private int doctorId;
-    private HospitalizationStatus status;
+    Integer id;
+    Integer patientId;
+    Integer doctorId;
+    HospitalizationStatus status;
 }
