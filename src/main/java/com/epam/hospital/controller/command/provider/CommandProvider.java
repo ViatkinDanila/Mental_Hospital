@@ -27,6 +27,7 @@ public final class CommandProvider {
         commands.put(CommandName.CONSULTATION_COMPLETE, new ConsultationCompleteCommand());
         commands.put(CommandName.CONSULTATION_APPROVE, new ConsultationApproveCommand());
         commands.put(CommandName.CONSULTATION_REQUEST, new ConsultationRequestCommand());
+        commands.put(CommandName.CONSULTATION_REJECT, new ConsultationRejectCommand());
         commands.put(CommandName.HOSPITALIZATION_REQUEST, new HospitalizationRequestCommand());
         commands.put(CommandName.HOSPITALIZATION_COMPLETE, new HospitalizationCompleteCommand());
         commands.put(CommandName.HOSPITALIZATION_REJECT, new HospitalizationRejectCommand());

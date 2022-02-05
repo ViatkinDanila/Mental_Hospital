@@ -21,7 +21,6 @@ public class ConsultationRejectCommand implements Command {
         int consultationId = ParameterExtractor.extractInt(RequestParameters.CONSULTATION_ID, requestContext);
         Consultation consultation = consultationService.getConsultationById(consultationId);;
         consultation.setStatus(ConsultationStatus.REJECTED);
-        consultation.setTreatmentCourseId(null);
         consultationService.update(consultation);
         return CommandResult.redirect(CONSULTATION_PAGE_COMMAND + "&id=" + consultationId);
     }

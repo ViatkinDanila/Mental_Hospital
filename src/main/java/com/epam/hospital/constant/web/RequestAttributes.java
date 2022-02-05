@@ -19,4 +19,5 @@ public class RequestAttributes {
     public static final String DOCTOR_INFO = "doctorInfo";
     public static final String PATIENT_INFO = "patientInfo";
     public static final String CHAMBER_TYPES = "chamberTypes";
+    public static final String LANGUAGE = "language";
 }
