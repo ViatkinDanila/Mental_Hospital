@@ -47,10 +47,9 @@ public class ConsultationRequestCommand implements Command {
         String doctorName = ParameterExtractor.extractString(RequestParameters.DOCTOR, requestContext);
         List<String> fullName = new ArrayList<String>(Arrays.asList(doctorName.split(" ")));
         User doctor = userService.getUserByFullName(fullName.get(0), fullName.get(1));
-
         Consultation consultation = Consultation.builder()
                 .communicationType(communicationType)
-                .date(ParameterExtractor.extractDate(RequestParameters.DATE, requestContext))
+                .date(ParameterExtractor.extractTimestamp(RequestParameters.DATE, requestContext))
                 .doctorId(doctor.getUserId())
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)

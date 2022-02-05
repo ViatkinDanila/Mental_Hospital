@@ -24,8 +24,8 @@
          style="background-color: #16CAEE; border-radius: 2rem">
         <div style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
             <div class="d-flex text-light justify-content-between pt-2 px-3 h1">
-            <span style="line-height: 1.5"> <sc:date-formatter date="${consultation.getDate()}"
-                                                               formatType="${sessionScope.lang}"></sc:date-formatter></span>
+            <span style="line-height: 1.5"><sc:date-formatter date="${consultation.getDate()}"
+                                                              formatType="${sessionScope.lang}"></sc:date-formatter></span>
                 <span style="line-height: 1.5">${consultation.getCommunicationType()}</span>
             </div>
         </div>

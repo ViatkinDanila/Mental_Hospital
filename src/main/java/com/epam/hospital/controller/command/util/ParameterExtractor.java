@@ -3,6 +3,7 @@ package com.epam.hospital.controller.command.util;
 import com.epam.hospital.controller.request.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -30,6 +31,11 @@ public class ParameterExtractor {
     }
     public static double extractDouble(String parameterName, RequestContext requestContext) {
         double paramValue = Double.parseDouble(requestContext.getRequestParameter(parameterName));
+        return paramValue;
+    }
+
+    public static Timestamp extractTimestamp(String parameterName, RequestContext requestContext) {
+        Timestamp paramValue = Timestamp.valueOf(requestContext.getRequestParameter(parameterName));
         return paramValue;
     }
 }

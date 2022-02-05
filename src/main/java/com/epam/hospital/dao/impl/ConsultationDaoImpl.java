@@ -6,11 +6,15 @@ import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.Consultation;
+import com.epam.hospital.util.date.DateFormatter;
+import com.epam.hospital.util.date.DateFormatterType;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Timestamp;
+
 
 public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implements ConsultationDao {
     private final static String SAVE_CONSULTATION_QUERY = String.format(
@@ -79,13 +83,12 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
         statement.setObject(2, consultation.getTreatmentCourseId());
         statement.setInt(3, consultation.getDoctorId());
         statement.setInt(4, consultation.getPatientId());
-        statement.setDate(5, new Date(consultation.getDate().getTime()));
+        statement.setTimestamp(5, new Timestamp(consultation.getDate().getTime()));
         statement.setInt(6, consultation.getDuration());
         statement.setDouble(7, consultation.getPrice());
         statement.setString(8, String.valueOf(consultation.getStatus()));
         if (action.equals(UPDATE_CONSULTATION_QUERY)) {
             statement.setInt(9, consultation.getConsultationId());
-
         }
     }
 }

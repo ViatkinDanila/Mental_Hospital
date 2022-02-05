@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class Consultation implements Entity {
      int doctorId;
      int patientId;
      CommunicationType communicationType;
-     Date date;
+     Timestamp date;
      int duration;
      Integer treatmentCourseId;
      double price;
