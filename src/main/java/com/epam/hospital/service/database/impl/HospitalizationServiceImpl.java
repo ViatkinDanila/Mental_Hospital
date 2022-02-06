@@ -65,7 +65,7 @@ public class HospitalizationServiceImpl implements HospitalizationService {
             hospitalizationDao.save(hospitalization);
             int hospitalizationId = hospitalizationDao.getHospitalizationIdByPatientId(hospitalization.getPatientId());
 
-            chamberStaying.setHospitalizationId((hospitalizationId));
+            chamberStaying.setHospitalizationId(hospitalizationId);
             chamberStayingDao.save(chamberStaying);
             transaction.commit();
         } catch(DaoException e){
