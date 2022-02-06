@@ -14,6 +14,7 @@ public final class CommandName {
     public static final String HOSPITALIZATION_APPROVE = "hospitalization-approve";
     public static final String BAN = "ban";
     public static final String UNBAN = "unban";
+    public static final String LOCALIZATION = "localization";
 
 
     public static final String SIGN_UP_PAGE = "sign-up-page";

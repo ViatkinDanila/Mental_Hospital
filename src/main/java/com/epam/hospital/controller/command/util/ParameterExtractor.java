@@ -35,7 +35,8 @@ public class ParameterExtractor {
     }
 
     public static Timestamp extractTimestamp(String parameterName, RequestContext requestContext) {
-        Timestamp paramValue = Timestamp.valueOf(requestContext.getRequestParameter(parameterName));
+        Date date = extractDate(parameterName,requestContext);
+        Timestamp paramValue = new Timestamp(date.getTime());
         return paramValue;
     }
 }
