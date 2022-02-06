@@ -234,7 +234,7 @@
                     <a id="add_row_1" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus text-white"></span>
                     </a>
-                    <a id='delete_row_2' class="btn btn-danger">
+                    <a id='delete_row_1' class="btn btn-danger">
                         <span class="glyphicon glyphicon-minus text-white"></span>
                     </a>
                 </div>

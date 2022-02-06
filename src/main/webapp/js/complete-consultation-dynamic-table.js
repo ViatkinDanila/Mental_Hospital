@@ -16,19 +16,19 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    var i = 1;
+    var j = 1;
     $("#add_row_1").click(function () {
-        $('#drugRecipe' + i).html("<td><input name='drug-" + i + "' type='text' class='form-control input-md mx-auto' style='font-size: 1.5rem; width: 82%'/></td>" +
-            "<td><input  name='dose-" + i + "' type='text' class='form-control input-md mx-auto'  style='font-size: 1.5rem; width: 82%'></td>" +
-            "<td><input  name='description-" + i + "' type='text' class='form-control input-md mx-auto'  style='font-size: 1.5rem; width: 82%'></td>");
+        $('#drugRecipe' + j).html("<td><input name='drug-" + j + "' type='text' class='form-control input-md mx-auto' style='font-size: 1.5rem; width: 82%'/></td>" +
+            "<td><input  name='dose-" + j + "' type='text' class='form-control input-md mx-auto'  style='font-size: 1.5rem; width: 82%'></td>" +
+            "<td><input  name='description-" + j + "' type='text' class='form-control input-md mx-auto'  style='font-size: 1.5rem; width: 82%'></td>");
 
-        $('#tab_logic').append('<tr id="drugRecipe' + (i + 1) + '"></tr>');
-        i++;
+        $('#tab_logic_1').append('<tr id="drugRecipe' + (j + 1) + '"></tr>');
+        j++;
     });
     $("#delete_row_1").click(function () {
-        if (i > 1) {
-            $("#drugRecipe" + (i - 1)).html('');
-            i--;
+        if (j > 1) {
+            $("#drugRecipe" + (j - 1)).html('');
+            j--;
         }
     });
 });
