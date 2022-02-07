@@ -64,6 +64,7 @@ public class AccessFilter implements Filter{
                    CommandName.DISEASES.equals(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
                    CommandName.LOGIN.equals(commandName) ||
+                   CommandName.LOCALIZATION.equals(commandName) ||
                    CommandName.PROFILE_PAGE.equals(commandName) ||
                    CommandName.LOGIN_PAGE.equals(commandName);
        }
@@ -78,6 +79,7 @@ public class AccessFilter implements Filter{
                    CommandName.DISEASES.equals(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
                    CommandName.SIGN_OUT.equals(commandName) ||
+                   CommandName.LOCALIZATION.equals(commandName) ||
                    CommandName.PROFILE_PAGE.equals(commandName) ||
                    CommandName.CONSULTATION_REQUEST.equals(commandName) ||
                    CommandName.LOGIN_PAGE.equals(commandName);
@@ -91,6 +93,7 @@ public class AccessFilter implements Filter{
                    CommandName.HOSPITALIZATION_COMPLETE.equalsIgnoreCase(commandName) ||
                    CommandName.DOCTORS.equals(commandName) ||
                    CommandName.DISEASES.equals(commandName) ||
+                   CommandName.LOCALIZATION.equals(commandName) ||
                    CommandName.PROFILE_PAGE.equals(commandName) ||
                    CommandName.HOME_PAGE.equals(commandName) ||
                    CommandName.SIGN_OUT.equals(commandName) ||

@@ -31,11 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String firstName, String lastName, String number, String email, String password) throws ServiceException {
-
-    }
-
-    @Override
     public User getUserById(int id) throws ServiceException {
         UserDao userDao = new UserDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
@@ -120,6 +115,30 @@ public class UserServiceImpl implements UserService {
             return userDao.findAll();
         } catch (DaoException e){
             throw new ServiceException("Can't get doctor info by doctor id.", e);
+        }
+    }
+
+    @Override
+    public void saveUser(User user) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(userDao);
+            userDao.save(user);
+        } catch (DaoException e){
+            throw new ServiceException("Can't save user.", e);
+        }
+    }
+
+    @Override
+    public void saveUser(User user, DoctorInfo doctorInfo) throws ServiceException {
+        UserDao userDao = new UserDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(false, userDao);
+            userDao.save(user);
+            userDao.saveDoctorInfo(doctorInfo);
+            transaction.commit();
+        } catch (DaoException e){
+            throw new ServiceException("Can't save user/doctor info.", e);
         }
     }
 }

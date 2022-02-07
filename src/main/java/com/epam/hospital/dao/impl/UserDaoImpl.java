@@ -25,6 +25,15 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Column.USER_ROLE_ID,
             Column.USER_IS_BANNED
     );
+    public static final String SAVE_DOCTOR_INFO_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)",
+            Table.DOCTOR_INFO_TABLE,
+            Column.DOCTOR_INFO_CLASSIFICATION,
+            Column.DOCTOR_INFO_SPECIALIZATION,
+            Column.DOCTOR_INFO_WORK_EXPERIENCE,
+            Column.DOCTOR_INFO_PRICE,
+            Column.DOCTOR_INFO_ID
+    );
     public final static String UPDATE_USER_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.USER_TABLE,
@@ -173,6 +182,16 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
         return findByField(Column.USER_ROLE_ID, id);
     }
 
+    @Override
+    public void saveDoctorInfo(DoctorInfo entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DOCTOR_INFO_QUERY);) {
+            setParams(statement, entity, SAVE_DOCTOR_INFO_QUERY);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't save doctor info.", e);
+        }
+    }
+
     private void setParams(PreparedStatement statement, User user, String action) throws SQLException {
         statement.setString(1, user.getFirstName());
         statement.setString(2, user.getLastName());
@@ -184,5 +203,13 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
         if (action.equals(UPDATE_USER_QUERY)) {
             statement.setInt(8, user.getUserId());
         }
+    }
+
+    private void setParams(PreparedStatement statement, DoctorInfo doctorInfo, String action) throws SQLException {
+        statement.setInt(1,doctorInfo.getClassification());
+        statement.setString(2,doctorInfo.getSpecialization());
+        statement.setInt(3,doctorInfo.getWorkExperience());
+        statement.setDouble(4,doctorInfo.getPrice());
+        statement.setInt(5,doctorInfo.getDoctorId());
     }
 }

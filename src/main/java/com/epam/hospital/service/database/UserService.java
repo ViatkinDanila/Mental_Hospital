@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface UserService {
     User login(String email, String password) throws ServiceException;
-    void register(String firstName, String lastName, String number, String email, String password) throws ServiceException;
     User getUserById(int id) throws ServiceException;
     User getUserByLogin(String email) throws ServiceException;
     String getUserRoleById(int id) throws ServiceException;
@@ -17,4 +16,6 @@ public interface UserService {
     User getUserByFullName(String firstName, String lastName) throws ServiceException;
     List<User> getAllDoctors(int doctorRoleId) throws ServiceException;
     List<User> getAll() throws ServiceException;
+    void saveUser(User user) throws ServiceException;
+    void saveUser(User user, DoctorInfo doctorInfo) throws ServiceException;
 }

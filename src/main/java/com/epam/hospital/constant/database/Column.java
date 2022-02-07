@@ -41,6 +41,7 @@ public class Column {
     public static final String DOCTOR_INFO_SPECIALIZATION = "specialization";
     public static final String DOCTOR_INFO_WORK_EXPERIENCE = "work_experience";
     public static final String DOCTOR_INFO_CLASSIFICATION = "classification";
+    public static final String DOCTOR_INFO_PRICE = "price";
 
     public static final String DRUG_RECIPES_TREATMENT_COURSE_ID = "treatment_course_id";
     public static final String DRUG_RECIPES_DRUG_ID = "drug_id";

@@ -18,6 +18,7 @@ public final class CommandName {
 
 
     public static final String SIGN_UP_PAGE = "sign-up-page";
+    public static final String ADD_USERS = "add-users";
     public static final String USERS = "users";
     public static final String DOCTORS = "doctors";
     public static final String DISEASES = "diseases";

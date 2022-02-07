@@ -6,6 +6,10 @@ public final class RequestParameters {
     public static final String FIRST_NAME = "firstName";
     public static final String LAST_NAME = "lastName";
     public static final String DOCTOR = "doctor";
+    public static final String USER_ROLE_ID = "role_id";
+    public static final String CLASSIFICATION = "classification";
+    public static final String SPECIALIZATION = "specialization";
+    public static final String WORK_EXPERIENCE = "workExperience";
     public static final String PHONE_NUMBER = "phoneNumber";
     public static final String COMMAND = "command";
     public static final String AGE = "age";

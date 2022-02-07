@@ -15,4 +15,5 @@ public class DoctorInfo implements Entity {
     private int classification;
     private int workExperience;
     private String specialization;
+    Double price;
 }
