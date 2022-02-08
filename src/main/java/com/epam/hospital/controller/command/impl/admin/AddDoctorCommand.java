@@ -17,7 +17,7 @@ import com.epam.hospital.util.Hasher;
 import java.nio.charset.StandardCharsets;
 
 
-public class AddUserCommand implements Command {
+public class AddDoctorCommand implements Command {
     static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
     private static final UserService userService = new UserServiceImpl();
     private static final int DOCTOR_ROLE_ID = 3;
