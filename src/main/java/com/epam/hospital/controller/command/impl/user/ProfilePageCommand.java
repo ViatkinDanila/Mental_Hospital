@@ -73,6 +73,7 @@ public class ProfilePageCommand implements Command {
                     .specialization(doctorInfo.getSpecialization())
                     .classification(doctorInfo.getClassification())
                     .workExperience(doctorInfo.getWorkExperience())
+                    .price(doctorInfo.getPrice())
                     .build();
 
             requestContext.addAttribute(RequestAttributes.DOCTOR_INFO, doctorInfoDto);

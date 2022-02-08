@@ -13,4 +13,5 @@ public class DoctorInfoDto {
     String specialization;
     int classification;
     int workExperience;
+    double price;
 }

@@ -15,6 +15,7 @@ public class DoctorInfoBuilder implements EntityBuilder<DoctorInfo> {
         doctorInfo.setClassification(resultSet.getInt(Column.DOCTOR_INFO_CLASSIFICATION));
         doctorInfo.setWorkExperience(resultSet.getInt(Column.DOCTOR_INFO_WORK_EXPERIENCE));
         doctorInfo.setSpecialization(resultSet.getString(Column.DOCTOR_INFO_SPECIALIZATION));
+        doctorInfo.setPrice(resultSet.getDouble((Column.DOCTOR_INFO_PRICE)));
         return doctorInfo;
     }
 }

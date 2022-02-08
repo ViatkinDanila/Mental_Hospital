@@ -35,7 +35,18 @@ public class DrugServiceImpl implements DrugService {
             transaction.initTransaction(drugDao);
             return drugDao.getDrugIdByName(name);
         } catch(DaoException e) {
-            throw new SecurityException("Can't get drug.", e);
+            throw new SecurityException("Can't get drug id.", e);
+        }
+    }
+
+    @Override
+    public void save(Drug drug) throws ServiceException {
+        DrugDao drugDao = new DrugDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(drugDao);
+            drugDao.save(drug);
+        } catch(DaoException e) {
+            throw new SecurityException("Can't save drug.", e);
         }
     }
 }

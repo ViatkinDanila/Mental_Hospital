@@ -6,6 +6,7 @@ import com.epam.hospital.controller.command.impl.ForwardPageCommand;
 import com.epam.hospital.controller.command.impl.Hospitalization.*;
 import com.epam.hospital.controller.command.impl.HospitalizationPageCommand;
 import com.epam.hospital.controller.command.impl.LocalizationCommand;
+import com.epam.hospital.controller.command.impl.admin.AddDiseaseCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;
 import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
@@ -36,6 +37,7 @@ public final class CommandProvider {
         commands.put(CommandName.BAN, new BanUserCommand());
         commands.put(CommandName.UNBAN, new UnbanUserCommand());
         commands.put(CommandName.LOCALIZATION, new LocalizationCommand());
+        commands.put(CommandName.ADD_DISEASE, new AddDiseaseCommand());
 
         commands.put(CommandName.HOME_PAGE, new ForwardPageCommand());
         commands.put(CommandName.SIGN_UP_PAGE, new ForwardPageCommand());

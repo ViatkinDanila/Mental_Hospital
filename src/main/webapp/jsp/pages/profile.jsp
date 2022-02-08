@@ -60,6 +60,9 @@
                             <p class="mt-3 h3">
                                 <fmt:message key="profile.work-experience"/> ${doctorInfo.getWorkExperience()}
                             </p>
+                            <p class="mt-3 h3">
+                                <fmt:message key="profile.price"/> ${doctorInfo.getPrice()}
+                            </p>
                         </c:when>
                         <c:otherwise>
                             <p class="mt-3 h3">
