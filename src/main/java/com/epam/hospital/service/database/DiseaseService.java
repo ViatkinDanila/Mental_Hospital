@@ -9,4 +9,5 @@ public interface DiseaseService {
     Disease getDiseaseById(int id) throws ServiceException;
     List<Disease> getAll() throws ServiceException;
     int getDiseaseIdByName(String name) throws ServiceException;
+    void save(Disease disease) throws ServiceException;
 }

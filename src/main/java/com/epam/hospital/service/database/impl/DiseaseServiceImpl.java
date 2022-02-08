@@ -28,7 +28,7 @@ public class DiseaseServiceImpl implements DiseaseService {
             transaction.initTransaction(diseaseDao);
             return diseaseDao.findById(id);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new SecurityException("Can't get disease.", e);
         }
     }
 
@@ -39,7 +39,7 @@ public class DiseaseServiceImpl implements DiseaseService {
             transaction.initTransaction(diseaseDao);
             return diseaseDao.findIdByName(name);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new SecurityException("Can't get disease id.", e);
         }
     }
 
@@ -50,7 +50,18 @@ public class DiseaseServiceImpl implements DiseaseService {
             transaction.initTransaction(diseaseDao);
             return diseaseDao.findAll();
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new SecurityException("Can't get diseases.", e);
+        }
+    }
+
+    @Override
+    public void save(Disease disease) throws ServiceException {
+        DiseaseDao diseaseDao = new DiseaseDaoImpl();
+        try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
+            transaction.initTransaction(diseaseDao);
+            diseaseDao.save(disease);
+        } catch(DaoException e){
+            throw new SecurityException("Can't save disease.", e);
         }
     }
 }

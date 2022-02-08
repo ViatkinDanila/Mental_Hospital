@@ -33,5 +33,6 @@ public final class RequestParameters {
     public final static String ID = "id";
     public final static String PAGE = "page";
     public final static String PRICE = "price";
-    public final static String LANGUAGE = "language";
+    public final static String LOCALE = "locale";
+    public final static String NAME = "name";
 }
