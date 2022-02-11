@@ -20,4 +20,6 @@ public class RequestAttributes {
     public static final String PATIENT_INFO = "patientInfo";
     public static final String CHAMBER_TYPES = "chamberTypes";
     public static final String LANGUAGE = "lang";
+    public static final String CONTENT = "content";
+    public static final String MAX_PAGES = "maxPages";
 }

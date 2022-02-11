@@ -30,9 +30,15 @@ public class ProfilePageCommand implements Command {
     private static final ConsultationService consultationService = ConsultationServiceImpl.getInstance();
     private static final HospitalizationService hospitalizationService = HospitalizationServiceImpl.getInstance();
     private static final ChamberService chamberService = ChamberServiceImpl.getInstance();
+    private static final int MAX_PAGE = 5;
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
+        requestContext.addAttribute(RequestAttributes.MAX_PAGES, MAX_PAGE);
+
+        String content = ParameterExtractor.extractString(RequestParameters.CONTENT, requestContext);
+        requestContext.addAttribute(RequestAttributes.CONTENT, content);
+
         int profileId;
         if (requestContext.getRequestParameter(RequestParameters.ID) != null) {
             profileId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);

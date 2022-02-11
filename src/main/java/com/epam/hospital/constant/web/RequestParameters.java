@@ -35,4 +35,5 @@ public final class RequestParameters {
     public final static String PRICE = "price";
     public final static String LOCALE = "locale";
     public final static String NAME = "name";
+    public static final String CONTENT = "content";
 }

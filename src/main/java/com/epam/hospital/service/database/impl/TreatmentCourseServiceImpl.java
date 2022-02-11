@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     private static TreatmentCourseService instance;
-
+    //TODO вынести в конст дао
     private TreatmentCourseServiceImpl() {
 
     }

@@ -42,7 +42,7 @@
                     </sc:access>
                     <sc:access role="NOT_GUEST">
                         <sc:access role="NOT_ADMIN">
-                            <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page"
+                            <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations"
                                class="btn btn-success btn-lg my-1 mx-5">
                                 <span class="h1" style="line-height: 1.5"><fmt:message key="navbar.profile"/></span>
                             </a>

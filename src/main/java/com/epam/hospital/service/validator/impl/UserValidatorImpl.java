@@ -6,7 +6,7 @@ import com.epam.hospital.service.validator.Validator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+//TODO проверка на инъекцию во всех валидаторах
 public class UserValidatorImpl implements Validator<User> {
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";

@@ -42,6 +42,24 @@
                     </c:choose>">
                     ${userInfo.getStatus()}
                 </p>
+                <p>
+                <c:if test="${content.equals('consultations')}">
+                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalizations"
+                       role="button">
+                        <span class="h3">
+                            <fmt:message key="profile.show.hospitalizations"/>
+                        </span>
+                    </a>
+                </c:if>
+                <c:if test="${content.equals('hospitalizations')}">
+                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations"
+                       role="button">
+                        <span class="h3">
+                            <fmt:message key="profile.show.consultations"/>
+                        </span>
+                    </a>
+                </c:if>
+                </p>
                 <a class="btn btn-primary btn-lg mt-4" data-toggle="collapse" href="#collapse" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
                     <span class="h3">
@@ -82,92 +100,96 @@
                         (userInfo.getRole() == 'USER' &&
                         (userInfo.getId().equals(sessionScope.userId) ||
                         sessionScope.role.equals('DOCTOR')))}">
-            <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-center">
-                <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="consultations.label"/></span>
-                <c:forEach items="${consultations}" var="consultation" varStatus="counter">
-                    <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=${consultation.getId()}"
-                       class="text-center w-75 mb-5"
-                       style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
-                        <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
-                             style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-                            <span style="line-height: 1.5"><sc:date-formatter date="${consultation.getDate()}"
-                                                                              formatType="${sessionScope.lang}"></sc:date-formatter></span>
-                            <span style="line-height: 1.5">${consultation.getCommunicationType()}</span>
-                        </div>
-                        <span class="h2 mt-2 mb-2 font-weight-bold" style="line-height: 3; color: #428bca">
-                              <c:choose>
-                                  <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
-                                      <fmt:message key="consultation.patient"/> ${consultation.getPatientFullName()}
-                                  </c:when>
-                                  <c:otherwise>
-                                      <fmt:message key="consultation.doctor"/> ${consultation.getDoctorFullName()}
-                                  </c:otherwise>
-                              </c:choose>
-                        </span>
-                        <c:choose>
-                            <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">
-                                <div class="d-flex justify-content-center bg-danger mb-0"
-                                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                 <span class="py-3 text-center text-white h3 mb-0">
-                                         ${consultation.getConsultationStatus().toString()}
-                                 </span>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="d-flex justify-content-center bg-success mb-0"
-                                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                <span class="py-3 text-center text-white h3 mb-0">
-                                        ${consultation.getConsultationStatus().toString()}
-                                </span>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </a>
-                </c:forEach>
-            </div>
-            <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-end">
-                <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="hospitalization.label"/></span>
-                <c:forEach items="${hospitalizations}" var="hospitalization" varStatus="counter">
-                    <a href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=${hospitalization.getId()}"
-                       class="text-end w-75 mb-5"
-                       style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
-                        <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
-                             style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-                            <span style="line-height: 1.5"><fmt:message key="hospitalization.chambernumber"/>: ${hospitalization.getChamberNumber()} </span>
-                        </div>
-                        <span class="h2 mt-2 mb-2 font-weight-bold d-flex justify-content-center" style="line-height: 3; color: #428bca">
-                              <c:choose>
-                                  <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
-                                      <fmt:message key="consultation.patient"/> ${hospitalization.getPatientFullName()}
-                                  </c:when>
-                                  <c:otherwise>
-                                      <fmt:message key="consultation.doctor"/> ${hospitalization.getDoctorFullName()}
-                                  </c:otherwise>
-                              </c:choose>
-                        </span>
-                        <c:choose>
-                            <c:when test="${hospitalization.getHospitalizationStatus().toString().equals('REJECTED')}">
-                                <div class="d-flex justify-content-center bg-danger mb-0"
-                                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                 <span class="py-3 text-center text-white h3 mb-0">
-                                         ${hospitalization.getHospitalizationStatus().toString()}
-                                 </span>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="d-flex justify-content-center bg-success mb-0"
-                                     style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
-                                <span class="py-3 text-center text-white h3 mb-0">
-                                        ${hospitalization.getHospitalizationStatus().toString()}
-                                </span>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </a>
-                </c:forEach>
-            </div>
-            </div>
+            <c:if test="${content.equals('consultations')}">
+                <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-center">
+                    <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="consultations.label"/></span>
+                    <c:forEach items="${consultations}" var="consultation" varStatus="counter">
+                        <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=${consultation.getId()}"
+                           class="text-center w-75 mb-5"
+                           style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
+                            <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
+                                 style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+                                <span style="line-height: 1.5"><sc:date-formatter date="${consultation.getDate()}"
+                                                                                  formatType="${sessionScope.lang}"></sc:date-formatter></span>
+                                <span style="line-height: 1.5">${consultation.getCommunicationType()}</span>
+                            </div>
+                            <span class="h2 mt-2 mb-2 font-weight-bold" style="line-height: 3; color: #428bca">
+                                  <c:choose>
+                                      <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
+                                          <fmt:message key="consultation.patient"/> ${consultation.getPatientFullName()}
+                                      </c:when>
+                                      <c:otherwise>
+                                          <fmt:message key="consultation.doctor"/> ${consultation.getDoctorFullName()}
+                                      </c:otherwise>
+                                  </c:choose>
+                            </span>
+                            <c:choose>
+                                <c:when test="${consultation.getConsultationStatus().toString().equals('REJECTED')}">
+                                    <div class="d-flex justify-content-center bg-danger mb-0"
+                                         style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                                     <span class="py-3 text-center text-white h3 mb-0">
+                                             ${consultation.getConsultationStatus().toString()}
+                                     </span>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="d-flex justify-content-center bg-success mb-0"
+                                         style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                                    <span class="py-3 text-center text-white h3 mb-0">
+                                            ${consultation.getConsultationStatus().toString()}
+                                    </span>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
+                    </c:forEach>
+                </div>
             </c:if>
+            <c:if test="${content.equals('hospitalizations')}">
+                <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-end">
+                    <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="hospitalization.label"/></span>
+                    <c:forEach items="${hospitalizations}" var="hospitalization" varStatus="counter">
+                        <a href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=${hospitalization.getId()}"
+                           class="text-end w-75 mb-5"
+                           style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
+                            <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
+                                 style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+                                <span style="line-height: 1.5"><fmt:message key="hospitalization.chambernumber"/>: ${hospitalization.getChamberNumber()} </span>
+                            </div>
+                            <span class="h2 mt-2 mb-2 font-weight-bold d-flex justify-content-center" style="line-height: 3; color: #428bca">
+                                  <c:choose>
+                                      <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
+                                          <fmt:message key="consultation.patient"/> ${hospitalization.getPatientFullName()}
+                                      </c:when>
+                                      <c:otherwise>
+                                          <fmt:message key="consultation.doctor"/> ${hospitalization.getDoctorFullName()}
+                                      </c:otherwise>
+                                  </c:choose>
+                            </span>
+                            <c:choose>
+                                <c:when test="${hospitalization.getHospitalizationStatus().toString().equals('REJECTED')}">
+                                    <div class="d-flex justify-content-center bg-danger mb-0"
+                                         style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                                     <span class="py-3 text-center text-white h3 mb-0">
+                                             ${hospitalization.getHospitalizationStatus().toString()}
+                                     </span>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="d-flex justify-content-center bg-success mb-0"
+                                         style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+                                    <span class="py-3 text-center text-white h3 mb-0">
+                                            ${hospitalization.getHospitalizationStatus().toString()}
+                                    </span>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
+                    </c:forEach>
+                </div>
+            </c:if>
+            </c:if>
+            </div>
         </div>
     </div>
 </body>
