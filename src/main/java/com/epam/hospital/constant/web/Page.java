@@ -11,6 +11,7 @@ public final class Page {
     public static final String REQUEST_HOSPITALIZATION_PAGE = "jsp/pages/hospitalization-request-page.jsp";
     public static final String ERROR = "jsp/error.jsp";
     public static final String DISEASES = "jsp/pages/diseases.jsp";
+    public static final String DISEASE = "jsp/pages/disease.jsp";
     public static final String DOCTORS = "jsp/pages/doctors.jsp";
     public static final String USERS = "jsp/pages/users.jsp";
     public static final String DOCTOR = "jsp/doctor.jsp";

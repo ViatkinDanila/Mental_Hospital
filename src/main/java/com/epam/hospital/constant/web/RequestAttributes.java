@@ -8,6 +8,7 @@ public class RequestAttributes {
     public static final String PATIENT_CARD_ID = "patientCardId";
     public static final String CONSULTATION_ID = "consultationId";
     public static final String DISEASES = "diseases";
+    public static final String DISEASE = "disease";
     public static final String DOCTORS = "doctors";
     public static final String DOCTOR = "doctor";
     public static final String CONSULTATIONS = "consultations";

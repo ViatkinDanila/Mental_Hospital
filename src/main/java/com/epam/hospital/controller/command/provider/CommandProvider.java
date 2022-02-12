@@ -10,6 +10,7 @@ import com.epam.hospital.controller.command.impl.admin.AddDiseaseCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;
 import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
+import com.epam.hospital.controller.command.impl.disease.GetDiseaseCommand;
 import com.epam.hospital.controller.command.impl.user.*;
 import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.command.impl.ConsultationPageCommand;
@@ -48,7 +49,7 @@ public final class CommandProvider {
         commands.put(CommandName.PROFILE_PAGE, new ProfilePageCommand());
         commands.put(CommandName.CONSULTATION_REQUEST_PAGE, new ConsultationRequestPageCommand());
         commands.put(CommandName.HOSPITALIZATION_REQUEST_PAGE, new HospitalizationRequestPageCommand());
-
+        commands.put(CommandName.DISEASE, new GetDiseaseCommand());
     }
 
     public Command getCommand(String commandName) {
