@@ -16,14 +16,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class Consultation implements Entity {
-    //TODO онли ссылочные типы
-     int consultationId;
-     int doctorId;
-     int patientId;
+     Integer consultationId;
+     Integer doctorId;
+     Integer patientId;
      CommunicationType communicationType;
      Timestamp date;
-     int duration;
+     Integer duration;
      Integer treatmentCourseId;
-     double price;
+     Double price;
      ConsultationStatus status;
 }

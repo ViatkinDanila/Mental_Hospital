@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DrugRecipe implements Entity {
-    private int treatmentCourseId;
-    private int drugId;
-    private int dose;
-    private String description;
+    Integer treatmentCourseId;
+    Integer drugId;
+    Integer dose;
+    String description;
 }

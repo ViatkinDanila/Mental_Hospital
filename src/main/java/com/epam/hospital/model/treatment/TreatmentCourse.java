@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class TreatmentCourse implements Entity {
-    private int treatmentCourseId;
-    private String instruction;
+     Integer treatmentCourseId;
+     String instruction;
 }

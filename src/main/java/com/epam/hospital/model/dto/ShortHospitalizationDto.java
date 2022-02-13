@@ -14,6 +14,6 @@ public class ShortHospitalizationDto {
     Integer id;
     Integer chamberNumber;
     HospitalizationStatus hospitalizationStatus;
-    private String doctorFullName;
-    private String patientFullName;
+    String doctorFullName;
+    String patientFullName;
 }

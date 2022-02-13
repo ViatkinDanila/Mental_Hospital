@@ -12,9 +12,9 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 public class PatientCard implements Entity {
-    private int cardId;
-    private int userId;
-    private String spareNumber;
-    private int age;
-    private String sex;
+     Integer cardId;
+     Integer userId;
+     String spareNumber;
+     Integer age;
+     String sex;
 }

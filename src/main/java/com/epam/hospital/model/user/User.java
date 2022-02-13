@@ -12,12 +12,12 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class User implements Entity {
-    private int userId;
-    private int userRoleId;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String number;
-    private String hashedPassword;
-    private boolean isBanned;
+     Integer userId;
+     Integer userRoleId;
+     String email;
+     String firstName;
+     String lastName;
+     String number;
+     String hashedPassword;
+     Boolean isBanned;
 }

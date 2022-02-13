@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DrugRecipeDto {
     String name;
-    float doze;
+    Float doze;
     String description;
 }

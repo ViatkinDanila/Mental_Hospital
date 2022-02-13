@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DoctorInfo implements Entity {
-    private int doctorId;
-    private int classification;
-    private int workExperience;
-    private String specialization;
+    Integer doctorId;
+    Integer classification;
+    Integer workExperience;
+    String specialization;
     Double price;
 }

@@ -12,6 +12,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Drug implements Entity {
-    private int drugId;
-    private String name;
+    Integer drugId;
+    String name;
 }

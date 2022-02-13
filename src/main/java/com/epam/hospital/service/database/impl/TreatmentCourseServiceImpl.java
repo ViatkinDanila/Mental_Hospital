@@ -11,7 +11,9 @@ import com.epam.hospital.model.treatment.TreatmentCourse;
 import com.epam.hospital.service.database.TreatmentCourseService;
 import com.epam.hospital.service.exception.ServiceException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     private static TreatmentCourseService instance;

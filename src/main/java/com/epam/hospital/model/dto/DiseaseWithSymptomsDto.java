@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DiseaseWithSymptomsDto {
-    int id;
+    Integer id;
     String name;
     String symptoms;
 }

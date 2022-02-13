@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DiseaseSymptom implements Entity {
-    private int treatmentCourseId;
-    private int diseaseId;
-    private String symptoms;
+    Integer treatmentCourseId;
+    Integer diseaseId;
+    String symptoms;
 }

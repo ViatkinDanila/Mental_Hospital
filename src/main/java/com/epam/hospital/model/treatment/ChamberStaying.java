@@ -13,9 +13,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class ChamberStaying implements Entity {
-    private int hospitalizationId;
-    private int chamberId;
-    private double price;
-    private Date dateIn;
-    private Date dateOut;
+     Integer hospitalizationId;
+     Integer chamberId;
+     Double price;
+     Date dateIn;
+     Date dateOut;
 }

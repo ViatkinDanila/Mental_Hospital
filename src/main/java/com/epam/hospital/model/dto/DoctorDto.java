@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DoctorDto {
-    private String userRole;
-    private int doctorId;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String number;
-    String specialization;
-    int workExperience;
-    int classification;
+     String userRole;
+     Integer doctorId;
+     String email;
+     String firstName;
+     String lastName;
+     String number;
+     String specialization;
+     Integer workExperience;
+     Integer classification;
 }

@@ -12,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 public class Disease implements Entity {
-    private int diseaseId;
-    private String name;
-    private String description;
+     Integer diseaseId;
+     String name;
+     String description;
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DoctorInfoDto {
     String specialization;
-    int classification;
-    int workExperience;
-    double price;
+    Integer classification;
+    Integer workExperience;
+    Double price;
 }

@@ -15,18 +15,18 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ConsultationDto implements Entity {
-    private String communicationType;
-    private Date date;
-    private int duration;
-    private ConsultationStatus consultationStatus;
-    private String doctorFirstName;
-    private String doctorLastName;
-    private int doctorId;
-    private int patientId;
-    private String patientFirstName;
-    private String patientLastName;
-    private List<DiseaseWithSymptomsDto> diseases;
-    private List<DrugRecipeDto> drugs;
-    private String instruction;
-    private double price;
+     String communicationType;
+     Date date;
+     Integer duration;
+     ConsultationStatus consultationStatus;
+     String doctorFirstName;
+     String doctorLastName;
+     Integer doctorId;
+     Integer patientId;
+     String patientFirstName;
+     String patientLastName;
+     List<DiseaseWithSymptomsDto> diseases;
+     List<DrugRecipeDto> drugs;
+     String instruction;
+     Double price;
 }
