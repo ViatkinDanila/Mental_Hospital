@@ -1,0 +1,28 @@
+package com.epam.hospital.controller.command.impl.disease;
+
+import com.epam.hospital.constant.web.Page;
+import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
+import com.epam.hospital.controller.command.Command;
+import com.epam.hospital.controller.command.CommandResult;
+import com.epam.hospital.controller.command.util.ParameterExtractor;
+import com.epam.hospital.controller.request.RequestContext;
+import com.epam.hospital.model.treatment.Disease;
+import com.epam.hospital.service.database.DiseaseService;
+import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
+import com.epam.hospital.service.exception.ServiceException;
+
+
+public class GetDiseaseCommand implements Command {
+    private static final DiseaseService diseaseService = DiseaseServiceImpl.getInstance();
+
+    @Override
+    public CommandResult execute(RequestContext requestContext) throws ServiceException {
+        int diseaseId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);
+        Disease disease = diseaseService.getDiseaseById(diseaseId);
+
+        requestContext.addAttribute(RequestAttributes.DISEASE, disease);
+
+        return CommandResult.forward(Page.DISEASE);
+    }
+}

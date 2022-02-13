@@ -158,7 +158,7 @@
                            required
                            style="font-size: 2rem">
                 </div>
-                <div class="py-3 pt-3 h2 w-75 mb-3">
+                <div class="py-3 pt-3 h2 w-75 mb-3" style="margin-left: 3rem">
                     <span class="form-label"><fmt:message key="consultation.duration.label"/></span>
                     <input name="duration" class="form-control mt-1" type="number" min="10" max="180"
                            style="font-size: 2rem" required>

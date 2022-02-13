@@ -26,6 +26,7 @@ public final class CommandName {
     public static final String USERS = "users";
     public static final String DOCTORS = "doctors";
     public static final String DISEASES = "diseases";
+    public static final String DISEASE = "disease";
     public static final String LOGIN_PAGE = "login-page";
     public static final String CONSULTATION_PAGE = "consultation";
     public static final String HOSPITALIZATION_PAGE = "hospitalization";
