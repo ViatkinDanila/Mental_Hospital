@@ -9,21 +9,26 @@ import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.AdminService;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.AdminServiceImpl;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 
 public class AddDoctorCommand implements Command {
     static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
+    private static final AdminService adminService = new AdminServiceImpl();
     private static final UserService userService = new UserServiceImpl();
     private static final int DOCTOR_ROLE_ID = 3;
     private static final String ADD_USER_COMMAND = "MentalHospital?command=" + CommandName.ADD_USERS;
     private static final String USER_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
     private static final String INVALID_LOGIN_KEY = "invalid.login";
+
 
 
     @Override
@@ -53,7 +58,7 @@ public class AddDoctorCommand implements Command {
                     .workExperience(ParameterExtractor.extractInt(RequestParameters.WORK_EXPERIENCE, requestContext))
                     .price(ParameterExtractor.extractDouble(RequestParameters.PRICE, requestContext))
                     .build();
-            userService.saveUser(user, doctorInfo);
+            adminService.saveUser(user, doctorInfo);
 
             return CommandResult.redirect(USER_PAGE_COMMAND + "&id=" + doctorId);
         }else {

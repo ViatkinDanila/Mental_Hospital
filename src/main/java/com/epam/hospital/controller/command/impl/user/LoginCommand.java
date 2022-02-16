@@ -6,17 +6,17 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.PatientCardService;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.PatientCardServiceImpl;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.PatientCardService;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.PatientCardServiceImpl;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
 
 import static com.epam.hospital.controller.command.impl.user.SignUpCommand.salt;
 
 public class LoginCommand implements Command {
-    private static final String INCORRECT_DATA_KEY = "incorrect";
+    private static final String INCORRECT_DATA_KEY = "incorrect.data.key";
     private static final String BANNED_USER_KEY = "banned";
     private static final String USER_ROLE = "USER";
     private static final String HOME_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOME_PAGE;
@@ -36,7 +36,7 @@ public class LoginCommand implements Command {
 
         User user = userService.login(email, hashPassword);
         if (user != null){
-            if (!user.isBanned()) {
+            if (!user.getIsBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
                 requestContext.addSession(SessionAttributes.USER_ID, user.getUserId());
                 requestContext.addSession(SessionAttributes.ROLE, role);

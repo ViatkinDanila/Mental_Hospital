@@ -1,4 +1,4 @@
-package com.epam.hospital.service.database;
+package com.epam.hospital.service.logic;
 
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
@@ -16,6 +16,6 @@ public interface UserService {
     User getUserByFullName(String firstName, String lastName) throws ServiceException;
     List<User> getAllDoctors(int doctorRoleId) throws ServiceException;
     List<User> getAll() throws ServiceException;
+    Integer getUserRoleId() throws ServiceException;
     void saveUser(User user) throws ServiceException;
-    void saveUser(User user, DoctorInfo doctorInfo) throws ServiceException;
 }

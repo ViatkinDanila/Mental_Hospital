@@ -43,6 +43,7 @@ public class Controller extends HttpServlet {
         String user = dbResourceManager.getValue(DBParameter.DB_USER);
         String password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         String driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
+        int poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
 
         int repeatCounter = 0;
         boolean isDone = false;
@@ -50,7 +51,7 @@ public class Controller extends HttpServlet {
         while (!isDone) {
             try {
                 log.info("[DB] try №{}: initialising connection pool", repeatCounter + 1);
-                connectionPool.init(url, user, password, driverName);
+                connectionPool.init(url, user, password, driverName, poolSize);
                 isDone = true;
             } catch (ConnectionPoolException e) {
                 log.error("Error while initialising connection pool.", e);
@@ -74,7 +75,7 @@ public class Controller extends HttpServlet {
         process(req, resp);
     }
 
-    protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter(RequestParameters.COMMAND);
         CommandProvider commandProvider = new CommandProvider();
         Command command = commandProvider.getCommand(commandName);

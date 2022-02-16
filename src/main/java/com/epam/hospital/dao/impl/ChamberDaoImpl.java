@@ -62,7 +62,7 @@ public class ChamberDaoImpl extends AbstractDaoImpl<Chamber> implements ChamberD
     @Override
     public Chamber findChamberWithFreeBeds(int chamberTypeId) throws DaoException {
         Chamber chamber = new Chamber();
-        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_CHAMBER_WITH_FREE_BEDS_QUERY);) {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_CHAMBER_WITH_FREE_BEDS_QUERY)) {
             statement.setInt(1,MIN_NUMBER_OF_AVAILABLE_BEDS);
             statement.setInt(2,chamberTypeId);
             ResultSet resultSet = statement.executeQuery();

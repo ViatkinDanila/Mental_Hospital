@@ -14,13 +14,13 @@ import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.treatment.type.HospitalizationStatus;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.ChamberService;
+import com.epam.hospital.service.logic.ChamberService;
 
-import com.epam.hospital.service.database.HospitalizationService;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.ChamberServiceImpl;
-import com.epam.hospital.service.database.impl.HospitalizationServiceImpl;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.HospitalizationService;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.ChamberServiceImpl;
+import com.epam.hospital.service.logic.impl.HospitalizationServiceImpl;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 
 import java.sql.Date;
@@ -30,7 +30,7 @@ import java.util.List;
 
 public class HospitalizationRequestCommand implements Command {
     private static final String HOSPITALIZATION_REQUEST_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_REQUEST_PAGE;
-    private static final String CHAMBER_TYPE_UNAVAILABLE = "unavailable";
+    private static final String CHAMBER_TYPE_UNAVAILABLE = "unavailable.chamber.type";
     private static final HospitalizationService hospitalizationService = HospitalizationServiceImpl.getInstance();
     private static final ChamberService chamberService = ChamberServiceImpl.getInstance();
     private static final UserService userService = UserServiceImpl.getInstance();
@@ -39,10 +39,10 @@ public class HospitalizationRequestCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         int patientCardId = (Integer) requestContext.getSessionAttribute(SessionAttributes.PATIENT_CARD_ID);
 
-        String chamberTypeIdString = ParameterExtractor.extractString(RequestParameters.CHAMBER_TYPE_ID, requestContext);
-        int chamberTypeId = Integer.parseInt(chamberTypeIdString);
+        int chamberTypeId = ParameterExtractor.extractInt(RequestParameters.CHAMBER_TYPE_ID, requestContext);
         ChamberType chamberType = chamberService.getChamberTypeById(chamberTypeId);
-        if(chamberType.getNumberOfFreeRooms() >= 1) {
+        int numberOfFreeRooms = chamberType.getNumberOfFreeRooms();
+        if(numberOfFreeRooms >= 1) {
             Chamber chamber = chamberService.getAvailableChamber(chamberTypeId);
             int chamberId = chamber.getChamberId();
             if (chamber.getNumberOfFreeBeds() == chamberType.getNumberOfBeds()){
@@ -70,9 +70,11 @@ public class HospitalizationRequestCommand implements Command {
                     .build();
 
             hospitalizationService.saveHospitalization(hospitalization, chamberStaying);
+            return CommandResult.redirect(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
         } else {
             requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, CHAMBER_TYPE_UNAVAILABLE);
         }
-        return CommandResult.redirect(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
+        //TODO как тут действовать с ф5
+        return CommandResult.forward(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
     }
 }

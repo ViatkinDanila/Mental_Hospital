@@ -36,4 +36,6 @@ public final class RequestParameters {
     public final static String LOCALE = "locale";
     public final static String NAME = "name";
     public static final String CONTENT = "content";
+    public static final String CONTENT_SIZE = "content-size";
+    public static final String CURRENT_PAGE = "current-page";
 }

@@ -13,7 +13,6 @@ import java.io.IOException;
 
 public class AccessFilter implements Filter{
     private static final String GUEST_ROLE = "GUEST";
-    private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
     private static final String DOCTOR_ROLE = "DOCTOR";
 
@@ -104,6 +103,7 @@ public class AccessFilter implements Filter{
                    CommandName.CONSULTATION_REJECT.equals(commandName) ||
                    CommandName.CONSULTATION_APPROVE.equals(commandName);
        }
+       //TODO ограничть меня(админа)
         return true;
     }
 

@@ -6,7 +6,6 @@ import com.epam.hospital.service.validator.Validator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-//TODO проверка на инъекцию во всех валидаторах
 public class UserValidatorImpl implements Validator<User> {
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
@@ -21,7 +20,7 @@ public class UserValidatorImpl implements Validator<User> {
     private static final int MAX_PASSWORD_LENGTH = 32;
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final List<String> INJECTION_SYMBOLS = List.of("$", "{", "}", "<", ">");
-    private static final int HASHED_PASSWORD_LENGTH = 512;
+    private static final int HASHED_PASSWORD_LENGTH = 128;
     private static final int MIN_ID_VALUE = 0;
 
     @Override
@@ -57,9 +56,6 @@ public class UserValidatorImpl implements Validator<User> {
                 || !isValidOfInjectionAttack(user.getLastName())) {
             return false;
         }
-        if (user.getUserId() < MIN_ID_VALUE){
-            return false;
-        }
         String phone = String.valueOf(user.getNumber());
         if (phone.length() > MAX_PHONE_NUMBER_LENGTH || phone.length() < MIN_PHONE_LENGTH) {
             return false;
@@ -80,7 +76,7 @@ public class UserValidatorImpl implements Validator<User> {
         return matcher.matches();
     }
 
-    private boolean isValidOfInjectionAttack(String line) {
+    public boolean isValidOfInjectionAttack(String line) {
         for (String injectSymbol : INJECTION_SYMBOLS) {
             if (line.contains(injectSymbol)) {
                 return false;
@@ -89,7 +85,7 @@ public class UserValidatorImpl implements Validator<User> {
         return true;
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         Matcher matcher = COMPILED_PATTERN_EMAIL.matcher(email);
         return matcher.matches();
     }

@@ -1,4 +1,4 @@
-package com.epam.hospital.service.database;
+package com.epam.hospital.service.logic;
 
 import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Hospitalization;

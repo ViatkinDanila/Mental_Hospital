@@ -1,17 +1,19 @@
-package com.epam.hospital.service.database.impl;
+package com.epam.hospital.service.logic.impl;
 
 import com.epam.hospital.dao.PatientCardDao;
-import com.epam.hospital.dao.TreatmentCourseDao;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.PatientCardDaoImpl;
-import com.epam.hospital.dao.impl.TreatmentCourseDaoImpl;
 import com.epam.hospital.model.treatment.PatientCard;
-import com.epam.hospital.service.database.PatientCardService;
+import com.epam.hospital.service.logic.PatientCardService;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.service.validator.Validator;
+import com.epam.hospital.service.validator.impl.PatientCardValidatorImpl;
 
 public class PatientCardServiceImpl implements PatientCardService {
     private static final PatientCardService instance = new PatientCardServiceImpl();
+    private static final Validator<PatientCard> patientCardValidator = new PatientCardValidatorImpl();
+
 
     public static PatientCardService getInstance(){
         return instance;
@@ -40,6 +42,9 @@ public class PatientCardServiceImpl implements PatientCardService {
 
     @Override
     public void update(PatientCard patientCard) throws ServiceException {
+        if (!patientCardValidator.isValid(patientCard)){
+            throw new ServiceException("Invalid patient card data.");
+        }
         PatientCardDao patientCardDao = new PatientCardDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(patientCardDao);

@@ -1,17 +1,20 @@
-package com.epam.hospital.service.database.impl;
+package com.epam.hospital.service.logic.impl;
 
 import com.epam.hospital.dao.ConsultationDao;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.ConsultationDaoImpl;
 import com.epam.hospital.model.treatment.Consultation;
-import com.epam.hospital.service.database.ConsultationService;
+import com.epam.hospital.service.logic.ConsultationService;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.service.validator.Validator;
+import com.epam.hospital.service.validator.impl.ConsultationValidatorImpl;
 
 import java.util.List;
 
 public class ConsultationServiceImpl implements ConsultationService {
     private static final ConsultationService instance = new ConsultationServiceImpl();
+    private static final Validator<Consultation> consultationValidator = new ConsultationValidatorImpl();
 
     private ConsultationServiceImpl(){
     }
@@ -21,47 +24,53 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation getConsultationById(int id) throws SecurityException {
+    public Consultation getConsultationById(int id) throws ServiceException {
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             return consultationDao.findById(id);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new ServiceException("Can't get consultation.", e);
         }
     }
 
     @Override
-    public Consultation getConsultationByDoctorId(int id) throws SecurityException {
+    public Consultation getConsultationByDoctorId(int id) throws ServiceException {
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             List<Consultation> consultations = consultationDao.findByDoctorId(id);
             return consultations.get(consultations.size() - 1);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultation.", e);
+            throw new ServiceException("Can't get consultation.", e);
         }
     }
 
     @Override
     public void save(Consultation consultation) throws ServiceException {
+        if (!consultationValidator.isValid(consultation)){
+            throw new ServiceException("Invalid consultation data.");
+        }
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             consultationDao.save(consultation);
         } catch(DaoException e){
-            throw new SecurityException("Can't save consultation.", e);
+            throw new ServiceException("Can't save consultation.", e);
         }
     }
 
     @Override
     public void update(Consultation consultation) throws ServiceException {
+        if (!consultationValidator.isValid(consultation)){
+            throw new ServiceException("Invalid consultation data.");
+        }
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             consultationDao.update(consultation);
         } catch(DaoException e){
-            throw new SecurityException("Can't update consultation.", e);
+            throw new ServiceException("Can't update consultation.", e);
         }
     }
 
@@ -72,7 +81,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             transaction.initTransaction(true, consultationDao);
             return consultationDao.findByPatientId(patientCardId);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultations by patient id.", e);
+            throw new ServiceException("Can't get consultations by patient id.", e);
         }
     }
 
@@ -83,7 +92,7 @@ public class ConsultationServiceImpl implements ConsultationService {
             transaction.initTransaction(true, consultationDao);
             return consultationDao.findByDoctorId(doctorId);
         } catch(DaoException e){
-            throw new SecurityException("Can't get consultations by doctor id.", e);
+            throw new ServiceException("Can't get consultations by doctor id.", e);
         }
     }
 }

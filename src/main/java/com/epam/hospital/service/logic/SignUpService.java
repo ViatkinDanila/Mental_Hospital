@@ -1,4 +1,4 @@
-package com.epam.hospital.service.database;
+package com.epam.hospital.service.logic;
 
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.user.User;

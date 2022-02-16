@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     public static final String SAVE_USER_QUERY = String.format(
@@ -73,6 +74,12 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Table.DOCTOR_INFO_TABLE,
             Column.DOCTOR_INFO_ID
     );
+    public final static String FIND_USER_ROLE_ID_QUERY = String.format(
+            "SELECT %s FROM %s WHERE %s=?",
+            Column.USER_ROLES_ID,
+            Table.USER_ROLES_TABLE,
+            Column.USER_ROLES_NAME
+    );
 
     public UserDaoImpl() {
         super(BuilderFactory.getUserBuilder(), Table.USER_TABLE, Column.USER_ID);
@@ -120,7 +127,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
 
     @Override
     public User findByEmailPassword(String email, String password) throws DaoException {
-        User user = new User();
+        User user = null;
         try (PreparedStatement statement = pooledConnection.prepareStatement(LOGIN_QUERY);) {
             statement.setString(1, email);
             statement.setString(2, password);
@@ -157,7 +164,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Can't find user by email and password.", e);
+            throw new DaoException("Can't find user by email.", e);
         }
         return false;
     }
@@ -183,6 +190,21 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public Integer getUserRoleId() throws DaoException {
+        Integer roleId = null;
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_USER_ROLE_ID_QUERY);) {
+            statement.setString(1, "USER");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                roleId = resultSet.getInt(Column.USER_ROLES_ID);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find role id.", e);
+        }
+        return roleId;
+    }
+
+    @Override
     public void saveDoctorInfo(DoctorInfo entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DOCTOR_INFO_QUERY);) {
             setParams(statement, entity, SAVE_DOCTOR_INFO_QUERY);
@@ -199,7 +221,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
         statement.setString(4, user.getEmail());
         statement.setString(5, user.getHashedPassword());
         statement.setInt(6, user.getUserRoleId());
-        statement.setBoolean(7, user.isBanned());
+        statement.setBoolean(7, user.getIsBanned());
         if (action.equals(UPDATE_USER_QUERY)) {
             statement.setInt(8, user.getUserId());
         }

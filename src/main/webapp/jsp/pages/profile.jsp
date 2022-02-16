@@ -44,7 +44,7 @@
                 </p>
                 <p>
                 <c:if test="${content.equals('consultations')}">
-                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalizations"
+                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalizations&content-size=5&current-page=1"
                        role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.hospitalizations"/>
@@ -52,7 +52,7 @@
                     </a>
                 </c:if>
                 <c:if test="${content.equals('hospitalizations')}">
-                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations"
+                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=1"
                        role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.consultations"/>
@@ -143,6 +143,15 @@
                             </c:choose>
                         </a>
                     </c:forEach>
+                    <div class="pagination">
+                        <c:if test="${currentPage != 1}">
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+                        </c:if>
+                            ${currentPage}
+                        <c:if test="${currentPage * contentSize < fullContentSize}">
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+                        </c:if>
+                    </div>
                 </div>
             </c:if>
             <c:if test="${content.equals('hospitalizations')}">
@@ -154,7 +163,7 @@
                            style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
                             <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
                                  style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-                                <span style="line-height: 1.5"><fmt:message key="hospitalization.chambernumber"/>: ${hospitalization.getChamberNumber()} </span>
+                                <span style="line-height: 1.5"><fmt:message key="hospitalization.chamber.number"/>: ${hospitalization.getChamberNumber()} </span>
                             </div>
                             <span class="h2 mt-2 mb-2 font-weight-bold d-flex justify-content-center" style="line-height: 3; color: #428bca">
                                   <c:choose>
@@ -186,11 +195,21 @@
                             </c:choose>
                         </a>
                     </c:forEach>
+                    <div class="pagination">
+                        <c:if test="${currentPage != 1}">
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalization&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+                        </c:if>
+                            ${currentPage}
+                        <c:if test="${currentPage * contentSize < fullContentSize}">
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalization&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+                        </c:if>
+                    </div>
                 </div>
             </c:if>
             </c:if>
             </div>
         </div>
+
     </div>
 </body>
 

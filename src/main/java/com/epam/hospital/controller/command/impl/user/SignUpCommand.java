@@ -10,13 +10,12 @@ import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.SignUpService;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.SignUpServiceImpl;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.SignUpService;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.SignUpServiceImpl;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
-
 
 import java.nio.charset.StandardCharsets;
 
@@ -25,7 +24,7 @@ public class SignUpCommand implements Command {
     private static final String LOGIN_PAGE_COMMAND = "MentalHospital?command=" + CommandName.LOGIN_PAGE;
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final String INVALID_LOGIN_KEY = "invalid.login";
-    private static final int USER_ROLE_ID = 1;
+    //TODO убрать конст, брать из бд
 
     private final SignUpService signUpService = SignUpServiceImpl.getInstance();
 
@@ -45,7 +44,7 @@ public class SignUpCommand implements Command {
                     .firstName(ParameterExtractor.extractString(RequestParameters.FIRST_NAME, requestContext))
                     .isBanned(false)
                     .lastName(ParameterExtractor.extractString(RequestParameters.LAST_NAME, requestContext))
-                    .userRoleId(USER_ROLE_ID)
+                    .userRoleId(userService.getUserRoleId())
                     .number(ParameterExtractor.extractString(RequestParameters.PHONE_NUMBER, requestContext))
                     .build();
             PatientCard patientCard = PatientCard.builder()

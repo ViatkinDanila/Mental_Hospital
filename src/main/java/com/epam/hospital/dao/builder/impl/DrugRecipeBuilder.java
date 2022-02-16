@@ -13,7 +13,7 @@ public class DrugRecipeBuilder implements EntityBuilder<DrugRecipe> {
         DrugRecipe drugRecipe = new DrugRecipe();
         drugRecipe.setDrugId(resultSet.getInt(Column.DRUG_RECIPES_DRUG_ID));
         drugRecipe.setTreatmentCourseId(resultSet.getInt(Column.DRUG_RECIPES_TREATMENT_COURSE_ID));
-        drugRecipe.setDose(resultSet.getInt(Column.DRUG_RECIPES_DOSE));
+        drugRecipe.setDose(resultSet.getFloat(Column.DRUG_RECIPES_DOSE));
         drugRecipe.setDescription(resultSet.getString(Column.DRUG_RECIPES_DESCRIPTION));
         return drugRecipe;
     }

@@ -54,7 +54,7 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
 
     private void setParams(PreparedStatement statement, DrugRecipe drugRecipe) throws SQLException{
         statement.setString(1, drugRecipe.getDescription());
-        statement.setInt(2, drugRecipe.getDose());
+        statement.setFloat(2, drugRecipe.getDose());
         statement.setInt(3, drugRecipe.getTreatmentCourseId());
         statement.setInt(4, drugRecipe.getDrugId());
     }

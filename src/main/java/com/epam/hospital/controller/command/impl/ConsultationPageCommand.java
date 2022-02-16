@@ -14,8 +14,8 @@ import com.epam.hospital.model.treatment.*;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.*;
-import com.epam.hospital.service.database.impl.*;
+import com.epam.hospital.service.logic.*;
+import com.epam.hospital.service.logic.impl.*;
 import com.epam.hospital.service.exception.ServiceException;
 
 import java.util.ArrayList;

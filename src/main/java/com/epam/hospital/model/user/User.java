@@ -20,4 +20,9 @@ public class User implements Entity {
      String number;
      String hashedPassword;
      Boolean isBanned;
+
+     @Override
+     protected Object clone() throws CloneNotSupportedException {
+          return super.clone();
+     }
 }

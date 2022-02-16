@@ -67,12 +67,12 @@ public class DaoTransactionProvider implements AutoCloseable {
                 rollback();
             }
         } catch (SQLException e) {
-//            LOGGER.error("Get auto commit error: " + e);
+           log.error("Get auto commit error: " + e);
         }
         try {
             pooledConnection.close();
         } catch (SQLException e) {
-//            LOGGER.error("Proxy connection error: " + e);
+            log.error("Proxy connection error: " + e);
         }
     }
 }

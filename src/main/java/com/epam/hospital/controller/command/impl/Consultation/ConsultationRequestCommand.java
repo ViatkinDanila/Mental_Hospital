@@ -11,14 +11,13 @@ import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.ConsultationService;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.ConsultationService;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.ConsultationServiceImpl;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +53,8 @@ public class ConsultationRequestCommand implements Command {
                 .status(ConsultationStatus.valueOf(CONSULTATION_PENDING_STATUS))
                 .patientId(patientCardId)
                 .treatmentCourseId(null)
+                .duration(0)
+                .price(0.0)
                 .build();
         consultationService.save(consultation);
         int consultationId = consultationService.getConsultationByDoctorId(doctor.getUserId()).getConsultationId();

@@ -8,8 +8,8 @@ import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
-import com.epam.hospital.service.database.ConsultationService;
-import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
+import com.epam.hospital.service.logic.ConsultationService;
+import com.epam.hospital.service.logic.impl.ConsultationServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 
 public class ConsultationRejectCommand implements Command {

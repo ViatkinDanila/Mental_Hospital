@@ -11,14 +11,14 @@ import com.epam.hospital.model.treatment.DiseaseSymptom;
 import com.epam.hospital.model.treatment.DrugRecipe;
 import com.epam.hospital.model.treatment.TreatmentCourse;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
-import com.epam.hospital.service.database.ConsultationService;
-import com.epam.hospital.service.database.DiseaseService;
-import com.epam.hospital.service.database.DrugService;
-import com.epam.hospital.service.database.TreatmentCourseService;
-import com.epam.hospital.service.database.impl.ConsultationServiceImpl;
-import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
-import com.epam.hospital.service.database.impl.DrugServiceImpl;
-import com.epam.hospital.service.database.impl.TreatmentCourseServiceImpl;
+import com.epam.hospital.service.logic.ConsultationService;
+import com.epam.hospital.service.logic.DiseaseService;
+import com.epam.hospital.service.logic.DrugService;
+import com.epam.hospital.service.logic.TreatmentCourseService;
+import com.epam.hospital.service.logic.impl.ConsultationServiceImpl;
+import com.epam.hospital.service.logic.impl.DiseaseServiceImpl;
+import com.epam.hospital.service.logic.impl.DrugServiceImpl;
+import com.epam.hospital.service.logic.impl.TreatmentCourseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,10 +66,10 @@ public class ConsultationCompleteCommand implements Command {
 
             List<String> descriptions = getStringList(RequestParameters.DESCRIPTION, requestContext);
 
-            List<Integer> doses = new ArrayList<>();
+            List<Float> doses = new ArrayList<>();
             List<String> dosesListStr = getStringList(RequestParameters.DOSE, requestContext);
             for (String dose : dosesListStr) {
-                doses.add(Integer.parseInt(dose));
+                doses.add(Float.parseFloat(dose));
             }
 
             for (int i = 0; i < drugsId.size() && i < descriptions.size() && i < doses.size(); i++) {

@@ -6,8 +6,8 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Disease;
-import com.epam.hospital.service.database.DiseaseService;
-import com.epam.hospital.service.database.impl.DiseaseServiceImpl;
+import com.epam.hospital.service.logic.DiseaseService;
+import com.epam.hospital.service.logic.impl.DiseaseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 

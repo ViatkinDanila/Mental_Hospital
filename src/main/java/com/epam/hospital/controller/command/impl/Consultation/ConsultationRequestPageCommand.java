@@ -6,8 +6,8 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 
 import java.util.List;

@@ -7,8 +7,8 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
-import com.epam.hospital.service.database.AdminService;
-import com.epam.hospital.service.database.impl.AdminServiceImpl;
+import com.epam.hospital.service.logic.AdminService;
+import com.epam.hospital.service.logic.impl.AdminServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 
 public class UnbanUserCommand implements Command {

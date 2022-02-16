@@ -7,20 +7,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class ConnectionPool {
-    private static ConnectionPool instance = null;
+    private static ConnectionPool instance;
     private static BlockingQueue<PooledConnection> allConnections;
     private static BlockingQueue<PooledConnection> engagedConnections;
-    private static int poolSize;
+
 
     private ConnectionPool() {
-        DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-        try {
-            poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
-        } catch (NumberFormatException e) {
-            poolSize = 5;
-        }
     }
-
+    //TODO потокабезопастность
     public static ConnectionPool getInstance() {
         if (instance == null) {
             instance = new ConnectionPool();
@@ -28,7 +22,7 @@ public class ConnectionPool {
         return instance;
     }
 
-    public void init(String url, String user, String password, String driverName) throws ConnectionPoolException {
+    public void init(String url, String user, String password, String driverName, int poolSize) throws ConnectionPoolException {
         try {
             Class.forName(driverName);
             allConnections = new ArrayBlockingQueue<>(poolSize);
@@ -44,41 +38,7 @@ public class ConnectionPool {
         }
     }
 
-//    public void closeConnection(Connection con, Statement st, ResultSet rs) throws ConnectionPoolException {
-//        try {
-//            rs.close();
-//        } catch (SQLException e) {
-//            throw new ConnectionPoolException("ResultSet isn't closed.", e);
-//        }
-//
-//        try {
-//            st.close();
-//        } catch (SQLException e) {
-//            throw new ConnectionPoolException("Statement isn't closed.", e);
-//        }
-//
-//        try {
-//            con.close();
-//        } catch (SQLException e) {
-//            throw new ConnectionPoolException("Connection isn't return to the pool.", e);
-//        }
-//    }
-//
-//    public void closeConnection(Connection con, PreparedStatement st) throws ConnectionPoolException {
-//        try {
-//            st.close();
-//        } catch (SQLException e) {
-//            throw new ConnectionPoolException("Statement isn't closed.", e);
-//        }
-//
-//        try {
-//            con.close();
-//        } catch (SQLException e) {
-//            throw new ConnectionPoolException("Connection isn't return to the pool.", e);
-//        }
-//    }
-
-    public void dispose() throws ConnectionPoolException {
+    public synchronized void dispose() throws ConnectionPoolException {
         try {
             for (Connection connection : allConnections) {
                 connection.close();
@@ -88,6 +48,9 @@ public class ConnectionPool {
             }
         } catch (SQLException e) {
             throw new ConnectionPoolException("Error closing the connection.", e);
+        } finally {
+            allConnections.clear();
+            engagedConnections.clear();
         }
     }
 
@@ -103,21 +66,14 @@ public class ConnectionPool {
         return connection;
     }
 
-    public boolean releaseConnection(PooledConnection connection) throws SQLException {
-        if (connection.isClosed()) {
-            return false;
+    public void releaseConnection(PooledConnection connection) throws SQLException {
+        if (engagedConnections.remove(connection)){
+            try {
+                allConnections.put(connection);
+            } catch (InterruptedException e) {
+                throw new SQLException("Error releasing connection.", e);
+            }
         }
-        if (!engagedConnections.remove(connection)) {
-            return false;
-        }
-        try {
-            allConnections.put(connection);
-        } catch (InterruptedException e) {
-            throw new SQLException("Error releasing connection.", e);
-        }
-        return true;
     }
-
-
 }
 

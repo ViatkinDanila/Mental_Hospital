@@ -1,4 +1,4 @@
-package com.epam.hospital.service.database.impl;
+package com.epam.hospital.service.logic.impl;
 
 import com.epam.hospital.dao.*;
 import com.epam.hospital.dao.exception.DaoException;
@@ -8,12 +8,10 @@ import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
 import com.epam.hospital.model.treatment.DrugRecipe;
 import com.epam.hospital.model.treatment.TreatmentCourse;
-import com.epam.hospital.service.database.TreatmentCourseService;
+import com.epam.hospital.service.logic.TreatmentCourseService;
 import com.epam.hospital.service.exception.ServiceException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     private static TreatmentCourseService instance;

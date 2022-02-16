@@ -8,8 +8,8 @@ import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.dto.DoctorDto;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
-import com.epam.hospital.service.database.UserService;
-import com.epam.hospital.service.database.impl.UserServiceImpl;
+import com.epam.hospital.service.logic.UserService;
+import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 

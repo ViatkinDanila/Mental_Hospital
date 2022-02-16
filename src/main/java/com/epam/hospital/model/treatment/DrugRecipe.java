@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class DrugRecipe implements Entity {
     Integer treatmentCourseId;
     Integer drugId;
-    Integer dose;
+    Float dose;
     String description;
 }

@@ -6,12 +6,11 @@ import com.epam.hospital.model.treatment.type.ConsultationStatus;
 import com.epam.hospital.service.validator.Validator;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class ConsultationValidatorImpl implements Validator<Consultation> {
     private static final int MIN_ID_VALUE = 0;
-    private static final int MIN_DURATION_VALUE = 10;
-    private static final int MAX_DURATION_VALUE = 60;
-
+    private static final List<String> INJECTION_SYMBOLS = List.of("$", "{", "}", "<", ">");
 
     @Override
     public boolean isValid(Consultation entity) {
@@ -19,20 +18,29 @@ public class ConsultationValidatorImpl implements Validator<Consultation> {
         ConsultationStatus consultationStatus = entity.getStatus();
         int doctorId = entity.getDoctorId();
         int patientId = entity.getPatientId();
-        int treatmentCourseId = entity.getTreatmentCourseId();
-        int duration = entity.getDuration();
 
         if (    communicationType == null ||
                 consultationStatus == null){
             return false;
         }
 
-        if (doctorId < MIN_ID_VALUE || patientId < MIN_ID_VALUE || treatmentCourseId < MIN_ID_VALUE ){
+        if (!isValidOfInjectionAttack(communicationType.toString()) ||
+                !isValidOfInjectionAttack(consultationStatus.toString())){
             return false;
         }
 
-        if (duration < MIN_DURATION_VALUE || duration > MAX_DURATION_VALUE){
+        if (doctorId < MIN_ID_VALUE || patientId < MIN_ID_VALUE){
             return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidOfInjectionAttack(String line) {
+        for (String injectSymbol : INJECTION_SYMBOLS) {
+            if (line.contains(injectSymbol)) {
+                return false;
+            }
         }
         return true;
     }

@@ -22,5 +22,7 @@ public class RequestAttributes {
     public static final String CHAMBER_TYPES = "chamberTypes";
     public static final String LANGUAGE = "lang";
     public static final String CONTENT = "content";
-    public static final String MAX_PAGES = "maxPages";
+    public static final String CONTENT_SIZE = "contentSize";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String FULL_CONTENT_SIZE = "fullContentSize";
 }

@@ -1,4 +1,4 @@
-package com.epam.hospital.service.database.impl;
+package com.epam.hospital.service.logic.impl;
 
 import com.epam.hospital.dao.AbstractDao;
 import com.epam.hospital.dao.DrugDao;
@@ -6,12 +6,14 @@ import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.dao.helper.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.DrugDaoImpl;
 import com.epam.hospital.model.treatment.Drug;
-import com.epam.hospital.service.database.DiseaseService;
-import com.epam.hospital.service.database.DrugService;
+import com.epam.hospital.service.logic.DrugService;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.service.validator.Validator;
+import com.epam.hospital.service.validator.impl.DrugValidatorImpl;
 
 public class DrugServiceImpl implements DrugService {
     private static final DrugService instance = new DrugServiceImpl();
+    private static final Validator<Drug> drugValidator = new DrugValidatorImpl();
 
     public static DrugService getInstance(){
         return instance;
@@ -24,7 +26,7 @@ public class DrugServiceImpl implements DrugService {
             transaction.initTransaction(drugDao);
             return drugDao.findById(id);
         } catch(DaoException e) {
-            throw new SecurityException("Can't get drug.", e);
+            throw new ServiceException("Can't get drug.", e);
         }
     }
 
@@ -35,18 +37,21 @@ public class DrugServiceImpl implements DrugService {
             transaction.initTransaction(drugDao);
             return drugDao.getDrugIdByName(name);
         } catch(DaoException e) {
-            throw new SecurityException("Can't get drug id.", e);
+            throw new ServiceException("Can't get drug id.", e);
         }
     }
 
     @Override
     public void save(Drug drug) throws ServiceException {
+        if (!drugValidator.isValid(drug)){
+            throw new ServiceException("Invalid drug data.");
+        }
         DrugDao drugDao = new DrugDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(drugDao);
             drugDao.save(drug);
         } catch(DaoException e) {
-            throw new SecurityException("Can't save drug.", e);
+            throw new ServiceException("Can't save drug.", e);
         }
     }
 }

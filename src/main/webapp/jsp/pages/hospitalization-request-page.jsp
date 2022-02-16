@@ -54,7 +54,7 @@
             </div>
 
             <h3 class="text-danger error-message mb-4">
-                <fmt:message key="consultation.request.error.${errorMessage}"/>
+                <fmt:message key="hospitalization.request.error.${errorMessage}"/>
             </h3>
             <button type="submit" name="Log in" class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
                 <span class="h2 mb-0" style="line-height: 1.6"><fmt:message key="consultation.request.button"/></span>

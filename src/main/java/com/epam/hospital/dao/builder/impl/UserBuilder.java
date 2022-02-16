@@ -17,7 +17,7 @@ public class UserBuilder implements EntityBuilder<User> {
         user.setLastName(resultSet.getString(Column.USER_LAST_NAME));
         user.setHashedPassword(resultSet.getString(Column.USER_PASSWORD));
         user.setNumber(resultSet.getString(Column.USER_NUMBER));
-        user.setBanned(resultSet.getBoolean(Column.USER_IS_BANNED));
+        user.setIsBanned(resultSet.getBoolean(Column.USER_IS_BANNED));
         return user;
     }
 }
