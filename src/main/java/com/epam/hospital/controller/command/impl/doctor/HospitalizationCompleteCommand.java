@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.doctor.Hospitalization;
+package com.epam.hospital.controller.command.impl.doctor;
 
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
@@ -6,6 +6,8 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
+import com.epam.hospital.model.hospital.Chamber;
+import com.epam.hospital.model.hospital.type.ChamberType;
 import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.treatment.type.HospitalizationStatus;
@@ -29,6 +31,18 @@ public class HospitalizationCompleteCommand implements Command {
         chamberStaying.setDateOut(ParameterExtractor.extractDate(RequestParameters.DATE_OUT, requestContext));
         chamberStaying.setPrice(ParameterExtractor.extractDouble(RequestParameters.PRICE, requestContext));
 
+        int chamberId = chamberStaying.getChamberId();
+        Chamber chamber = chamberService.getChamberById(chamberId);
+        if (chamber.getNumberOfFreeBeds() == 0){
+            ChamberType chamberType = chamberService.getChamberTypeById(chamber.getChamberTypeId());
+            int currentNumOfFreeRooms = chamberType.getNumberOfFreeRooms();
+            chamberType.setNumberOfFreeRooms(currentNumOfFreeRooms+1);
+            chamberService.updateChamberType(chamberType);
+        }
+        int currentNumOfFreeBeds = chamber.getNumberOfFreeBeds();
+        chamber.setNumberOfFreeBeds(currentNumOfFreeBeds+1);
+
+        chamberService.updateChamber(chamber);
         hospitalizationService.update(hospitalization);
         chamberService.updateChamberStaying(chamberStaying);
         return CommandResult.redirect(HOSPITALIZATION_PAGE_COMMAND + "&id=" + hospitalizationId);

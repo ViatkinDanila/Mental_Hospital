@@ -62,7 +62,7 @@
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.doctors"/></span>
                 </a>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=1"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=3&current-page=1"
                    class="nav-link px-5 ml-5 text-light">
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.diseases"/></span>

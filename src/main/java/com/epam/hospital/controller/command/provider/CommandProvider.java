@@ -6,7 +6,7 @@ import com.epam.hospital.controller.command.impl.common.*;
 import com.epam.hospital.controller.command.impl.common.page.ConsultationPageCommand;
 import com.epam.hospital.controller.command.impl.common.page.ForwardPageCommand;
 import com.epam.hospital.controller.command.impl.common.page.ProfilePageCommand;
-import com.epam.hospital.controller.command.impl.doctor.Hospitalization.*;
+import com.epam.hospital.controller.command.impl.doctor.*;
 import com.epam.hospital.controller.command.impl.admin.AddDiseaseCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;

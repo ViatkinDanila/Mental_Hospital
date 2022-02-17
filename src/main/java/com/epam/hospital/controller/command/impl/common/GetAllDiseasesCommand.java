@@ -13,6 +13,7 @@ import com.epam.hospital.service.logic.impl.DiseaseServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -30,10 +31,11 @@ public class GetAllDiseasesCommand implements Command {
         requestContext.addAttribute(RequestAttributes.CURRENT_PAGE, currentPage);
 
         requestContext.addAttribute(RequestAttributes.FULL_CONTENT_SIZE, diseaseList.size());
-
-        //TODO ВТФ ИЗ ЗЭТ
-        //log.info("diseases: {}", diseaseList);
-        requestContext.addAttribute(RequestAttributes.DISEASES, diseaseList);
+        List<Disease> diseaseListNeededSize = new ArrayList<>();
+        for (int index = (currentPage-1)*contentSize; index < currentPage*contentSize && index < diseaseList.size(); index++){
+            diseaseListNeededSize.add(diseaseList.get(index));
+        }
+        requestContext.addAttribute(RequestAttributes.DISEASES, diseaseListNeededSize);
         return CommandResult.forward(Page.DISEASES);
     }
 }

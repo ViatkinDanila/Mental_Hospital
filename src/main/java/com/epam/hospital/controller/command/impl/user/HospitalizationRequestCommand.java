@@ -45,13 +45,12 @@ public class HospitalizationRequestCommand implements Command {
         if(numberOfFreeRooms >= 1) {
             Chamber chamber = chamberService.getAvailableChamber(chamberTypeId);
             int chamberId = chamber.getChamberId();
-            if (chamber.getNumberOfFreeBeds() == chamberType.getNumberOfBeds()){
+            Integer numberOfFreeBeds = chamber.getNumberOfFreeBeds();
+            if (numberOfFreeBeds.equals(1)){
                 int currentlyNumberOfFreeRooms = chamberType.getNumberOfFreeRooms();
                 chamberType.setNumberOfFreeRooms(currentlyNumberOfFreeRooms-1);
-                chamberService.updateChamberType(chamberType);
             }
-            chamber.setNumberOfFreeBeds(chamber.getNumberOfFreeBeds()-1);
-            chamberService.updateChamber(chamber);
+
 
             String doctorName = ParameterExtractor.extractString(RequestParameters.DOCTOR, requestContext);
             List<String> fullName = new ArrayList<String>(Arrays.asList(doctorName.split(" ")));
@@ -67,9 +66,16 @@ public class HospitalizationRequestCommand implements Command {
                     .chamberId(chamberId)
                     .dateIn(new Date(System.currentTimeMillis()))
                     .dateOut(new Date(System.currentTimeMillis()))
+                    .price(0.0)
                     .build();
 
-            hospitalizationService.saveHospitalization(hospitalization, chamberStaying);
+            chamber.setNumberOfFreeBeds(numberOfFreeBeds-1);
+            if (numberOfFreeBeds.equals(1)){
+                hospitalizationService.saveHospitalization(hospitalization, chamberStaying, chamber, chamberType);
+            } else {
+                hospitalizationService.saveHospitalization(hospitalization, chamberStaying, chamber);
+
+            }
             return CommandResult.redirect(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
         } else {
             requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, CHAMBER_TYPE_UNAVAILABLE);
