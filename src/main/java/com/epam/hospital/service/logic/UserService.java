@@ -17,5 +17,6 @@ public interface UserService {
     List<User> getAllDoctors(int doctorRoleId) throws ServiceException;
     List<User> getAll() throws ServiceException;
     Integer getUserRoleId() throws ServiceException;
+    Integer getDoctorRoleId() throws ServiceException;
     void saveUser(User user) throws ServiceException;
 }

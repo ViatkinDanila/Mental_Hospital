@@ -36,8 +36,8 @@ create table chambers
 	id int auto_increment
 		primary key,
 	chamber_type_id int not null,
-	hospital_id int not null,
-	num_free_beds int not null,
+	hospital_id int null,
+	num_free_beds int null,
 	constraint fk_chambers_chambres_type1
 		foreign key (chamber_type_id) references chamber_types (id),
 	constraint fk_chambers_hospital1
@@ -88,7 +88,7 @@ create table drug_recipes
 	treatment_course_id int not null,
 	drug_id int not null,
 	description varchar(400) not null,
-	dose int not null,
+	dose float not null,
 	constraint fk_treatment_courses_has_drugs_drugs1
 		foreign key (drug_id) references drugs (id),
 	constraint fk_treatment_courses_has_drugs_treatment_courses1
@@ -159,7 +159,7 @@ create table consultations
 	treatment_course_id int null,
 	communication_type enum('ONLINE', 'FACE_TO_FACE') not null,
 	date timestamp not null,
-	duration int not null,
+	duration int null,
 	price double null,
 	status enum('APPROVED', 'PENDING', 'COMPLETED', 'REJECTED') null,
 	constraint fk_consultation_outpatient_card1

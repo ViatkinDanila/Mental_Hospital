@@ -22,7 +22,7 @@
     <div class="d-flex flex-column w-100 mt-3 ml-5 align-items-center text-center">
         <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="doctors.label"/></span>
         <c:forEach items="${doctors}" var="doctor" varStatus="counter">
-            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${doctor.getDoctorId()}"
+            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${doctor.getDoctorId()}&content=consultations&content-size=5&current-page=1"
                class="text-center w-50 mb-5"
                style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none; width: 35%">
                 <div class="d-flex text-light justify-content-center pt-2 px-3 h2"

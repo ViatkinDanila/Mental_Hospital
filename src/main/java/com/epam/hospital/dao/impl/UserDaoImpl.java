@@ -74,12 +74,13 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
             Table.DOCTOR_INFO_TABLE,
             Column.DOCTOR_INFO_ID
     );
-    public final static String FIND_USER_ROLE_ID_QUERY = String.format(
+    public final static String FIND_ROLE_ID_QUERY = String.format(
             "SELECT %s FROM %s WHERE %s=?",
             Column.USER_ROLES_ID,
             Table.USER_ROLES_TABLE,
             Column.USER_ROLES_NAME
     );
+
 
     public UserDaoImpl() {
         super(BuilderFactory.getUserBuilder(), Table.USER_TABLE, Column.USER_ID);
@@ -192,14 +193,29 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     @Override
     public Integer getUserRoleId() throws DaoException {
         Integer roleId = null;
-        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_USER_ROLE_ID_QUERY);) {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_ROLE_ID_QUERY);) {
             statement.setString(1, "USER");
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 roleId = resultSet.getInt(Column.USER_ROLES_ID);
             }
         } catch (SQLException e) {
-            throw new DaoException("Can't find role id.", e);
+            throw new DaoException("Can't find user role id.", e);
+        }
+        return roleId;
+    }
+
+    @Override
+    public Integer getDoctorRoleId() throws DaoException {
+        Integer roleId = null;
+        try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_ROLE_ID_QUERY);) {
+            statement.setString(1, "DOCTOR");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                roleId = resultSet.getInt(Column.USER_ROLES_ID);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Can't find doctor role id.", e);
         }
         return roleId;
     }

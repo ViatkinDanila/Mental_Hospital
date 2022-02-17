@@ -17,5 +17,6 @@ public interface UserDao extends AbstractDao<User> {
     DoctorInfo findDoctorInfoById (int id) throws DaoException;
     List<User> findAllDoctors (int id) throws DaoException;
     Integer getUserRoleId() throws DaoException;
+    Integer getDoctorRoleId() throws DaoException;
     void saveDoctorInfo(DoctorInfo doctorInfo) throws DaoException;
 }
