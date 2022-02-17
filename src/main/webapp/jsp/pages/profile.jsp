@@ -44,7 +44,7 @@
                 </p>
                 <p>
                 <c:if test="${content.equals('consultations')}">
-                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalizations&content-size=5&current-page=1"
+                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalizations&content-size=5&current-page=1"
                        role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.hospitalizations"/>
@@ -52,7 +52,7 @@
                     </a>
                 </c:if>
                 <c:if test="${content.equals('hospitalizations')}">
-                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=1"
+                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=1"
                        role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.consultations"/>
@@ -145,11 +145,13 @@
                     </c:forEach>
                     <div class="pagination">
                         <c:if test="${currentPage != 1}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=${currentPage-1}">&#8592;</a>
                         </c:if>
+                        <c:if test="${fullContentSize > 0}">
                             ${currentPage}
+                        </c:if>
                         <c:if test="${currentPage * contentSize < fullContentSize}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=consultations&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=${currentPage+1}">&#8594;</a>
                         </c:if>
                     </div>
                 </div>
@@ -197,11 +199,13 @@
                     </c:forEach>
                     <div class="pagination">
                         <c:if test="${currentPage != 1}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalization&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalization&content-size=5&current-page=${currentPage-1}">&#8592;</a>
                         </c:if>
+                        <c:if test="${fullContentSize > 0}">
                             ${currentPage}
+                        </c:if>
                         <c:if test="${currentPage * contentSize < fullContentSize}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&content=hospitalization&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalization&content-size=5&current-page=${currentPage+1}">&#8594;</a>
                         </c:if>
                     </div>
                 </div>

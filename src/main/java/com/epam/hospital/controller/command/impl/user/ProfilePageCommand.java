@@ -43,12 +43,16 @@ public class ProfilePageCommand implements Command {
         int currentPage = ParameterExtractor.extractInt(RequestParameters.CURRENT_PAGE, requestContext);
         requestContext.addAttribute(RequestAttributes.CURRENT_PAGE, currentPage);
 
-        int profileId;
-        if (requestContext.getRequestParameter(RequestParameters.ID) != null) {
-            profileId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);
-        } else {
-            profileId = (int) requestContext.getSessionAttribute(SessionAttributes.USER_ID);
-        }
+        int profileId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);
+        requestContext.addAttribute(RequestAttributes.PROFILE_ID, profileId);
+
+//        if (requestContext.getRequestParameter(RequestParameters.ID) != null) {
+//            profileId = ParameterExtractor.extractInt(RequestParameters.ID, requestContext);
+//        } else {
+//            profileId = (int) requestContext.getSessionAttribute(SessionAttributes.USER_ID);
+//            requestContext.addAttribute(RequestAttributes.PROFILE_ID, 0);
+//        }
+
         User user = userService.getUserById(profileId);
         //TODO: проверить работу метода
         String role = userService.getUserRoleById(user.getUserRoleId());

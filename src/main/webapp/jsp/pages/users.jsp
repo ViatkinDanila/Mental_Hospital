@@ -40,7 +40,7 @@
                     <tr class="py-2">
                         <td>${user.getId()}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${user.getId()}">
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${user.getId()}&content=consultations&content-size=5&current-page=1">
                                     ${user.getFullName()}
                             </a>
                         </td>

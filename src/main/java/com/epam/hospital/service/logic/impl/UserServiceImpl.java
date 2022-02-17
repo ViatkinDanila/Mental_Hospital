@@ -9,8 +9,11 @@ import com.epam.hospital.model.user.info.DoctorInfo;
 import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.validator.impl.UserValidatorImpl;
+import com.epam.hospital.util.Hasher;
 
 import java.util.List;
+
+import static com.epam.hospital.controller.command.impl.user.SignUpCommand.salt;
 
 public class UserServiceImpl implements UserService {
     private final static UserService instance = new UserServiceImpl();
@@ -29,10 +32,12 @@ public class UserServiceImpl implements UserService {
                 !userValidator.isValidPassword(password)){
             throw new ServiceException("Invalid email, password data.");
         }
+        Hasher hasher = new Hasher();
+        String hashPassword = hasher.hashString(password, salt);
         UserDao userDao = new UserDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(userDao);
-            return userDao.findByEmailPassword(email,password);
+            return userDao.findByEmailPassword(email,hashPassword);
         } catch (DaoException e){
             throw new ServiceException("Can't find out is user exit.", e);
         }

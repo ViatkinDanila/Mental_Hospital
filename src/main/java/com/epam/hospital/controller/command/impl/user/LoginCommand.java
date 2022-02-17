@@ -11,9 +11,7 @@ import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.logic.impl.PatientCardServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
-import com.epam.hospital.util.Hasher;
 
-import static com.epam.hospital.controller.command.impl.user.SignUpCommand.salt;
 
 public class LoginCommand implements Command {
     private static final String INCORRECT_DATA_KEY = "incorrect.data.key";
@@ -31,10 +29,7 @@ public class LoginCommand implements Command {
         String email = ParameterExtractor.extractString(RequestParameters.LOGIN, requestContext);
         String password = ParameterExtractor.extractString(RequestParameters.PASSWORD, requestContext);
 
-        Hasher hasher = new Hasher();
-        String hashPassword = hasher.hashString(password, salt);
-
-        User user = userService.login(email, hashPassword);
+        User user = userService.login(email, password);
         if (user != null){
             if (!user.getIsBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());

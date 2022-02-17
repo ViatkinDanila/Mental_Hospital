@@ -17,4 +17,20 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+
+    <tag>
+        <name>date-formatter</name>
+        <tag-class>com.epam.hospital.util.tag.DateFormatterTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <name>date</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>formatType</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

@@ -25,4 +25,5 @@ public class RequestAttributes {
     public static final String CONTENT_SIZE = "contentSize";
     public static final String CURRENT_PAGE = "currentPage";
     public static final String FULL_CONTENT_SIZE = "fullContentSize";
+    public static final String PROFILE_ID = "profileId";
 }

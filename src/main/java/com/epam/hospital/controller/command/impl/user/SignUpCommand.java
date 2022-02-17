@@ -20,7 +20,7 @@ import com.epam.hospital.util.Hasher;
 import java.nio.charset.StandardCharsets;
 
 public class SignUpCommand implements Command {
-    static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
+    public static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
     private static final String LOGIN_PAGE_COMMAND = "MentalHospital?command=" + CommandName.LOGIN_PAGE;
     private static final UserService userService = UserServiceImpl.getInstance();
     private static final String INVALID_LOGIN_KEY = "invalid.login";
