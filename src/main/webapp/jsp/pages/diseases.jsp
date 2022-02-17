@@ -33,16 +33,17 @@
                 </span>
             </div>
         </c:forEach>
-    </div>
-    <div class="pagination">
-        <c:if test="${currentPage != 1}">
-            <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage-1}">&#8592;</a>
-        </c:if>
+        <div class="pagination">
+            <c:if test="${currentPage != 1}">
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+            </c:if>
             ${currentPage}
-        <c:if test="${currentPage * contentSize < fullContentSize}">
-            <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage+1}">&#8594;</a>
-        </c:if>
+            <c:if test="${currentPage * contentSize < fullContentSize}">
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+            </c:if>
+        </div>
     </div>
+
 </div>
 
 </body>
