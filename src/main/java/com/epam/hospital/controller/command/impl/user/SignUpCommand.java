@@ -16,6 +16,7 @@ import com.epam.hospital.service.logic.impl.SignUpServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
 import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
+import jakarta.validation.ValidationException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -23,6 +24,7 @@ public class SignUpCommand implements Command {
     public static final byte[] salt = "5e5db995-f84a-4a98-91ef-e6df62c491f1".getBytes(StandardCharsets.UTF_8);
     private static final String LOGIN_PAGE_COMMAND = "MentalHospital?command=" + CommandName.LOGIN_PAGE;
     private static final UserService userService = UserServiceImpl.getInstance();
+    private static final String INVALID_DATA = "invalid.data";
     private static final String INVALID_LOGIN_KEY = "invalid.login";
     //TODO убрать конст, брать из бд
 
@@ -52,9 +54,14 @@ public class SignUpCommand implements Command {
                     .sex(ParameterExtractor.extractString(RequestParameters.SEX, requestContext))
                     .spareNumber(ParameterExtractor.extractString(RequestParameters.SPARE_PHONE_NUMBER, requestContext))
                     .build();
-            signUpService.signUp(user, patientCard);
 
-            return CommandResult.redirect(LOGIN_PAGE_COMMAND);
+            boolean isDone = signUpService.signUp(user, patientCard);
+            System.out.println(isDone);
+            if (isDone) {
+                return CommandResult.redirect(LOGIN_PAGE_COMMAND);
+            } else {
+                requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, INVALID_DATA);
+            }
         } else {
             requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, INVALID_LOGIN_KEY);
         }

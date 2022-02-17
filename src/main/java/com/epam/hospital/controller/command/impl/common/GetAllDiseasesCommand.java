@@ -1,9 +1,11 @@
-package com.epam.hospital.controller.command.impl.disease;
+package com.epam.hospital.controller.command.impl.common;
 
 import com.epam.hospital.constant.web.RequestAttributes;
+import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.constant.web.Page;
+import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Disease;
 import com.epam.hospital.service.logic.DiseaseService;
@@ -20,7 +22,17 @@ public class GetAllDiseasesCommand implements Command {
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         List<Disease> diseaseList = diseaseService.getAll();
-        log.info("diseases: {}", diseaseList);
+
+        int contentSize = ParameterExtractor.extractInt(RequestParameters.CONTENT_SIZE, requestContext);
+        requestContext.addAttribute(RequestAttributes.CONTENT_SIZE, contentSize);
+
+        int currentPage = ParameterExtractor.extractInt(RequestParameters.CURRENT_PAGE, requestContext);
+        requestContext.addAttribute(RequestAttributes.CURRENT_PAGE, currentPage);
+
+        requestContext.addAttribute(RequestAttributes.FULL_CONTENT_SIZE, diseaseList.size());
+
+        //TODO ВТФ ИЗ ЗЭТ
+        //log.info("diseases: {}", diseaseList);
         requestContext.addAttribute(RequestAttributes.DISEASES, diseaseList);
         return CommandResult.forward(Page.DISEASES);
     }

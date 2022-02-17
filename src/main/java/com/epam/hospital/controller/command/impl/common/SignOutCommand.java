@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.user;
+package com.epam.hospital.controller.command.impl.common;
 
 import com.epam.hospital.constant.web.SessionAttributes;
 import com.epam.hospital.controller.command.Command;

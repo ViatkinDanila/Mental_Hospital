@@ -13,6 +13,7 @@ import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.validator.Validator;
 import com.epam.hospital.service.validator.impl.PatientCardValidatorImpl;
 import com.epam.hospital.service.validator.impl.UserValidatorImpl;
+import jakarta.validation.ValidationException;
 
 public class SignUpServiceImpl implements SignUpService {
     private static final SignUpService instance = new SignUpServiceImpl();
@@ -25,9 +26,9 @@ public class SignUpServiceImpl implements SignUpService {
     }
 
     @Override
-    public void signUp(User user, PatientCard patientCard) throws ServiceException {
+    public boolean signUp(User user, PatientCard patientCard) throws ServiceException {
         if (!userValidator.isValid(user) || !patientCardValidator.isValid(patientCard)){
-            throw new ServiceException("Invalid user, patient card data.");
+            return false;
         }
         UserDao userDao = new UserDaoImpl();
         PatientCardDao patientCardDao = new PatientCardDaoImpl();
@@ -38,6 +39,7 @@ public class SignUpServiceImpl implements SignUpService {
             patientCard.setUserId(user.getUserId());
             patientCardDao.save(patientCard);
             transaction.commit();
+            return true;
         } catch (DaoException e){
             throw new ServiceException("Can't get user by login.", e);
         }

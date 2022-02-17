@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = new UserDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(userDao);
-            return userDao.getUserRoleId();
+            return userDao.getDoctorRoleId();
         } catch (DaoException e){
             throw new ServiceException("Can't get doctor role id.", e);
         }

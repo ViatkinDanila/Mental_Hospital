@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.user;
+package com.epam.hospital.controller.command.impl.common.page;
 
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
@@ -33,7 +33,6 @@ public class ProfilePageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        //TODO исправить ошибку при переходе не в свой профиль
         String content = ParameterExtractor.extractString(RequestParameters.CONTENT, requestContext);
         requestContext.addAttribute(RequestAttributes.CONTENT, content);
 

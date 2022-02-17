@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.Hospitalization;
+package com.epam.hospital.controller.command.impl.user;
 
 import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
@@ -21,7 +21,8 @@ public class HospitalizationRequestPageCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        List<User> doctors = userService.getAllDoctors(3);
+        int doctorRoleId = userService.getDoctorRoleId();
+        List<User> doctors = userService.getAllDoctors(doctorRoleId);
         requestContext.addAttribute(RequestAttributes.DOCTORS, doctors);
 
         List<ChamberType> chamberTypeList = chamberService.getAllChamberTypes();

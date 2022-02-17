@@ -22,7 +22,7 @@
     <div class="d-flex flex-column w-100 mt-4 ml-5 align-items-center text-center">
         <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="diseases.label"/></span>
         <c:forEach items="${diseases}" var="disease" varStatus="counter">
-            <div class="text-center mb-5"
+            <div class="text-left mb-5"
                style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none; width:50%">
                 <div class="d-flex text-light justify-content-center pt-2 px-3 h2"
                      style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
@@ -33,6 +33,15 @@
                 </span>
             </div>
         </c:forEach>
+    </div>
+    <div class="pagination">
+        <c:if test="${currentPage != 1}">
+            <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+        </c:if>
+            ${currentPage}
+        <c:if test="${currentPage * contentSize < fullContentSize}">
+            <a href="${pageContext.request.contextPath}/MentalHospital?command=diseases&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+        </c:if>
     </div>
 </div>
 

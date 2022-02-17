@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.Hospitalization;
+package com.epam.hospital.controller.command.impl.user;
 
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;

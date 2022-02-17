@@ -47,14 +47,15 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public void save(Consultation consultation) throws ServiceException {
+    public boolean save(Consultation consultation) throws ServiceException {
         if (!consultationValidator.isValid(consultation)){
-            throw new ServiceException("Invalid consultation data.");
+            return false;
         }
         ConsultationDao consultationDao = new ConsultationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, consultationDao);
             consultationDao.save(consultation);
+            return true;
         } catch(DaoException e){
             throw new ServiceException("Can't save consultation.", e);
         }

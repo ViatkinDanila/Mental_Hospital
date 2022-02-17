@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl;
+package com.epam.hospital.controller.command.impl.common.page;
 
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;

@@ -1,19 +1,21 @@
 package com.epam.hospital.controller.command.provider;
 
 import com.epam.hospital.controller.command.Command;
-import com.epam.hospital.controller.command.impl.Consultation.*;
-import com.epam.hospital.controller.command.impl.ForwardPageCommand;
-import com.epam.hospital.controller.command.impl.Hospitalization.*;
-import com.epam.hospital.controller.command.impl.HospitalizationPageCommand;
-import com.epam.hospital.controller.command.impl.LocalizationCommand;
+import com.epam.hospital.controller.command.impl.admin.GetAllUsersCommand;
+import com.epam.hospital.controller.command.impl.common.*;
+import com.epam.hospital.controller.command.impl.common.page.ConsultationPageCommand;
+import com.epam.hospital.controller.command.impl.common.page.ForwardPageCommand;
+import com.epam.hospital.controller.command.impl.common.page.ProfilePageCommand;
+import com.epam.hospital.controller.command.impl.doctor.Hospitalization.*;
 import com.epam.hospital.controller.command.impl.admin.AddDiseaseCommand;
 import com.epam.hospital.controller.command.impl.admin.BanUserCommand;
 import com.epam.hospital.controller.command.impl.admin.UnbanUserCommand;
-import com.epam.hospital.controller.command.impl.disease.GetAllDiseasesCommand;
-import com.epam.hospital.controller.command.impl.disease.GetDiseaseCommand;
+import com.epam.hospital.controller.command.impl.doctor.ConsultationApproveCommand;
+import com.epam.hospital.controller.command.impl.doctor.ConsultationCompleteCommand;
+import com.epam.hospital.controller.command.impl.doctor.ConsultationRejectCommand;
+import com.epam.hospital.controller.command.impl.user.ConsultationRequestCommand;
 import com.epam.hospital.controller.command.impl.user.*;
 import com.epam.hospital.constant.web.CommandName;
-import com.epam.hospital.controller.command.impl.ConsultationPageCommand;
 
 import java.util.HashMap;
 import java.util.Map;

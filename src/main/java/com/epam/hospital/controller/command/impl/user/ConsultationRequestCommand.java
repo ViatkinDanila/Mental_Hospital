@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.Consultation;
+package com.epam.hospital.controller.command.impl.user;
 
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.constant.web.SessionAttributes;
@@ -56,7 +56,7 @@ public class ConsultationRequestCommand implements Command {
                 .duration(0)
                 .price(0.0)
                 .build();
-        consultationService.save(consultation);
+        boolean isDone = consultationService.save(consultation);
         int consultationId = consultationService.getConsultationByDoctorId(doctor.getUserId()).getConsultationId();
         return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND + "&id=" + consultationId);
     }
