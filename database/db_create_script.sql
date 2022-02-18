@@ -154,32 +154,35 @@ create table patient_cards
 
 create table consultations
 (
-	id int auto_increment
-		primary key,
-	doctor_id int not null,
-	patient_id int not null,
-	treatment_course_id int null,
-	communication_type enum('ONLINE', 'FACE_TO_FACE') not null,
-	date timestamp not null,
-	duration int null,
-	price double null,
-	status enum('APPROVED', 'PENDING', 'COMPLETED', 'REJECTED') null,
-	constraint fk_consultation_outpatient_card1
-		foreign key (patient_id) references patient_cards (id),
-	constraint fk_consultations_treatment_courses1
-		foreign key (treatment_course_id) references treatment_courses (id),
-	constraint fk_consultations_users1
-		foreign key (doctor_id) references users (id)
+    id                  int auto_increment
+        primary key,
+    doctor_id           int                                                   not null,
+    patient_id          int                                                   not null,
+    treatment_course_id int                                                   null,
+    communication_type  enum ('ONLINE', 'FACE_TO_FACE')                       not null,
+    date                timestamp                                             not null,
+    duration            int                                                   null,
+    price               double                                                null,
+    status              enum ('APPROVED', 'PENDING', 'COMPLETED', 'REJECTED') null,
+    parent_id           int                                                   null,
+    child_id            int                                                   null,
+    constraint fk_consultation_outpatient_card1
+        foreign key (patient_id) references patient_cards (id),
+    constraint fk_consultations_treatment_courses1
+        foreign key (treatment_course_id) references treatment_courses (id),
+    constraint fk_consultations_users1
+        foreign key (doctor_id) references users (id)
 );
 
 create index fk_consultation_outpatient_card1_idx
-	on consultations (patient_id);
+    on consultations (patient_id);
 
 create index fk_consultations_treatment_courses1_idx
-	on consultations (treatment_course_id);
+    on consultations (treatment_course_id);
 
 create index fk_consultations_users1_idx
-	on consultations (doctor_id);
+    on consultations (doctor_id);
+
 
 create table hospitalizations
 (
