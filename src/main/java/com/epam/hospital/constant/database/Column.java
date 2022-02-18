@@ -29,6 +29,8 @@ public class Column {
     public static final String CONSULTATION_DURATION = "duration";
     public static final String CONSULTATION_PRICE = "price";
     public static final String CONSULTATION_STATUS = "status";
+    public static final String CONSULTATION_PARENT_ID = "parent_id";
+    public static final String CONSULTATION_CHILD_ID = "child_id";
 
     public static final String DISEASE_SYMPTOMS_COURSE_ID = "treatment_course_id";
     public static final String DISEASE_SYMPTOMS_DISEASE_ID = "diseases_id";

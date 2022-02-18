@@ -15,6 +15,7 @@ public final class CommandName {
     public static final String BAN = "ban";
     public static final String UNBAN = "unban";
     public static final String LOCALIZATION = "localization";
+    public static final String CONSULTATION_COMPLETE_WITHOUT_COURSE = "consultation-complete-without-course";
 
 
     public static final String SIGN_UP_PAGE = "sign-up-page";

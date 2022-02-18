@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TESTED
 @Slf4j
 public class ConsultationRequestCommand implements Command {
     private static final String CONSULTATION_PENDING_STATUS = "PENDING";
@@ -43,9 +42,19 @@ public class ConsultationRequestCommand implements Command {
             communicationType = CommunicationType.FACE_TO_FACE;
         }
 
-        String doctorName = ParameterExtractor.extractString(RequestParameters.DOCTOR, requestContext);
-        List<String> fullName = new ArrayList<String>(Arrays.asList(doctorName.split(" ")));
-        User doctor = userService.getUserByFullName(fullName.get(0), fullName.get(1));
+        Integer parentConsultationId = null;
+        User doctor;
+        Consultation parentConsultation = null;
+        if (requestContext.getRequestParameter(RequestParameters.PARENT_ID) == null) {
+            String doctorName = ParameterExtractor.extractString(RequestParameters.DOCTOR, requestContext);
+            List<String> fullName = new ArrayList<>(Arrays.asList(doctorName.split(" ")));
+            doctor = userService.getUserByFullName(fullName.get(0), fullName.get(1));
+        } else {
+            parentConsultationId = ParameterExtractor.extractInt(RequestParameters.PARENT_ID, requestContext);
+            parentConsultation = consultationService.getConsultationById(parentConsultationId);
+            doctor = userService.getUserById(parentConsultation.getDoctorId());
+        }
+
         Consultation consultation = Consultation.builder()
                 .communicationType(communicationType)
                 .date(ParameterExtractor.extractTimestamp(RequestParameters.DATE, requestContext))
@@ -55,9 +64,13 @@ public class ConsultationRequestCommand implements Command {
                 .treatmentCourseId(null)
                 .duration(0)
                 .price(0.0)
+                .parentConsultationId(parentConsultationId)
                 .build();
-        boolean isDone = consultationService.save(consultation);
-        int consultationId = consultationService.getConsultationByDoctorId(doctor.getUserId()).getConsultationId();
+        int consultationId = consultationService.saveAndGetId(consultation);
+        if (parentConsultation != null) {
+            parentConsultation.setChildConsultationId(consultationId);
+            consultationService.update(parentConsultation);
+        }
         return CommandResult.redirect(CONSULTATION_REQUEST_PAGE_COMMAND + "&id=" + consultationId);
     }
 }

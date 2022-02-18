@@ -13,19 +13,7 @@ import java.util.List;
 
 public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implements ConsultationDao {
     private final static String SAVE_CONSULTATION_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            Table.CONSULTATION_TABLE,
-            Column.CONSULTATION_COMMUNICATION_TYPE,
-            Column.CONSULTATION_TREATMENT_COURSE_ID,
-            Column.CONSULTATION_DOCTOR_ID,
-            Column.CONSULTATION_PATIENT_ID,
-            Column.CONSULTATION_DATE,
-            Column.CONSULTATION_DURATION,
-            Column.CONSULTATION_PRICE,
-            Column.CONSULTATION_STATUS
-    );
-    private final static String UPDATE_CONSULTATION_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             Table.CONSULTATION_TABLE,
             Column.CONSULTATION_COMMUNICATION_TYPE,
             Column.CONSULTATION_TREATMENT_COURSE_ID,
@@ -35,6 +23,22 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
             Column.CONSULTATION_DURATION,
             Column.CONSULTATION_PRICE,
             Column.CONSULTATION_STATUS,
+            Column.CONSULTATION_PARENT_ID,
+            Column.CONSULTATION_CHILD_ID
+    );
+    private final static String UPDATE_CONSULTATION_QUERY = String.format(
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            Table.CONSULTATION_TABLE,
+            Column.CONSULTATION_COMMUNICATION_TYPE,
+            Column.CONSULTATION_TREATMENT_COURSE_ID,
+            Column.CONSULTATION_DOCTOR_ID,
+            Column.CONSULTATION_PATIENT_ID,
+            Column.CONSULTATION_DATE,
+            Column.CONSULTATION_DURATION,
+            Column.CONSULTATION_PRICE,
+            Column.CONSULTATION_STATUS,
+            Column.CONSULTATION_PARENT_ID,
+            Column.CONSULTATION_CHILD_ID,
             Column.CONSULTATION_ID
     );
 
@@ -95,8 +99,10 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
         statement.setInt(6, consultation.getDuration());
         statement.setDouble(7, consultation.getPrice());
         statement.setString(8, String.valueOf(consultation.getStatus()));
+        statement.setObject(9, consultation.getParentConsultationId());
+        statement.setObject(10, consultation.getChildConsultationId());
         if (action.equals(UPDATE_CONSULTATION_QUERY)) {
-            statement.setInt(9, consultation.getConsultationId());
+            statement.setInt(11, consultation.getConsultationId());
         }
     }
 }

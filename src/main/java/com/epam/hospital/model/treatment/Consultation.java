@@ -24,4 +24,6 @@ public class Consultation implements Entity {
     Integer treatmentCourseId;
     Double price;
     ConsultationStatus status;
+    Integer parentConsultationId;
+    Integer childConsultationId;
 }

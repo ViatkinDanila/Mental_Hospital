@@ -53,7 +53,7 @@
                 <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="12" maxlength="18"
                        class="form-control mt-1" style="font-size: 2rem">
             </div>
-            <select name="sex" class="form-select form-control form-select-lg mt-1"
+            <select name="sex" class="form-select form-control form-select-lg mt-1 mb-4"
                     aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                 <option selected><fmt:message key="signup.sex.click"/></option>
                 <option value="male">
@@ -63,6 +63,7 @@
                     FEMALE
                 </option>
             </select>
+
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="signup.age"/></span>
                 <input type="number" name="age" min="18" max="150" class="form-control mt-1" required

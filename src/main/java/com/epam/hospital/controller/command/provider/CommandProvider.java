@@ -41,6 +41,7 @@ public final class CommandProvider {
         commands.put(CommandName.ADD_DISEASE, new AddDiseaseCommand());
         commands.put(CommandName.ADD_DRUG, new AddDrugCommand());
         commands.put(CommandName.ADD_DOCTOR, new AddDoctorCommand());
+        commands.put(CommandName.CONSULTATION_COMPLETE_WITHOUT_COURSE, new ConsultationCompleteWithoutCourseCommand());
 
         commands.put(CommandName.SIGN_UP_PAGE, new ForwardPageCommand());
         commands.put(CommandName.LOGIN_PAGE, new ForwardPageCommand());

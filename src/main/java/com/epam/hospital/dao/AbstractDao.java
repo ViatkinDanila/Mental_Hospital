@@ -16,7 +16,7 @@ public interface AbstractDao<T extends Entity> {
 
     void deleteById(int id) throws DaoException;
 
-    Optional<T> findById(int... id) throws DaoException;
+    Optional<T> findById(int... ids) throws DaoException;
 
     List<T> findByField(String fieldName, Object value) throws DaoException;
 

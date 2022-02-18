@@ -29,4 +29,5 @@ public class ConsultationDto implements Entity {
     List<DrugRecipeDto> drugs;
     String instruction;
     Double price;
+    boolean courseExist;
 }

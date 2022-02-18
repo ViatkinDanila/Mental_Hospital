@@ -102,7 +102,8 @@ public class AccessFilter implements Filter {
                     CommandName.SIGN_OUT.equals(commandName) ||
                     CommandName.CONSULTATION_COMPLETE.equals(commandName) ||
                     CommandName.CONSULTATION_REJECT.equals(commandName) ||
-                    CommandName.CONSULTATION_APPROVE.equals(commandName);
+                    CommandName.CONSULTATION_APPROVE.equals(commandName) ||
+                    CommandName.CONSULTATION_COMPLETE_WITHOUT_COURSE.equals(commandName);
         }
         if (role.equals(ADMIN_ROLE)) {
             return CommandName.USERS.equals(commandName) ||

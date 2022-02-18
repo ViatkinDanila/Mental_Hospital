@@ -76,9 +76,9 @@ public class ChamberStayingDaoImpl extends AbstractDaoImpl<ChamberStaying> imple
     }
 
     @Override
-    public Optional<ChamberStaying> findById(int... id) throws DaoException {
+    public Optional<ChamberStaying> findById(int... ids) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_CHAMBER_STAYING_QUERY);) {
-            statement.setInt(1, id[0]);
+            statement.setInt(1, ids[0]);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 ChamberStaying chamberStaying = BuilderFactory.getChamberStaying().build(resultSet);

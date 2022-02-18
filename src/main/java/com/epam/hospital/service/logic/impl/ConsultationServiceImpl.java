@@ -10,6 +10,7 @@ import com.epam.hospital.service.logic.ConsultationService;
 import com.epam.hospital.service.validator.Validator;
 import com.epam.hospital.service.validator.impl.ConsultationValidatorImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,30 +41,19 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation getConsultationByDoctorId(int id) throws ServiceException {
-        ConsultationDao consultationDao = new ConsultationDaoImpl();
-        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
-            transaction.initTransaction(true, consultationDao);
-            List<Consultation> consultations = consultationDao.findByDoctorId(id);
-            return consultations.get(consultations.size() - 1);
-        } catch (DaoException e) {
-            throw new ServiceException("Can't get consultation.", e);
-        }
-    }
-
-    @Override
-    public boolean save(Consultation consultation) throws ServiceException {
+    public int saveAndGetId(Consultation consultation) throws ServiceException {
         if (!consultationValidator.isValid(consultation)) {
-            return false;
+            throw new ServiceException("Invalid consultation: " + consultation);
         }
         ConsultationDao consultationDao = new ConsultationDaoImpl();
+        int id;
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(true, consultationDao);
-            consultationDao.save(consultation);
-            return true;
+            id = consultationDao.saveAndGetId(consultation);
         } catch (DaoException e) {
             throw new ServiceException("Can't save consultation.", e);
         }
+        return id;
     }
 
     @Override
@@ -101,4 +91,41 @@ public class ConsultationServiceImpl implements ConsultationService {
             throw new ServiceException("Can't get consultations by doctor id.", e);
         }
     }
+
+    @Override
+    public List<Consultation> getAllRelatedConsultations(int consultationId) throws ServiceException {
+        ConsultationDao consultationDao = new ConsultationDaoImpl();
+        try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
+            transaction.initTransaction(false, consultationDao);
+
+            int currentHeadConsultationId = consultationId;
+            Consultation currentHeadConsultation = null;
+            do {
+                if (currentHeadConsultation != null) {
+                    currentHeadConsultationId = currentHeadConsultation.getParentConsultationId();
+                }
+                Optional<Consultation> headConsultationOptional = consultationDao.findById(currentHeadConsultationId);
+                Consultation newConsultation = headConsultationOptional.orElseThrow(() -> new ServiceException("No consultation with id=" + consultationId));
+                currentHeadConsultationId = newConsultation.getConsultationId();
+                currentHeadConsultation = newConsultation;
+            } while (currentHeadConsultation.getParentConsultationId() != null);
+
+            List<Consultation> consultations = new ArrayList<>();
+            consultations.add(currentHeadConsultation);
+
+            Consultation currentConsultation = currentHeadConsultation;
+            while (currentConsultation.getChildConsultationId() != null) {
+                Optional<Consultation> childConsultationOptional = consultationDao.findById(currentConsultation.getChildConsultationId());
+                Consultation childConsultation = childConsultationOptional.orElseThrow(() -> new ServiceException("No consultation with id=" + consultationId));
+                consultations.add(childConsultation);
+                currentConsultation = childConsultation;
+            }
+
+            return consultations;
+        } catch (DaoException e) {
+            throw new ServiceException("Can't get consultations by doctor id.", e);
+        }
+    }
+
+
 }
