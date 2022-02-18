@@ -1,4 +1,4 @@
-package com.epam.hospital.dao.connectionpool;
+package com.epam.hospital.dao.pool;
 
 import java.sql.*;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class PooledConnection implements Connection {
-    private Connection connection;
+    private final Connection connection;
     ConnectionPool pool;
 
     public PooledConnection(Connection connection, ConnectionPool pool) throws SQLException {

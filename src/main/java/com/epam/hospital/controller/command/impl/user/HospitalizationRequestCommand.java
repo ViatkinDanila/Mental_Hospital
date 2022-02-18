@@ -1,12 +1,12 @@
 package com.epam.hospital.controller.command.impl.user;
 
+import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.constant.web.SessionAttributes;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.hospital.Chamber;
 import com.epam.hospital.model.hospital.type.ChamberType;
@@ -14,22 +14,23 @@ import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.treatment.type.HospitalizationStatus;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.ChamberService;
-
 import com.epam.hospital.service.logic.HospitalizationService;
 import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.logic.impl.ChamberServiceImpl;
 import com.epam.hospital.service.logic.impl.HospitalizationServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class HospitalizationRequestCommand implements Command {
     private static final String HOSPITALIZATION_REQUEST_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_REQUEST_PAGE;
+    private static final String HOSPITALIZATION_PAGE_COMMAND = "MentalHospital?command=" + CommandName.HOSPITALIZATION_PAGE;
     private static final String CHAMBER_TYPE_UNAVAILABLE = "unavailable.chamber.type";
     private static final HospitalizationService hospitalizationService = HospitalizationServiceImpl.getInstance();
     private static final ChamberService chamberService = ChamberServiceImpl.getInstance();
@@ -53,7 +54,7 @@ public class HospitalizationRequestCommand implements Command {
 
 
             String doctorName = ParameterExtractor.extractString(RequestParameters.DOCTOR, requestContext);
-            List<String> fullName = new ArrayList<String>(Arrays.asList(doctorName.split(" ")));
+            List<String> fullName = new ArrayList<>(Arrays.asList(doctorName.split(" ")));
             User doctor = userService.getUserByFullName(fullName.get(0), fullName.get(1));
 
             Hospitalization hospitalization = Hospitalization.builder()
@@ -70,17 +71,18 @@ public class HospitalizationRequestCommand implements Command {
                     .build();
 
             chamber.setNumberOfFreeBeds(numberOfFreeBeds-1);
+            int id;
             if (numberOfFreeBeds.equals(1)){
-                hospitalizationService.saveHospitalization(hospitalization, chamberStaying, chamber, chamberType);
+                id = hospitalizationService.saveHospitalizationAndGetId(hospitalization, chamberStaying, chamber, chamberType);
             } else {
-                hospitalizationService.saveHospitalization(hospitalization, chamberStaying, chamber);
+                id = hospitalizationService.saveHospitalizationAndGetId(hospitalization, chamberStaying, chamber);
 
             }
-            return CommandResult.redirect(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
+            return CommandResult.redirect(HOSPITALIZATION_PAGE_COMMAND + "&id=" + id);
         } else {
             requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, CHAMBER_TYPE_UNAVAILABLE);
         }
-        //TODO как тут действовать с ф5
+
         return CommandResult.forward(HOSPITALIZATION_REQUEST_PAGE_COMMAND);
     }
 }

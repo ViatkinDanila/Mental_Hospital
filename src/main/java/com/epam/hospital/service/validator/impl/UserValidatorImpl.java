@@ -6,6 +6,7 @@ import com.epam.hospital.service.validator.Validator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class UserValidatorImpl implements Validator<User> {
     private static final String NAME_PATTERN = "[A-zА-яЁё]+";
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$";
@@ -21,7 +22,6 @@ public class UserValidatorImpl implements Validator<User> {
     private static final int MIN_PASSWORD_LENGTH = 8;
     private static final List<String> INJECTION_SYMBOLS = List.of("$", "{", "}", "<", ">");
     private static final int HASHED_PASSWORD_LENGTH = 128;
-    private static final int MIN_ID_VALUE = 0;
 
     @Override
     public boolean isValid(User user) {
@@ -30,17 +30,12 @@ public class UserValidatorImpl implements Validator<User> {
         }
         String login = user.getEmail();
         String password = user.getHashedPassword();
-        if (login == null || login.length() > MAX_FIELD_USER_LENGTH
-                || login.length() < MIN_LOGIN_LENGTH || !isValidOfInjectionAttack(login)
-                || login.length() > MAX_LOGIN_LENGTH|| !isValidEmail(login)) {
+        if (login == null || login.length() > MAX_FIELD_USER_LENGTH || login.length() < MIN_LOGIN_LENGTH || !isValidOfInjectionAttack(login) || !isValidEmail(login)) {
             return false;
         }
-        if (password == null || password.length() != HASHED_PASSWORD_LENGTH) {
-            return false;
-        }
-        return true;
+        return password != null && password.length() == HASHED_PASSWORD_LENGTH;
     }
-    
+
     public boolean isValidGeneralInfo(User user) {
         if (user.getFirstName() == null
                 || user.getFirstName().length() > MAX_FIELD_USER_LENGTH

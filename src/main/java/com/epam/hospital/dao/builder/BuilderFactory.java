@@ -1,7 +1,6 @@
 package com.epam.hospital.dao.builder;
 
 import com.epam.hospital.dao.builder.impl.*;
-import com.epam.hospital.model.treatment.ChamberStaying;
 
 public class BuilderFactory {
     private final static UserBuilder userBuilder = new UserBuilder();
@@ -58,15 +57,15 @@ public class BuilderFactory {
         return drugBuilder;
     }
 
-    public static ChamberStayingBuilder getChamberStaying(){
+    public static ChamberStayingBuilder getChamberStaying() {
         return chamberStayingBuilder;
     }
 
-    public static DiseaseBuilder getDiseaseBuilder(){
+    public static DiseaseBuilder getDiseaseBuilder() {
         return diseaseBuilder;
     }
 
-    public static DoctorInfoBuilder getDoctorInfoBuilder(){
+    public static DoctorInfoBuilder getDoctorInfoBuilder() {
         return doctorInfoBuilder;
     }
 }

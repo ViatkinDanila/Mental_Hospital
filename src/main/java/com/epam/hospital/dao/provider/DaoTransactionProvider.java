@@ -1,9 +1,9 @@
-package com.epam.hospital.dao.helper;
+package com.epam.hospital.dao.provider;
 
 import com.epam.hospital.dao.AbstractDao;
-import com.epam.hospital.dao.connectionpool.ConnectionPool;
-import com.epam.hospital.dao.connectionpool.PooledConnection;
-import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
+import com.epam.hospital.dao.pool.ConnectionPool;
+import com.epam.hospital.dao.pool.PooledConnection;
+import com.epam.hospital.dao.pool.exception.ConnectionPoolException;
 import com.epam.hospital.dao.exception.DaoException;
 import com.epam.hospital.model.Entity;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class DaoTransactionProvider implements AutoCloseable {
         try {
             pooledConnection.rollback();
         } catch (SQLException e) {
-//            LOGGER.error("Rollback error: " + e);
+            log.error("Rollback error: " + e);
         }
     }
 
@@ -67,7 +67,7 @@ public class DaoTransactionProvider implements AutoCloseable {
                 rollback();
             }
         } catch (SQLException e) {
-           log.error("Get auto commit error: " + e);
+            log.error("Get auto commit error: " + e);
         }
         try {
             pooledConnection.close();

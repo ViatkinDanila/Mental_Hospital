@@ -9,20 +9,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Consultation implements Entity {
-     Integer consultationId;
-     Integer doctorId;
-     Integer patientId;
-     CommunicationType communicationType;
-     Timestamp date;
-     Integer duration;
-     Integer treatmentCourseId;
-     Double price;
-     ConsultationStatus status;
+    Integer consultationId;
+    Integer doctorId;
+    Integer patientId;
+    CommunicationType communicationType;
+    Timestamp date;
+    Integer duration;
+    Integer treatmentCourseId;
+    Double price;
+    ConsultationStatus status;
 }

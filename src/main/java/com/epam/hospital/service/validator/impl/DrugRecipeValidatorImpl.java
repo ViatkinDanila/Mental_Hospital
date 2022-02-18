@@ -7,33 +7,23 @@ import java.util.List;
 
 public class DrugRecipeValidatorImpl implements Validator<DrugRecipe> {
     private static final int MAX_DESCRIPTION_SIZE = 500;
-    private static final int MIN_ID = 1;
     private static final int MIN_DOSE = 1;
     private static final List<String> INJECTION_SYMBOLS = List.of("$", "{", "}", "<", ">");
 
     @Override
     public boolean isValid(DrugRecipe entity) {
-        int drugId = entity.getDrugId();
-        int treatmentCourseId = entity.getTreatmentCourseId();
         float dose = entity.getDose();
         String description = entity.getDescription();
 
-        if (drugId < MIN_ID || treatmentCourseId < MIN_ID){
+        if (dose < MIN_DOSE) {
             return false;
         }
 
-        if (dose < MIN_DOSE){
+        if (description == null || description.length() > MAX_DESCRIPTION_SIZE) {
             return false;
         }
 
-        if (description == null || description.length() > MAX_DESCRIPTION_SIZE){
-            return false;
-        }
-
-        if (!isValidOfInjectionAttack(description)){
-            return false;
-        }
-        return true;
+        return isValidOfInjectionAttack(description);
     }
 
     private boolean isValidOfInjectionAttack(String line) {

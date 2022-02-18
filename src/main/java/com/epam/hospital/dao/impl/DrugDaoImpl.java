@@ -1,18 +1,20 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.DrugDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.Drug;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DrugDaoImpl extends AbstractDaoImpl<Drug> implements DrugDao {
     private final static String SAVE_DRUG_QUERY = String.format(
-            "INSERT INTO %s %s VALUES ?",
+            "INSERT INTO %s (%s) VALUES (?)",
             Table.DRUGS_TABLE,
             Column.DRUGS_NAME
     );
@@ -32,6 +34,19 @@ public class DrugDaoImpl extends AbstractDaoImpl<Drug> implements DrugDao {
         try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DRUG_QUERY);) {
             setParams(statement, entity, SAVE_DRUG_QUERY);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't save drug.", e);
+        }
+    }
+
+    @Override
+    public int saveAndGetId(Drug entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DRUG_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity, SAVE_DRUG_QUERY);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             throw new DaoException("Can't save drug.", e);
         }

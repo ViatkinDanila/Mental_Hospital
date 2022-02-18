@@ -13,20 +13,12 @@ public class DrugValidatorImpl implements Validator<Drug> {
     @Override
     public boolean isValid(Drug entity) {
         String title = entity.getName();
-        int drugId = entity.getDrugId();
 
-        if (title == null || title.length() > MAX_TITLE_LENGTH){
+        if (title == null || title.length() > MAX_TITLE_LENGTH) {
             return false;
         }
 
-        if (!isValidOfInjectionAttack(title)){
-            return false;
-        }
-
-        if (drugId < MIN_ID_VALUE){
-            return false;
-        }
-        return true;
+        return isValidOfInjectionAttack(title);
     }
 
     private boolean isValidOfInjectionAttack(String line) {

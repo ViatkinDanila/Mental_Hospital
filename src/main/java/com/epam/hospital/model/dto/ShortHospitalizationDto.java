@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class ShortHospitalizationDto {
     Integer id;
     Integer chamberNumber;
+    Date date;
     HospitalizationStatus hospitalizationStatus;
     String doctorFullName;
     String patientFullName;

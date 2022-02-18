@@ -1,16 +1,16 @@
 package com.epam.hospital.controller.command.impl.common;
 
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
-import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Disease;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.DiseaseService;
 import com.epam.hospital.service.logic.impl.DiseaseServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;

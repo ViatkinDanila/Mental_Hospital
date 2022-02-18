@@ -14,5 +14,7 @@ public final class Page {
     public static final String DISEASE = "jsp/pages/disease.jsp";
     public static final String DOCTORS = "jsp/pages/doctors.jsp";
     public static final String USERS = "jsp/pages/users.jsp";
-    public static final String DOCTOR = "jsp/doctor.jsp";
+    public static final String ADD_DOCTOR_PAGE = "jsp/pages/add-doctor-page.jsp";
+    public static final String ADD_DISEASE_PAGE = "jsp/pages/add-disease-page.jsp";
+    public static final String ADD_DRUG_PAGE = "jsp/pages/add-drug-page.jsp";
 }

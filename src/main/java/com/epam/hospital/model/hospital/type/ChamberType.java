@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChamberType implements Entity {
-     Integer chamberTypeId;
-     String name;
-     Integer numberOfBeds;
-     Double price;
-     Integer numberOfFreeRooms;
+    Integer chamberTypeId;
+    String name;
+    Integer numberOfBeds;
+    Double price;
+    Integer numberOfFreeRooms;
+    String imageRef;
 }

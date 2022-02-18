@@ -1,4 +1,4 @@
-package com.epam.hospital.dao.connectionpool.exception;
+package com.epam.hospital.dao.pool.exception;
 
 public class ConnectionPoolException extends Exception {
     public ConnectionPoolException() {

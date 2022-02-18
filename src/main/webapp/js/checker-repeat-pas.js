@@ -9,9 +9,11 @@ function checkPassword(pass1, pass2) {
         passErrorEl.classList.add("d-none");
     }
 }
-inputs[1].addEventListener("input", ()=> checkPassword(inputs[0].value, inputs[1].value));
+
+inputs[1].addEventListener("input", () => checkPassword(inputs[0].value, inputs[1].value));
 
 const currentPass = document.getElementById('currentPass');
+
 function showPass() {
     if (currentPass.type === "password") {
         currentPass.type = "text";

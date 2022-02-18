@@ -7,9 +7,9 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Drug;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.DrugService;
 import com.epam.hospital.service.logic.impl.DrugServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 
 public class AddDrugCommand implements Command {
     private static final DrugService drugService = new DrugServiceImpl();

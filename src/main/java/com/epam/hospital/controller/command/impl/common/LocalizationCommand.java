@@ -25,10 +25,10 @@ public class LocalizationCommand implements Command {
     }
 
     private String getLocaleByLanguage(String language) {
-         if (RU.equals(language)){
-             return RU_LOCALE;
-         }
-         return EN_LOCALE;
+        if (RU.equals(language)) {
+            return RU_LOCALE;
+        }
+        return EN_LOCALE;
     }
 
 }

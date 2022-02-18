@@ -32,14 +32,14 @@
         <div class="container d-flex w-75 flex-column">
             <div class="d-flex py-3 pt-5 h2 justify-content-center">
                 <span><fmt:message key="consultation.doctor"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getDoctorId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getDoctorId()}&content=consultations&content-size=5&current-page=1"
                    class="font-weight-bold">
                     <span class="ml-3">${consultation.getDoctorFirstName()} ${consultation.getDoctorLastName()}</span>
                 </a>
             </div>
             <div class="d-flex py-3 h2 justify-content-center">
                 <span><fmt:message key="consultation.patient"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getPatientId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${consultation.getPatientId()}&content=consultations&content-size=5&current-page=1"
                    class="font-weight-bold">
                     <span class="ml-3">${consultation.getPatientFirstName()} ${consultation.getPatientLastName()}</span>
                 </a>
@@ -50,18 +50,12 @@
                         <span><fmt:message key="consultation.duration"/></span>
                         <span class="ml-3">${consultation.getDuration()} <fmt:message key="units.minutes"/></span>
                     </div>
+                    <div class="d-flex py-3 pb-4 h2 justify-content-center">
+                        <span><fmt:message key="consultation.price"/></span>
+                        <span class="ml-3">${consultation.getPrice()}</span>
+                        <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
+                    </div>
                 </c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${!consultation.getConsultationStatus().toString().equals('PENDING')}">
-                            <div class="d-flex py-3 pb-4 h2 justify-content-center">
-                                <span><fmt:message key="consultation.price"/></span>
-                                <span class="ml-3">${consultation.getPrice()}</span>
-                                <span class="glyphicon glyphicon-usd" style="margin-top: -1px"></span>
-                            </div>
-                            </c:when>
-                        </c:choose>
-                    </c:otherwise>
             </c:choose>
         </div>
         <c:choose>

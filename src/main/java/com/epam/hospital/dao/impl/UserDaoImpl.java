@@ -1,16 +1,17 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.UserDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,6 +98,19 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     @Override
+    public int saveAndGetId(User entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_USER_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity, SAVE_USER_QUERY);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException("Can't save user.", e);
+        }
+    }
+
+    @Override
     public void update(User entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_USER_QUERY);) {
             setParams(statement, entity, UPDATE_USER_QUERY);
@@ -107,39 +121,42 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) throws DaoException {
-        return findByField(Column.USER_EMAIL,email).get(0);
+    public Optional<User> findByEmail(String email) throws DaoException {
+        List<User> list = findByField(Column.USER_EMAIL, email);
+
+        return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
-//tested
-    public User findByFullName(String firstName, String lastName) throws DaoException{
-        User user = new User();
+
+    //tested
+    public Optional<User> findByFullName(String firstName, String lastName) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_BY_FULLNAME_QUERY);) {
             statement.setString(1, firstName);
             statement.setString(2, lastName);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = BuilderFactory.getUserBuilder().build(resultSet);
+                User user = BuilderFactory.getUserBuilder().build(resultSet);
+                return Optional.of(user);
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by full name.", e);
         }
-        return user;
+        return Optional.empty();
     }
 
     @Override
-    public User findByEmailPassword(String email, String password) throws DaoException {
-        User user = null;
+    public Optional<User> findByEmailPassword(String email, String password) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(LOGIN_QUERY);) {
             statement.setString(1, email);
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = BuilderFactory.getUserBuilder().build(resultSet);
+                User user = BuilderFactory.getUserBuilder().build(resultSet);
+                return Optional.of(user);
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find user by email and password.", e);
         }
-        return user;
+        return Optional.empty();
     }
 
     @Override
@@ -171,18 +188,18 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     @Override
-    public DoctorInfo findDoctorInfoById(int id) throws DaoException {
-        DoctorInfo doctorInfo = new DoctorInfo();
+    public Optional<DoctorInfo> findDoctorInfoById(int id) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(FIND_DOCTOR_INFO_BY_ID_QUERY);) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                doctorInfo = BuilderFactory.getDoctorInfoBuilder().build(resultSet);
+                DoctorInfo doctorInfo = BuilderFactory.getDoctorInfoBuilder().build(resultSet);
+                return Optional.of(doctorInfo);
             }
         } catch (SQLException e) {
             throw new DaoException("Can't find doctor info by doctor id.", e);
         }
-        return doctorInfo;
+        return Optional.empty();
     }
 
     @Override
@@ -244,10 +261,10 @@ public class UserDaoImpl extends AbstractDaoImpl<User> implements UserDao {
     }
 
     private void setParams(PreparedStatement statement, DoctorInfo doctorInfo, String action) throws SQLException {
-        statement.setInt(1,doctorInfo.getClassification());
-        statement.setString(2,doctorInfo.getSpecialization());
-        statement.setInt(3,doctorInfo.getWorkExperience());
-        statement.setDouble(4,doctorInfo.getPrice());
-        statement.setInt(5,doctorInfo.getDoctorId());
+        statement.setInt(1, doctorInfo.getClassification());
+        statement.setString(2, doctorInfo.getSpecialization());
+        statement.setInt(3, doctorInfo.getWorkExperience());
+        statement.setDouble(4, doctorInfo.getPrice());
+        statement.setInt(5, doctorInfo.getDoctorId());
     }
 }

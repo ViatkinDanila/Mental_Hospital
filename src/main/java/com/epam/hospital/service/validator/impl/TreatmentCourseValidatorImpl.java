@@ -12,15 +12,11 @@ public class TreatmentCourseValidatorImpl implements Validator<TreatmentCourse> 
     @Override
     public boolean isValid(TreatmentCourse entity) {
         String instruction = entity.getInstruction();
-        if (instruction == null || instruction.length() > MAX_INSTRUCTION_SIZE){
+        if (instruction == null || instruction.length() > MAX_INSTRUCTION_SIZE) {
             return false;
         }
 
-        if (!isValidOfInjectionAttack(instruction)){
-            return false;
-        }
-
-        return true;
+        return isValidOfInjectionAttack(instruction);
     }
 
     private boolean isValidOfInjectionAttack(String line) {

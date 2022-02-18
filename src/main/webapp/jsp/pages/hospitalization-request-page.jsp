@@ -35,7 +35,8 @@
 
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="consultation.doctor.label"/></span>
-                <select name="doctor" class="form-select form-control form-select-lg mt-1" aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
+                <select name="doctor" class="form-select form-control form-select-lg mt-1"
+                        aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                     <option selected><fmt:message key="consultation.doctor.select"/></option>
                     <c:forEach items="${doctors}" var="doctor" varStatus="counter">
                         <option value="${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}">${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}</option>
@@ -45,7 +46,8 @@
 
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="hospitalization.chamber.type"/></span>
-                <select name="chamberTypeId" class="form-select form-control form-select-lg mt-1" aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
+                <select name="chamberTypeId" class="form-select form-control form-select-lg mt-1"
+                        aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                     <option selected><fmt:message key="hospitalization.chamber.type.select"/></option>
                     <c:forEach items="${chamberTypes}" var="chamberType" varStatus="counter">
                         <option value="${chamberType.getChamberTypeId()}">${chamberType.getName()}</option>
@@ -56,7 +58,8 @@
             <h3 class="text-danger error-message mb-4">
                 <fmt:message key="hospitalization.request.error.${errorMessage}"/>
             </h3>
-            <button type="submit" name="Log in" class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
+            <button type="submit" name="Log in"
+                    class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
                 <span class="h2 mb-0" style="line-height: 1.6"><fmt:message key="consultation.request.button"/></span>
             </button>
         </form>

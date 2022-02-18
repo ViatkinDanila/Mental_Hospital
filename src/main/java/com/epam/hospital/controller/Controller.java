@@ -1,19 +1,19 @@
 package com.epam.hospital.controller;
 
+import com.epam.hospital.constant.web.CommandName;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.provider.CommandProvider;
-import com.epam.hospital.constant.web.CommandName;
-import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.HttpRequestFiller;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.controller.request.RequestContextMapper;
-import com.epam.hospital.dao.connectionpool.ConnectionPool;
-import com.epam.hospital.dao.connectionpool.DBParameter;
-import com.epam.hospital.dao.connectionpool.DBResourceManager;
-import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
+import com.epam.hospital.dao.pool.ConnectionPool;
+import com.epam.hospital.dao.pool.DBParameter;
+import com.epam.hospital.dao.pool.DBResourceManager;
+import com.epam.hospital.dao.pool.exception.ConnectionPoolException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

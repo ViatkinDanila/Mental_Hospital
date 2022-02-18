@@ -6,15 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class PatientCard implements Entity {
-     Integer cardId;
-     Integer userId;
-     String spareNumber;
-     Integer age;
-     String sex;
+    Integer cardId;
+    Integer userId;
+    String spareNumber;
+    Integer age;
+    String sex;
 }

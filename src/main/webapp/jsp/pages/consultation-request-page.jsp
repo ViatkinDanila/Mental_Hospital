@@ -35,7 +35,8 @@
 
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="consultation.doctor.label"/></span>
-                <select name="doctor" class="form-select form-control form-select-lg mt-1" aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
+                <select name="doctor" class="form-select form-control form-select-lg mt-1"
+                        aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
                     <option selected><fmt:message key="consultation.doctor.select"/></option>
                     <c:forEach items="${doctors}" var="doctor" varStatus="counter">
                         <option value="${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}">${doctor.getFirstName().concat(" ").concat(doctor.getLastName())}</option>
@@ -45,14 +46,17 @@
 
 
             <div class="form-check form-switch mb-5">
-                <input class="form-check-input" name="isOnline" type="checkbox" id="flexSwitchCheckDefault" style="width: 2rem; height: 2rem">
-                <label class="form-check-label ml-4" for="flexSwitchCheckDefault"><fmt:message key="consultation.online"/></label>
+                <input class="form-check-input" name="isOnline" type="checkbox" id="flexSwitchCheckDefault"
+                       style="width: 2rem; height: 2rem">
+                <label class="form-check-label ml-4" for="flexSwitchCheckDefault"><fmt:message
+                        key="consultation.online"/></label>
             </div>
 
             <h3 class="text-danger error-message mb-4">
                 <fmt:message key="consultation.request.error.${errorMessage}"/>
             </h3>
-            <button type="submit" name="Log in" class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
+            <button type="submit" name="Log in"
+                    class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
                 <span class="h2 mb-0" style="line-height: 1.6"><fmt:message key="consultation.request.button"/></span>
             </button>
         </form>

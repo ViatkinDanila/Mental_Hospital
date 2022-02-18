@@ -23,6 +23,8 @@ public final class CommandName {
     public static final String ADD_DISEASE = "add-disease";
     public static final String ADD_DRUG_PAGE = "add-drug-page";
     public static final String ADD_DRUG = "add-drug";
+    public static final String ADD_DOCTOR = "add-doctor";
+    public static final String ADD_DOCTOR_PAGE = "add-doctor-page";
     public static final String USERS = "users";
     public static final String DOCTORS = "doctors";
     public static final String DISEASES = "diseases";

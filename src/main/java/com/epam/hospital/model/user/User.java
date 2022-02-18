@@ -6,23 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class User implements Entity {
-     Integer userId;
-     Integer userRoleId;
-     String email;
-     String firstName;
-     String lastName;
-     String number;
-     String hashedPassword;
-     Boolean isBanned;
+    Integer userId;
+    Integer userRoleId;
+    String email;
+    String firstName;
+    String lastName;
+    String number;
+    String hashedPassword;
+    Boolean isBanned;
 
-     @Override
-     protected Object clone() throws CloneNotSupportedException {
-          return super.clone();
-     }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

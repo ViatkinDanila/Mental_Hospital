@@ -67,9 +67,9 @@ INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_
 INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (34, 4, 6, null, 'ONLINE', '2022-03-31 03:33:00', 0, 0, 'PENDING');
 INSERT INTO mental_hospital.consultations (id, doctor_id, patient_id, treatment_course_id, communication_type, date, duration, price, status) VALUES (35, 13, 6, null, 'ONLINE', '2022-03-31 22:22:00', 0, 0, 'PENDING');
 INSERT INTO mental_hospital.hospitals (id, address, phone_number) VALUES (1, 'Yana Chechota 4', '88005553535');
-INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers) VALUES (1, 'Economy', 4, 80, 9);
-INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers) VALUES (2, 'Regular', 2, 120, 0);
-INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers) VALUES (3, 'VIP', 1, 200, 5);
+INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers, img_ref) VALUES (1, 'Economy', 4, 80, 9, 'http://angiohospital.ru/assets/templates/cardio/pictures/pacientam7.jpg');
+INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers, img_ref) VALUES (2, 'Regular', 2, 120, 0, 'https://mediterra.kz/images/otdeleniya/vip-palata.jpg');
+INSERT INTO mental_hospital.chamber_types (id, title, num_of_beds, price, num_of_available_chambers, img_ref) VALUES (3, 'VIP', 1, 200, 5, 'https://ru.unimed.org/sites/ru.unimed.org/files/SD4A8273.jpg');
 INSERT INTO mental_hospital.chambers (id, chamber_type_id, hospital_id, num_free_beds) VALUES (1, 1, 1, 2);
 INSERT INTO mental_hospital.chambers (id, chamber_type_id, hospital_id, num_free_beds) VALUES (2, 2, 1, 2);
 INSERT INTO mental_hospital.chambers (id, chamber_type_id, hospital_id, num_free_beds) VALUES (3, 1, 1, 4);

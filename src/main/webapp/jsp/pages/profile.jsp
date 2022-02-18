@@ -43,22 +43,24 @@
                     ${userInfo.getStatus()}
                 </p>
                 <p>
-                <c:if test="${content.equals('consultations')}">
-                    <a class="btn btn-primary btn-lg mt-4"  href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalizations&content-size=5&current-page=1"
-                       role="button">
+                    <c:if test="${content.equals('consultations')}">
+                        <a class="btn btn-primary btn-lg mt-4"
+                           href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalizations&content-size=5&current-page=1"
+                           role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.hospitalizations"/>
                         </span>
-                    </a>
-                </c:if>
-                <c:if test="${content.equals('hospitalizations')}">
-                    <a class="btn btn-primary btn-lg mt-4" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=1"
-                       role="button">
+                        </a>
+                    </c:if>
+                    <c:if test="${content.equals('hospitalizations')}">
+                        <a class="btn btn-primary btn-lg mt-4"
+                           href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=1"
+                           role="button">
                         <span class="h3">
                             <fmt:message key="profile.show.consultations"/>
                         </span>
-                    </a>
-                </c:if>
+                        </a>
+                    </c:if>
                 </p>
                 <a class="btn btn-primary btn-lg mt-4" data-toggle="collapse" href="#collapse" role="button"
                    aria-expanded="false" aria-controls="collapseExample">
@@ -106,7 +108,7 @@
                     <c:forEach items="${consultations}" var="consultation" varStatus="counter">
                         <a href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=${consultation.getId()}"
                            class="text-center w-75 mb-5"
-                           style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
+                           style="background-color: #16CAEE; border-radius: 2rem; text-decoration: none">
                             <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
                                  style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
                                 <span style="line-height: 1.5"><sc:date-formatter date="${consultation.getDate()}"
@@ -143,13 +145,14 @@
                             </c:choose>
                         </a>
                     </c:forEach>
-                    <div class="pagination">
+                    <div class="pagination mb-3">
                         <c:if test="${currentPage != 1}">
                             <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=${currentPage-1}">&#8592;</a>
                         </c:if>
                         <c:if test="${fullContentSize > 0}">
-                            ${currentPage}
+                            <h3 class="px-2 my-1">${currentPage}</h3>
                         </c:if>
+
                         <c:if test="${currentPage * contentSize < fullContentSize}">
                             <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=consultations&content-size=5&current-page=${currentPage+1}">&#8594;</a>
                         </c:if>
@@ -158,22 +161,31 @@
             </c:if>
             <c:if test="${content.equals('hospitalizations')}">
                 <div class="d-flex flex-column w-50 mt-5 ml-5 align-items-center text-end">
-                    <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message key="hospitalization.label"/></span>
+                    <span class="h1 text-primary mb-4 font-weight-bold"><fmt:message
+                            key="hospitalization.label"/></span>
                     <c:forEach items="${hospitalizations}" var="hospitalization" varStatus="counter">
                         <a href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=${hospitalization.getId()}"
                            class="text-end w-75 mb-5"
-                           style="background-color: #16CAEE; border-radius: 1.5rem; text-decoration: none">
+                           style="background-color: #16CAEE; border-radius: 2rem; text-decoration: none">
                             <div class="d-flex text-light justify-content-between pt-2 px-3 h2"
                                  style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-                                <span style="line-height: 1.5"><fmt:message key="hospitalization.chamber.number"/>: ${hospitalization.getChamberNumber()} </span>
+                                <span style="line-height: 1.5">
+                                    <sc:date-formatter date="${hospitalization.getDate()}"
+                                                       formatType="${sessionScope.lang}"></sc:date-formatter>
+                                </span>
+                                <span style="line-height: 1.5"><fmt:message
+                                        key="hospitalization.chamber.number"/> ${hospitalization.getChamberNumber()} </span>
                             </div>
-                            <span class="h2 mt-2 mb-2 font-weight-bold d-flex justify-content-center" style="line-height: 3; color: #428bca">
+                            <span class="h2 mt-2 mb-2 font-weight-bold d-flex justify-content-center"
+                                  style="line-height: 3; color: #428bca">
                                   <c:choose>
                                       <c:when test="${userInfo.getRole().toString().equals('DOCTOR')}">
-                                          <fmt:message key="consultation.patient"/> ${hospitalization.getPatientFullName()}
+                                          <fmt:message
+                                                  key="consultation.patient"/> ${hospitalization.getPatientFullName()}
                                       </c:when>
                                       <c:otherwise>
-                                          <fmt:message key="consultation.doctor"/> ${hospitalization.getDoctorFullName()}
+                                          <fmt:message
+                                                  key="consultation.doctor"/> ${hospitalization.getDoctorFullName()}
                                       </c:otherwise>
                                   </c:choose>
                             </span>
@@ -197,24 +209,24 @@
                             </c:choose>
                         </a>
                     </c:forEach>
-                    <div class="pagination">
+                    <div class="pagination mb-3">
                         <c:if test="${currentPage != 1}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalization&content-size=5&current-page=${currentPage-1}">&#8592;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalizations&content-size=5&current-page=${currentPage-1}">&#8592;</a>
                         </c:if>
                         <c:if test="${fullContentSize > 0}">
-                            ${currentPage}
+                            <h3 class="px-2 my-1">${currentPage}</h3>
                         </c:if>
                         <c:if test="${currentPage * contentSize < fullContentSize}">
-                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalization&content-size=5&current-page=${currentPage+1}">&#8594;</a>
+                            <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${profileId}&content=hospitalizations&content-size=5&current-page=${currentPage+1}">&#8594;</a>
                         </c:if>
                     </div>
                 </div>
             </c:if>
-            </c:if>
-            </div>
-        </div>
-
+        </c:if>
     </div>
+</div>
+
+</div>
 </body>
 
 </body>

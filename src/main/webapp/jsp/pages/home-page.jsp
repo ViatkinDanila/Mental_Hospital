@@ -19,22 +19,41 @@
 <c:import url="/jsp/elements/navbar.jsp"/>
 
 <div class="container d-flex flex-column h3">
-    <span class="h1 text-dark m-auto p-5">HOME PAGE</span>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=1">Get consultation by id=1</a>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=hospitalization&id=1">Get hospitalization by id=1</a>
+    <span class="h1 text-dark mx-auto mt-5">WELCOME!</span>
+    <span class="h2 text-dark m-auto mt-5 pt-5">Here is all available chamber types!</span>
 
-    <a class="h1 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=consultation&id=1">COMPLETE CONSULTATION by id=1</a>
-
-    <a class="h1 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page">PROFILE</a>
-
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=consultation">Get all consultations (profile page)</a>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user-profile&elements=hospitalization">Get all hospitalizations (profile page)</a>
-
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctor&id=1">Get doctor by id=1</a>
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=doctors">Get all doctors</a>
-
-    <a class="h3 m-auto p-5" href="${pageContext.request.contextPath}/MentalHospital?command=user&id=1">Get user by id=1</a>
-</div>
+    <div id="carouselExampleIndicators" class="mt-5 carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <c:forEach items="${chamberTypes}" var="chamberType" varStatus="counter">
+                <li data-target="#carouselExampleIndicators" data-slide-to="${counter}" class="
+                    <c:if test="${counter.index == 0}">active</c:if>
+                ">
+                </li>
+            </c:forEach>
+        </ol>
+        <div class="carousel-inner">
+            <c:forEach items="${chamberTypes}" var="chamberType" varStatus="counter">
+                <div class="carousel-item
+                        <c:if test="${counter.index == 0}">active</c:if>
+                    ">
+                    <img class="d-block w-100" src="${chamberType.getImageRef()}" style="height: 60rem">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>${chamberType.getName()}</h1>
+                        <h2>Available chambers: ${chamberType.getNumberOfFreeRooms()}</h2>
+                        <h2>Price: ${chamberType.getPrice()}</h2>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 
 </body>
 </html>

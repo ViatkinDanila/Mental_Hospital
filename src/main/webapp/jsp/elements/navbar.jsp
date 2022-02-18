@@ -42,7 +42,8 @@
                     </sc:access>
                     <sc:access role="NOT_GUEST">
                         <sc:access role="NOT_ADMIN">
-                            <a type="button" href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${userId}&content=consultations&content-size=5&current-page=1"
+                            <a type="button"
+                               href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${userId}&content=consultations&content-size=5&current-page=1"
                                class="btn btn-success btn-lg my-1 mx-5">
                                 <span class="h1" style="line-height: 1.5"><fmt:message key="navbar.profile"/></span>
                             </a>
@@ -83,11 +84,29 @@
                 </div>
             </sc:access>
             <sc:access role="ADMIN">
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=users"
-                   class="nav-link text-light ml-5">
+                <div class="d-flex">
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=users"
+                       class="nav-link text-light ml-5">
                     <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
                             key="navbar.users"/></span>
-                </a>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=add-doctor-page"
+                       class="nav-link text-light ml-5 mr-2">
+                    <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
+                            key="navbar.add.doctor"/></span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=add-drug-page"
+                       class="nav-link text-light ml-5">
+                    <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
+                            key="navbar.add.drug"/></span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/MentalHospital?command=add-disease-page"
+                       class="nav-link text-light ml-5">
+                    <span class="h1 font-weight-bold" style="line-height: 1.5"><fmt:message
+                            key="navbar.add.disease"/></span>
+                    </a>
+                </div>
+
             </sc:access>
             <sc:access role="DOCTOR">
                 <div>

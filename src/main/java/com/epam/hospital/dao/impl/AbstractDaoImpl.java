@@ -1,19 +1,20 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.dao.AbstractDao;
 import com.epam.hospital.dao.builder.EntityBuilder;
-import com.epam.hospital.dao.connectionpool.PooledConnection;
+import com.epam.hospital.dao.pool.PooledConnection;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
 import com.epam.hospital.model.Entity;
 import lombok.extern.slf4j.Slf4j;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Slf4j
 public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T> {
     private final EntityBuilder<T> builder;
@@ -36,15 +37,18 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-//            LOGGER.error("Can't delete entity by id.",e);
+            log.error("Can't delete entity by id.", e);
             throw new DaoException("Can't delete entity by id.", e);
         }
     }
 
     @Override
-    public T findById(int... ids) throws DaoException {
-        return findByField(Column.ID, ids[0]).get(0);
+    public Optional<T> findById(int... ids) throws DaoException {
+        List<T> list = findByField(Column.ID, ids[0]);
+
+        return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
+
     @Override
     public List<T> findByField(String fieldName, Object value) throws DaoException {
         List<T> entities = new ArrayList<>();
@@ -55,11 +59,11 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
         try (PreparedStatement statement = pooledConnection.prepareStatement(query);) {
             statement.setObject(1, value);
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 entities.add(builder.build(resultSet));
             }
         } catch (SQLException e) {
-           log.error("Can't find entity by id.",e);
+            log.error("Can't find entity by id.", e);
             throw new DaoException("Can't find by id.", e);
         }
         return entities;
@@ -75,7 +79,7 @@ public abstract class AbstractDaoImpl<T extends Entity> implements AbstractDao<T
                 result.add(entity);
             }
         } catch (SQLException e) {
-//            LOGGER.error("Can't find all entity's.",e);
+            log.error("Can't find all entity's.", e);
             throw new DaoException("Can't find all entity's.", e);
         }
         return result;

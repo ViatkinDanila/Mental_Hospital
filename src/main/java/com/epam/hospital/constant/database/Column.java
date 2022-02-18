@@ -18,6 +18,7 @@ public class Column {
     public static final String CHAMBERS_TYPE_TITLE = "title";
     public static final String CHAMBERS_TYPE_NUMBER_OF_BEDS = "num_of_beds";
     public static final String CHAMBERS_TYPE_PRICE = "price";
+    public static final String CHAMBERS_IMAGE_REF = "img_ref";
 
     public static final String CONSULTATION_ID = "id";
     public static final String CONSULTATION_TREATMENT_COURSE_ID = "treatment_course_id";

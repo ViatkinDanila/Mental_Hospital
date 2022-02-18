@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Disease implements Entity {
-     Integer diseaseId;
-     String name;
-     String description;
+    Integer diseaseId;
+    String name;
+    String description;
 }

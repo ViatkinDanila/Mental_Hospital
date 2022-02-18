@@ -33,16 +33,19 @@
             </div>
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="signup.repeat.pass"/></span>
-                <input type="password" class="form-control password mt-1" minlength="8" maxlength="32" required style="font-size: 2rem">
+                <input type="password" class="form-control password mt-1" minlength="8" maxlength="32" required
+                       style="font-size: 2rem">
                 <span class="password-error d-none text-danger"><fmt:message key="signup.repeat.pass.error"/></span>
             </div>
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="signup.first.name"/></span>
-                <input type="text" name="firstName" minlength="4" maxlength="32" class="form-control mt-1" required style="font-size: 2rem">
+                <input type="text" name="firstName" minlength="4" maxlength="32" class="form-control mt-1" required
+                       style="font-size: 2rem">
             </div>
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="signup.last.name"/></span>
-                <input type="text" name="lastName" minlength="4" maxlength="32" class="form-control mt-1" required style="font-size: 2rem">
+                <input type="text" name="lastName" minlength="4" maxlength="32" class="form-control mt-1" required
+                       style="font-size: 2rem">
             </div>
 
             <div class="mb-5">
@@ -50,13 +53,20 @@
                 <input type="phone" pattern="[+]{1}[0-9]{12, 16}" name="phoneNumber" minlength="12" maxlength="18"
                        class="form-control mt-1" style="font-size: 2rem">
             </div>
-            <div class="mb-4">
-                <span class="form-label"><fmt:message key="signup.sex"/></span>
-                <input type="text" name="sex" minlength="2" maxlength="32" class="form-control mt-1" required style="font-size: 2rem">
-            </div>
+            <select name="sex" class="form-select form-control form-select-lg mt-1"
+                    aria-label=".form-select-lg example" style="font-size: 2rem; height: 5rem">
+                <option selected><fmt:message key="signup.sex.click"/></option>
+                <option value="male">
+                    MALE
+                </option>
+                <option value="female">
+                    FEMALE
+                </option>
+            </select>
             <div class="mb-4">
                 <span class="form-label"><fmt:message key="signup.age"/></span>
-                <input type="number" name="age" min="18" max="150" class="form-control mt-1" required style="font-size: 2rem">
+                <input type="number" name="age" min="18" max="150" class="form-control mt-1" required
+                       style="font-size: 2rem">
             </div>
             <div class="mb-5">
                 <span class="form-label"><fmt:message key="signup.spare.phone.number"/></span>
@@ -66,7 +76,8 @@
             <h3 class="text-danger error-message mb-4">
                 <fmt:message key="login.error.${errorMessage}"/>
             </h3>
-            <button type="submit" name="Log in" class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
+            <button type="submit" name="Log in"
+                    class="btn btn-primary w-25 btn-lg d-flex mx-auto justify-content-center" style="width: 20rem">
                 <span class="h2 mb-0" style="line-height: 1.6"><fmt:message key="signup.btn.submit"/></span>
             </button>
         </form>

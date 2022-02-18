@@ -19,19 +19,19 @@ public class DoctorInfoValidatorImpl implements Validator<DoctorInfo> {
         int wordExperience = info.getWorkExperience();
         int classification = info.getClassification();
 
-        if (specialization == null || specialization.length() > MAX_SPECIALIZATION_LENGTH){
+        if (specialization == null || specialization.length() > MAX_SPECIALIZATION_LENGTH) {
             return false;
         }
 
-        if (!isValidOfInjectionAttack(specialization)){
+        if (!isValidOfInjectionAttack(specialization)) {
             return false;
         }
 
-        if (wordExperience < MIN_WORK_EXPERIENCE){
+        if (wordExperience < MIN_WORK_EXPERIENCE) {
             return false;
         }
 
-        if (classification > MAX_CLASSIFICATION_RANK || classification < MIN_CLASSIFICATION_RANK){
+        if (classification > MAX_CLASSIFICATION_RANK || classification < MIN_CLASSIFICATION_RANK) {
             return false;
         }
 

@@ -1,22 +1,21 @@
 package com.epam.hospital.controller.command.impl.user;
 
+import com.epam.hospital.constant.web.CommandName;
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.constant.web.CommandName;
-import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.SignUpService;
 import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.logic.impl.SignUpServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
-import jakarta.validation.ValidationException;
 
 import java.nio.charset.StandardCharsets;
 
@@ -34,7 +33,7 @@ public class SignUpCommand implements Command {
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
         String login = ParameterExtractor.extractString(RequestParameters.LOGIN, requestContext);
         boolean isUserExist = userService.isUserExistByLogin(login);
-        if (!isUserExist){
+        if (!isUserExist) {
             requestContext.addAttribute(RequestAttributes.LOGIN, login);
 
             String password = ParameterExtractor.extractString(RequestParameters.PASSWORD, requestContext);
@@ -56,7 +55,6 @@ public class SignUpCommand implements Command {
                     .build();
 
             boolean isDone = signUpService.signUp(user, patientCard);
-            System.out.println(isDone);
             if (isDone) {
                 return CommandResult.redirect(LOGIN_PAGE_COMMAND);
             } else {

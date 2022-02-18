@@ -1,13 +1,16 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.PatientCardDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.PatientCard;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class PatientCardDaoImpl extends AbstractDaoImpl<PatientCard> implements PatientCardDao {
     //private static final Logger LOGGER = LogManager.getLogger();
@@ -46,6 +49,19 @@ public class PatientCardDaoImpl extends AbstractDaoImpl<PatientCard> implements 
     }
 
     @Override
+    public int saveAndGetId(PatientCard entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_PATIENT_CARD_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity, SAVE_PATIENT_CARD_QUERY);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException("Can't save patient card.", e);
+        }
+    }
+
+    @Override
     public void update(PatientCard entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_PATIENT_CARD_QUERY);) {
             setParams(statement, entity, UPDATE_PATIENT_CARD_QUERY);
@@ -53,11 +69,6 @@ public class PatientCardDaoImpl extends AbstractDaoImpl<PatientCard> implements 
         } catch (SQLException e) {
             throw new DaoException("Can't save patient card.", e);
         }
-    }
-
-    @Override
-    public PatientCard findByPatientId(int patientId) throws DaoException {
-        return findByField(Column.PATIENT_CARD_USER_ID, patientId).get(0);
     }
 
     public void setParams(PreparedStatement statement, PatientCard card, String action) throws SQLException {

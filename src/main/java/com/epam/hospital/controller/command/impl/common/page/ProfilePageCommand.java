@@ -1,12 +1,11 @@
 package com.epam.hospital.controller.command.impl.common.page;
 
+import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
 import com.epam.hospital.constant.web.RequestParameters;
-import com.epam.hospital.constant.web.SessionAttributes;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.dto.*;
 import com.epam.hospital.model.treatment.ChamberStaying;
@@ -16,13 +15,14 @@ import com.epam.hospital.model.treatment.PatientCard;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.*;
 import com.epam.hospital.service.logic.impl.*;
-import com.epam.hospital.service.exception.ServiceException;
 
-
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ProfilePageCommand implements Command {
     private static final UserService userService = UserServiceImpl.getInstance();
@@ -70,6 +70,7 @@ public class ProfilePageCommand implements Command {
             requestContext.addAttribute(RequestAttributes.PATIENT_INFO, patientInfoDto);
 
             consultations = consultationService.getAllConsultationsByPatientCardId(patientCard.getCardId());
+
             hospitalizations = hospitalizationService.getAllHospitalizationsByPatientCardId(patientCard.getCardId());
             chamberStayings = getAllChamberStayings(hospitalizations);
         } else {
@@ -88,11 +89,11 @@ public class ProfilePageCommand implements Command {
             chamberStayings = getAllChamberStayings(hospitalizations);
         }
 
-        if (content.equals("consultations")){
+        if (content.equals("consultations")) {
             requestContext.addAttribute(RequestAttributes.FULL_CONTENT_SIZE, consultations.size());
             List<ShortConsultationDto> consultationDtoList = new ArrayList<>();
             Consultation consultation;
-            for (int index = (currentPage-1) * contentSize; index < contentSize * currentPage && index < consultations.size(); index++) {
+            for (int index = (currentPage - 1) * contentSize; index < contentSize * currentPage && index < consultations.size(); index++) {
                 consultation = consultations.get(index);
                 ShortConsultationDto.ShortConsultationDtoBuilder shortConsultationDtoBuilder = ShortConsultationDto.builder()
                         .date(consultation.getDate())
@@ -115,10 +116,11 @@ public class ProfilePageCommand implements Command {
 
             List<ShortHospitalizationDto> hospitalizationDtoList = new ArrayList<>();
 
-            for (int i = (currentPage-1) * contentSize; i < hospitalizations.size() && i < chamberStayings.size() && i < contentSize * currentPage; i++) {
+            for (int i = (currentPage - 1) * contentSize; i < hospitalizations.size() && i < chamberStayings.size() && i < contentSize * currentPage; i++) {
                 ShortHospitalizationDto.ShortHospitalizationDtoBuilder shortHospitalizationDtoBuilder = ShortHospitalizationDto.builder()
                         .id(hospitalizations.get(i).getId())
                         .hospitalizationStatus(hospitalizations.get(i).getStatus())
+                        .date(chamberStayings.get(i).getDateIn())
                         .chamberNumber(chamberStayings.get(i).getChamberId());
 
                 if (role.equalsIgnoreCase("USER")) {
@@ -136,12 +138,12 @@ public class ProfilePageCommand implements Command {
         return CommandResult.forward(Page.PROFILE_PAGE);
     }
 
-    private List<ChamberStaying> getAllChamberStayings(List<Hospitalization> hospitalizations) throws ServiceException{
+    private List<ChamberStaying> getAllChamberStayings(List<Hospitalization> hospitalizations) throws ServiceException {
         List<ChamberStaying> stayings = new ArrayList<>();
-            for (Hospitalization hospitalization : hospitalizations){
-                ChamberStaying chamberStaying = chamberService.getChamberStayingById(hospitalization.getId());
-                stayings.add(chamberStaying);
-            }
-       return stayings;
+        for (Hospitalization hospitalization : hospitalizations) {
+            ChamberStaying chamberStaying = chamberService.getChamberStayingByHospitalizationId(hospitalization.getId());
+            stayings.add(chamberStaying);
+        }
+        return stayings;
     }
 }

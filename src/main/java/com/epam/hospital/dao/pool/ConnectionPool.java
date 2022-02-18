@@ -1,8 +1,10 @@
-package com.epam.hospital.dao.connectionpool;
+package com.epam.hospital.dao.pool;
 
-import com.epam.hospital.dao.connectionpool.exception.ConnectionPoolException;
+import com.epam.hospital.dao.pool.exception.ConnectionPoolException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
@@ -14,6 +16,7 @@ public class ConnectionPool {
 
     private ConnectionPool() {
     }
+
     //TODO потокабезопастность
     public static ConnectionPool getInstance() {
         if (instance == null) {
@@ -67,7 +70,7 @@ public class ConnectionPool {
     }
 
     public void releaseConnection(PooledConnection connection) throws SQLException {
-        if (engagedConnections.remove(connection)){
+        if (engagedConnections.remove(connection)) {
             try {
                 allConnections.put(connection);
             } catch (InterruptedException e) {

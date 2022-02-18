@@ -13,10 +13,10 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class ShortConsultationDto {
-     Integer id;
-     Date date;
-     String communicationType;
-     String doctorFullName;
-     String patientFullName;
-     ConsultationStatus consultationStatus;
+    Integer id;
+    Date date;
+    String communicationType;
+    String doctorFullName;
+    String patientFullName;
+    ConsultationStatus consultationStatus;
 }

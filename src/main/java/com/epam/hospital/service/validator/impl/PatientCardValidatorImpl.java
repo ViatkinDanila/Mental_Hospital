@@ -18,23 +18,19 @@ public class PatientCardValidatorImpl implements Validator<PatientCard> {
         int age = entity.getAge();
         String sex = entity.getSex();
 
-        if (spareNumber == null || spareNumber.length() > MAX_SPARE_NUMBER_LENGTH){
+        if (spareNumber == null || spareNumber.length() > MAX_SPARE_NUMBER_LENGTH) {
             return false;
         }
 
-        if (!(sex.equalsIgnoreCase(MALE) || sex.equalsIgnoreCase(FEMALE))){
+        if (!(sex.equalsIgnoreCase(MALE) || sex.equalsIgnoreCase(FEMALE))) {
             return false;
         }
 
-        if (!isValidOfInjectionAttack(spareNumber) || !isValidOfInjectionAttack(sex)){
+        if (!isValidOfInjectionAttack(spareNumber) || !isValidOfInjectionAttack(sex)) {
             return false;
         }
 
-        if (age < MIN_AGE){
-            return false;
-        }
-
-        return true;
+        return age >= MIN_AGE;
     }
 
     private boolean isValidOfInjectionAttack(String line) {

@@ -14,9 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class ChamberStaying implements Entity, Serializable {
-     Integer hospitalizationId;
-     Integer chamberId;
-     Double price;
-     Date dateIn;
-     Date dateOut;
+    Integer hospitalizationId;
+    Integer chamberId;
+    Double price;
+    Date dateIn;
+    Date dateOut;
 }

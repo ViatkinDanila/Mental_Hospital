@@ -5,7 +5,7 @@ import com.epam.hospital.dao.ChamberStayingDao;
 import com.epam.hospital.dao.ChamberTypeDao;
 import com.epam.hospital.dao.HospitalizationDao;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.helper.DaoTransactionProvider;
+import com.epam.hospital.dao.provider.DaoTransactionProvider;
 import com.epam.hospital.dao.impl.ChamberDaoImpl;
 import com.epam.hospital.dao.impl.ChamberStayingDaoImpl;
 import com.epam.hospital.dao.impl.ChamberTypeDaoImpl;
@@ -23,6 +23,7 @@ import com.epam.hospital.service.validator.impl.ChamberValidatorImpl;
 import com.epam.hospital.service.validator.impl.HospitalizationValidatorImpl;
 
 import java.util.List;
+import java.util.Optional;
 
 public class HospitalizationServiceImpl implements HospitalizationService {
     private static final HospitalizationService instance = new HospitalizationServiceImpl();
@@ -40,7 +41,11 @@ public class HospitalizationServiceImpl implements HospitalizationService {
         HospitalizationDao hospitalizationDao = new HospitalizationDaoImpl();
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(true, hospitalizationDao);
-            return hospitalizationDao.findById(hospitalizationId);
+            Optional<Hospitalization> hospitalizationOptional = hospitalizationDao.findById(hospitalizationId);
+            if (hospitalizationOptional.isEmpty()) {
+                throw new ServiceException("Cannot find hospitalization with id=" + hospitalizationId);
+            }
+            return hospitalizationOptional.get();
         } catch(DaoException e){
             throw new ServiceException("Can't get hospitalization.", e);
         }
@@ -69,18 +74,18 @@ public class HospitalizationServiceImpl implements HospitalizationService {
     }
 
     @Override
-    public void saveHospitalization(Hospitalization hospitalization, ChamberStaying chamberStaying, Chamber chamber) throws ServiceException {
+    public int saveHospitalizationAndGetId(Hospitalization hospitalization, ChamberStaying chamberStaying, Chamber chamber) throws ServiceException {
         if (!hospitalizationValidator.isValid(hospitalization) || !chamberStayingValidator.isValid(chamberStaying) || !chamberValidator.isValid(chamber)){
             throw new ServiceException("Invalid hospitalization,  chamber staying, chamber data.");
         }
         HospitalizationDao hospitalizationDao = new HospitalizationDaoImpl();
         ChamberStayingDao chamberStayingDao = new ChamberStayingDaoImpl();
         ChamberDao chamberDao = new ChamberDaoImpl();
+        int hospitalizationId;
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(false, hospitalizationDao, chamberStayingDao, chamberDao);
 
-            hospitalizationDao.save(hospitalization);
-            int hospitalizationId = hospitalizationDao.getHospitalizationIdByPatientId(hospitalization.getPatientId());
+            hospitalizationId = hospitalizationDao.saveAndGetId(hospitalization);
 
             chamberStaying.setHospitalizationId(hospitalizationId);
             chamberStayingDao.save(chamberStaying);
@@ -88,13 +93,16 @@ public class HospitalizationServiceImpl implements HospitalizationService {
             chamberDao.update(chamber);
 
             transaction.commit();
+
+
         } catch(DaoException e){
             throw new ServiceException("Can't save hospitalization, chamber staying.", e);
         }
+        return hospitalizationId;
     }
 
     @Override
-    public void saveHospitalization(Hospitalization hospitalization, ChamberStaying chamberStaying, Chamber chamber, ChamberType chamberType) throws ServiceException {
+    public int saveHospitalizationAndGetId(Hospitalization hospitalization, ChamberStaying chamberStaying, Chamber chamber, ChamberType chamberType) throws ServiceException {
         if (!hospitalizationValidator.isValid(hospitalization) ||
                 !chamberStayingValidator.isValid(chamberStaying) ||
                 !chamberTypeValidator.isValid(chamberType) ||
@@ -105,11 +113,11 @@ public class HospitalizationServiceImpl implements HospitalizationService {
         ChamberStayingDao chamberStayingDao = new ChamberStayingDaoImpl();
         ChamberDao chamberDao = new ChamberDaoImpl();
         ChamberTypeDao chamberTypeDao = new ChamberTypeDaoImpl();
+        int hospitalizationId;
         try(DaoTransactionProvider transaction = new DaoTransactionProvider()){
             transaction.initTransaction(false, hospitalizationDao, chamberStayingDao, chamberDao, chamberTypeDao);
 
-            hospitalizationDao.save(hospitalization);
-            int hospitalizationId = hospitalizationDao.getHospitalizationIdByPatientId(hospitalization.getPatientId());
+            hospitalizationId = hospitalizationDao.saveAndGetId(hospitalization);
 
             chamberStaying.setHospitalizationId(hospitalizationId);
             chamberStayingDao.save(chamberStaying);
@@ -121,6 +129,8 @@ public class HospitalizationServiceImpl implements HospitalizationService {
         } catch(DaoException e){
             throw new ServiceException("Can't save hospitalization, chamber staying.", e);
         }
+
+        return hospitalizationId;
     }
 
     @Override

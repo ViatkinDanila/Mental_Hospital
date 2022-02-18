@@ -11,10 +11,11 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-public class AccessFilter implements Filter{
+public class AccessFilter implements Filter {
     private static final String GUEST_ROLE = "GUEST";
     private static final String USER_ROLE = "USER";
     private static final String DOCTOR_ROLE = "DOCTOR";
+    private static final String ADMIN_ROLE = "ADMIN";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,57 +54,76 @@ public class AccessFilter implements Filter{
     }
 
     private boolean isAccessAllowed(String commandName, String role) {
-        if (commandName == null){
+        if (commandName == null) {
             return true;
         }
-       if (role.equals(GUEST_ROLE)) {
-           return CommandName.SIGN_UP.equals(commandName) ||
-                   CommandName.SIGN_UP_PAGE.equals(commandName) ||
-                   CommandName.HOME_PAGE.equals(commandName) ||
-                   CommandName.DISEASES.equals(commandName) ||
-                   CommandName.DISEASE.equals(commandName) ||
-                   CommandName.DOCTORS.equals(commandName) ||
-                   CommandName.LOGIN.equals(commandName) ||
-                   CommandName.LOCALIZATION.equals(commandName) ||
-                   CommandName.PROFILE_PAGE.equals(commandName) ||
-                   CommandName.LOGIN_PAGE.equals(commandName);
-       }
+        if (role.equals(GUEST_ROLE)) {
+            return CommandName.SIGN_UP.equals(commandName) ||
+                    CommandName.SIGN_UP_PAGE.equals(commandName) ||
+                    CommandName.HOME_PAGE.equals(commandName) ||
+                    CommandName.DISEASES.equals(commandName) ||
+                    CommandName.DISEASE.equals(commandName) ||
+                    CommandName.DOCTORS.equals(commandName) ||
+                    CommandName.LOGIN.equals(commandName) ||
+                    CommandName.LOCALIZATION.equals(commandName) ||
+                    CommandName.PROFILE_PAGE.equals(commandName) ||
+                    CommandName.LOGIN_PAGE.equals(commandName);
+        }
 
-       if (role.equals(USER_ROLE)) {
-           return CommandName.CONSULTATION_PAGE.equals(commandName) ||
-                  CommandName.CONSULTATION_REQUEST_PAGE.equals(commandName) ||
-                  CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
-                   CommandName.HOSPITALIZATION_REQUEST.equalsIgnoreCase(commandName) ||
-                   CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
-                   CommandName.HOME_PAGE.equals(commandName) ||
-                   CommandName.DISEASES.equals(commandName) ||
-                   CommandName.DISEASE.equals(commandName) ||
-                   CommandName.DOCTORS.equals(commandName) ||
-                   CommandName.SIGN_OUT.equals(commandName) ||
-                   CommandName.LOCALIZATION.equals(commandName) ||
-                   CommandName.PROFILE_PAGE.equals(commandName) ||
-                   CommandName.CONSULTATION_REQUEST.equals(commandName) ||
-                   CommandName.LOGIN_PAGE.equals(commandName);
-       }
+        if (role.equals(USER_ROLE)) {
+            return CommandName.CONSULTATION_PAGE.equals(commandName) ||
+                    CommandName.CONSULTATION_REQUEST_PAGE.equals(commandName) ||
+                    CommandName.HOSPITALIZATION_REQUEST_PAGE.equals(commandName) ||
+                    CommandName.HOSPITALIZATION_REQUEST.equalsIgnoreCase(commandName) ||
+                    CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
+                    CommandName.HOME_PAGE.equals(commandName) ||
+                    CommandName.DISEASES.equals(commandName) ||
+                    CommandName.DISEASE.equals(commandName) ||
+                    CommandName.DOCTORS.equals(commandName) ||
+                    CommandName.SIGN_OUT.equals(commandName) ||
+                    CommandName.LOCALIZATION.equals(commandName) ||
+                    CommandName.PROFILE_PAGE.equals(commandName) ||
+                    CommandName.CONSULTATION_REQUEST.equals(commandName) ||
+                    CommandName.LOGIN_PAGE.equals(commandName);
+        }
 
-       if (role.equals(DOCTOR_ROLE)) {
-           return CommandName.CONSULTATION_PAGE.equals(commandName) ||
-                   CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
-                   CommandName.HOSPITALIZATION_APPROVE.equalsIgnoreCase(commandName) ||
-                   CommandName.HOSPITALIZATION_REJECT.equalsIgnoreCase(commandName) ||
-                   CommandName.HOSPITALIZATION_COMPLETE.equalsIgnoreCase(commandName) ||
-                   CommandName.DOCTORS.equals(commandName) ||
-                   CommandName.DISEASES.equals(commandName) ||
-                   CommandName.DISEASE.equals(commandName) ||
-                   CommandName.LOCALIZATION.equals(commandName) ||
-                   CommandName.PROFILE_PAGE.equals(commandName) ||
-                   CommandName.HOME_PAGE.equals(commandName) ||
-                   CommandName.SIGN_OUT.equals(commandName) ||
-                   CommandName.CONSULTATION_COMPLETE.equals(commandName) ||
-                   CommandName.CONSULTATION_REJECT.equals(commandName) ||
-                   CommandName.CONSULTATION_APPROVE.equals(commandName);
-       }
-       //TODO ограничть меня(админа)
+        if (role.equals(DOCTOR_ROLE)) {
+            return CommandName.CONSULTATION_PAGE.equals(commandName) ||
+                    CommandName.HOSPITALIZATION_PAGE.equalsIgnoreCase(commandName) ||
+                    CommandName.HOSPITALIZATION_APPROVE.equalsIgnoreCase(commandName) ||
+                    CommandName.HOSPITALIZATION_REJECT.equalsIgnoreCase(commandName) ||
+                    CommandName.HOSPITALIZATION_COMPLETE.equalsIgnoreCase(commandName) ||
+                    CommandName.DOCTORS.equals(commandName) ||
+                    CommandName.DISEASES.equals(commandName) ||
+                    CommandName.DISEASE.equals(commandName) ||
+                    CommandName.LOCALIZATION.equals(commandName) ||
+                    CommandName.PROFILE_PAGE.equals(commandName) ||
+                    CommandName.HOME_PAGE.equals(commandName) ||
+                    CommandName.SIGN_OUT.equals(commandName) ||
+                    CommandName.CONSULTATION_COMPLETE.equals(commandName) ||
+                    CommandName.CONSULTATION_REJECT.equals(commandName) ||
+                    CommandName.CONSULTATION_APPROVE.equals(commandName);
+        }
+        if (role.equals(ADMIN_ROLE)) {
+            return CommandName.USERS.equals(commandName) ||
+                    CommandName.BAN.equalsIgnoreCase(commandName) ||
+                    CommandName.UNBAN.equalsIgnoreCase(commandName) ||
+                    CommandName.ADD_DRUG_PAGE.equals(commandName) ||
+                    CommandName.ADD_DISEASE_PAGE.equals(commandName) ||
+                    CommandName.ADD_DOCTOR_PAGE.equals(commandName) ||
+                    CommandName.ADD_DRUG.equals(commandName) ||
+                    CommandName.ADD_DOCTOR.equals(commandName) ||
+                    CommandName.ADD_DISEASE.equals(commandName) ||
+                    CommandName.HOME_PAGE.equals(commandName) ||
+                    CommandName.LOCALIZATION.equals(commandName) ||
+                    CommandName.DOCTORS.equals(commandName) ||
+                    CommandName.DISEASES.equals(commandName) ||
+                    CommandName.DISEASE.equals(commandName) ||
+                    CommandName.PROFILE_PAGE.equals(commandName) ||
+                    CommandName.SIGN_OUT.equals(commandName) ||
+                    CommandName.LOGIN.equals(commandName);
+        }
+
         return true;
     }
 

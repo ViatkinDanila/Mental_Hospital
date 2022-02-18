@@ -9,15 +9,14 @@ import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
 import com.epam.hospital.model.user.info.DoctorInfo;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.AdminService;
 import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.logic.impl.AdminServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.util.Hasher;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 
 
 public class AddDoctorCommand implements Command {
@@ -25,18 +24,16 @@ public class AddDoctorCommand implements Command {
     private static final AdminService adminService = new AdminServiceImpl();
     private static final UserService userService = new UserServiceImpl();
     private static final int DOCTOR_ROLE_ID = 3;
-    private static final String ADD_USER_COMMAND = "MentalHospital?command=" + CommandName.ADD_USERS;
+    private static final String ADD_DOCTOR_COMMAND = "MentalHospital?command=" + CommandName.ADD_USERS;
     private static final String USER_PAGE_COMMAND = "MentalHospital?command=" + CommandName.PROFILE_PAGE;
     private static final String INVALID_LOGIN_KEY = "invalid.login";
 
 
-
     @Override
     public CommandResult execute(RequestContext requestContext) throws ServiceException {
-        //TODO протестить
         String login = ParameterExtractor.extractString(RequestParameters.LOGIN, requestContext);
         boolean isUserExist = userService.isUserExistByLogin(login);
-        if (!isUserExist){
+        if (!isUserExist) {
             String password = ParameterExtractor.extractString(RequestParameters.PASSWORD, requestContext);
             Hasher hasher = new Hasher();
             String hashedPassword = hasher.hashString(password, salt);
@@ -49,21 +46,19 @@ public class AddDoctorCommand implements Command {
                     .lastName(ParameterExtractor.extractString(RequestParameters.LAST_NAME, requestContext))
                     .hashedPassword(hashedPassword)
                     .build();
-            int doctorId = userService.getUserByLogin(ParameterExtractor.extractString(RequestParameters.LOGIN, requestContext)).getUserId();
 
             DoctorInfo doctorInfo = DoctorInfo.builder()
-                    .doctorId(doctorId)
                     .classification(ParameterExtractor.extractInt(RequestParameters.CLASSIFICATION, requestContext))
                     .specialization(ParameterExtractor.extractString(RequestParameters.SPECIALIZATION, requestContext))
                     .workExperience(ParameterExtractor.extractInt(RequestParameters.WORK_EXPERIENCE, requestContext))
                     .price(ParameterExtractor.extractDouble(RequestParameters.PRICE, requestContext))
                     .build();
-            adminService.saveUser(user, doctorInfo);
+            int id = adminService.saveDoctorAndGetId(user, doctorInfo);
 
-            return CommandResult.redirect(USER_PAGE_COMMAND + "&id=" + doctorId);
-        }else {
+            return CommandResult.redirect(USER_PAGE_COMMAND + "&id=" + id + "&content=consultations&content-size=5&current-page=1");
+        } else {
             requestContext.addAttribute(RequestAttributes.ERROR_MESSAGE, INVALID_LOGIN_KEY);
         }
-        return CommandResult.forward(ADD_USER_COMMAND);
+        return CommandResult.forward(ADD_DOCTOR_COMMAND);
     }
 }

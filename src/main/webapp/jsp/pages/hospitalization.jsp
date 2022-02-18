@@ -25,21 +25,22 @@
          style="background-color: #16CAEE; border-radius: 2rem">
         <div style="background-color: #4f7a9f; border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
             <div class="d-flex text-light justify-content-between pt-2 px-3 h1">
-            <span style="line-height: 1.5"><ftm:message key="hospitalization.chamber.number"/> ${hospitalization.getChamberNumber()}</span>
+                <span style="line-height: 1.5"><ftm:message
+                        key="hospitalization.chamber.number"/> ${hospitalization.getChamberNumber()}</span>
                 <span style="line-height: 1.5">${hospitalization.getChamberType().getName()}</span>
             </div>
         </div>
         <div class="container d-flex w-75 flex-column">
             <div class="d-flex py-3 pt-5 h2 justify-content-center">
                 <span><fmt:message key="consultation.doctor"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${hospitalization.getDoctorId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${hospitalization.getDoctorId()}&content=hospitalizations&content-size=5&current-page=1"
                    class="font-weight-bold">
                     <span class="ml-3">${hospitalization.getDoctorFirstName()} ${hospitalization.getDoctorLastName()}</span>
                 </a>
             </div>
             <div class="d-flex py-3 h2 justify-content-center">
                 <span><fmt:message key="consultation.patient"/></span>
-                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${hospitalization.getPatientId()}"
+                <a href="${pageContext.request.contextPath}/MentalHospital?command=profile-page&id=${hospitalization.getPatientId()}&content=hospitalizations&content-size=5&current-page=1"
                    class="font-weight-bold">
                     <span class="ml-3">${hospitalization.getPatientFirstName()} ${hospitalization.getPatientLastName()}</span>
                 </a>
@@ -102,7 +103,8 @@
                   method="POST"
                   style="width: 55%; border-radius: 6rem"
                   action="${pageContext.request.contextPath}/MentalHospital?id=${hospitalizationId}">
-                <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message key="hospitalization.course"/></span>
+                <span class="h1 pb-3 pt-4 text-center font-weight-bold"><fmt:message
+                        key="hospitalization.course"/></span>
                 <div class="py-3 pt-3 h2 w-75 mb-3" style="margin-left: 3rem">
                     <span class="form-label"><fmt:message key="hospitalization.date.out"/></span>
                     <input class="date mt-1 form-control"
@@ -112,7 +114,7 @@
                            placeholder="<fmt:message key="hospitalization.date.advice"/>"
                            name="dateOut" value="${dateOut}" style="font-size: 2rem" required>
                 </div>
-                <div class="py-3 pt-3 h2 w-75 mb-3">
+                <div class="py-3 pt-3 h2 w-75 mb-3 ml-5">
                     <span class="form-label"><fmt:message key="hospitalization.price"/></span>
                     <input name="price" class="form-control mt-1" type="number" min="10" max="10000"
                            style="font-size: 2rem" required>
@@ -121,12 +123,12 @@
                 <div class="d-flex w-75 justify-content-between mb-4">
                     <button type="submit" name="command" value="hospitalization-complete"
                             class="btn btn-success btn-lg d-flex mx-auto justify-content-center">
-                            <span class="h3 mb-0" style="line-height: 1.5"><fmt:message
+                            <span class="h2 mb-0" style="line-height: 2"><fmt:message
                                     key="hospitalization.complete.button"/></span>
                     </button>
                     <button type="submit" name="command" value="hospitalization-reject"
                             class="btn btn-danger btn-lg d-flex mx-auto justify-content-center">
-                            <span class="h3 mb-0" style="line-height: 1.5"><fmt:message
+                            <span class="h2 mb-0" style="line-height: 2"><fmt:message
                                     key="consultation.reject.button"/></span>
                     </button>
                 </div>

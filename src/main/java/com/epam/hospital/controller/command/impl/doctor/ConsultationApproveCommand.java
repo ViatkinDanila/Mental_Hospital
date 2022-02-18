@@ -1,17 +1,17 @@
 package com.epam.hospital.controller.command.impl.doctor;
 
+import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.constant.web.RequestParameters;
 import com.epam.hospital.controller.command.Command;
 import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
-import com.epam.hospital.constant.web.CommandName;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.treatment.Consultation;
 import com.epam.hospital.model.treatment.type.CommunicationType;
 import com.epam.hospital.model.treatment.type.ConsultationStatus;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.ConsultationService;
 import com.epam.hospital.service.logic.impl.ConsultationServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,19 +1,14 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.ConsultationDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.Consultation;
-import com.epam.hospital.util.date.DateFormatter;
-import com.epam.hospital.util.date.DateFormatterType;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
-import java.sql.Timestamp;
 
 
 public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implements ConsultationDao {
@@ -52,6 +47,19 @@ public class ConsultationDaoImpl extends AbstractDaoImpl<Consultation> implement
         try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_CONSULTATION_QUERY);) {
             setParams(statement, entity, SAVE_CONSULTATION_QUERY);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't save consultation.", e);
+        }
+    }
+
+    @Override
+    public int saveAndGetId(Consultation entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_CONSULTATION_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity, SAVE_CONSULTATION_QUERY);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             throw new DaoException("Can't save consultation.", e);
         }

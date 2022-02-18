@@ -6,11 +6,11 @@ import com.epam.hospital.controller.command.CommandResult;
 import com.epam.hospital.controller.command.util.ParameterExtractor;
 import com.epam.hospital.controller.request.RequestContext;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.PatientCardService;
 import com.epam.hospital.service.logic.UserService;
 import com.epam.hospital.service.logic.impl.PatientCardServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 
 
 public class LoginCommand implements Command {
@@ -30,12 +30,12 @@ public class LoginCommand implements Command {
         String password = ParameterExtractor.extractString(RequestParameters.PASSWORD, requestContext);
 
         User user = userService.login(email, password);
-        if (user != null){
+        if (user != null) {
             if (!user.getIsBanned()) {
                 String role = userService.getUserRoleById(user.getUserRoleId());
                 requestContext.addSession(SessionAttributes.USER_ID, user.getUserId());
                 requestContext.addSession(SessionAttributes.ROLE, role);
-                if (role.equals(USER_ROLE)){
+                if (role.equals(USER_ROLE)) {
                     int patientCardId = patientCardService.getPatientCardIdByUserId(user.getUserId());
                     requestContext.addSession(RequestAttributes.PATIENT_CARD_ID, patientCardId);
                 }

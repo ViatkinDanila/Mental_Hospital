@@ -1,12 +1,14 @@
 create table chamber_types
 (
-	id int auto_increment
-		primary key,
-	title varchar(45) not null,
-	num_of_beds int not null,
-	price int not null,
-	num_of_available_chambers int not null
+    id                        int auto_increment
+        primary key,
+    title                     varchar(45)  not null,
+    num_of_beds               int          not null,
+    price                     int          null,
+    num_of_available_chambers int          not null,
+    img_ref                   varchar(250) not null
 );
+
 
 create table diseases
 (

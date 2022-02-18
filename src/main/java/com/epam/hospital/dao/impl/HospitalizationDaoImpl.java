@@ -1,14 +1,16 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.HospitalizationDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.Hospitalization;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> implements HospitalizationDao {
@@ -45,6 +47,19 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
     }
 
     @Override
+    public int saveAndGetId(Hospitalization entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_HOSPITALIZATION_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity, SAVE_HOSPITALIZATION_QUERY);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new DaoException("Can't save hospitalization.", e);
+        }
+    }
+
+    @Override
     public void update(Hospitalization entity) throws DaoException {
         try (PreparedStatement statement = pooledConnection.prepareStatement(UPDATE_HOSPITALIZATION_QUERY);) {
             setParams(statement, entity, UPDATE_HOSPITALIZATION_QUERY);
@@ -64,17 +79,11 @@ public class HospitalizationDaoImpl extends AbstractDaoImpl<Hospitalization> imp
         return findByField(Column.HOSPITALIZATION_DOCTOR_ID, doctorId);
     }
 
-    @Override
-    public int getHospitalizationIdByPatientId(int patientId) throws DaoException {
-        List<Hospitalization> hospitalizations = findByField(Column.HOSPITALIZATION_PATIENT_ID,patientId);
-        return hospitalizations.get(hospitalizations.size()-1).getId();
-    }
-
-    private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException{
-        statement.setInt(1,hospitalization.getPatientId());
-        statement.setInt(2,hospitalization.getDoctorId());
-        statement.setString(3,hospitalization.getStatus().toString());
-        if (action.equals(UPDATE_HOSPITALIZATION_QUERY)){
+    private void setParams(PreparedStatement statement, Hospitalization hospitalization, String action) throws SQLException {
+        statement.setInt(1, hospitalization.getPatientId());
+        statement.setInt(2, hospitalization.getDoctorId());
+        statement.setString(3, hospitalization.getStatus().toString());
+        if (action.equals(UPDATE_HOSPITALIZATION_QUERY)) {
             statement.setInt(4, hospitalization.getId());
         }
     }

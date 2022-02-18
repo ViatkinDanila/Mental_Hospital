@@ -1,8 +1,8 @@
 package com.epam.hospital.dao.builder.impl;
 
 
-import com.epam.hospital.dao.builder.EntityBuilder;
 import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.dao.builder.EntityBuilder;
 import com.epam.hospital.model.hospital.Chamber;
 
 import java.sql.ResultSet;

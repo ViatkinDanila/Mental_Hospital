@@ -1,14 +1,16 @@
 package com.epam.hospital.dao.impl;
 
+import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.dao.DrugRecipeDao;
 import com.epam.hospital.dao.builder.BuilderFactory;
 import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.constant.database.Column;
-import com.epam.hospital.constant.database.Table;
 import com.epam.hospital.model.treatment.DrugRecipe;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements DrugRecipeDao {
     private final static String SAVE_DRUG_RECIPE_QUERY = String.format(
@@ -28,7 +30,7 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
             Column.DRUG_RECIPES_DRUG_ID
     );
 
-    public DrugRecipeDaoImpl(){
+    public DrugRecipeDaoImpl() {
         super(BuilderFactory.getDrugRecipeBuilder(), Table.DRUG_RECIPES_TABLE, Column.DRUG_RECIPES_TREATMENT_COURSE_ID);
     }
 
@@ -37,6 +39,19 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
         try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DRUG_RECIPE_QUERY);) {
             setParams(statement, entity);
             statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Can't save drug recipe.", e);
+        }
+    }
+
+    @Override
+    public int saveAndGetId(DrugRecipe entity) throws DaoException {
+        try (PreparedStatement statement = pooledConnection.prepareStatement(SAVE_DRUG_RECIPE_QUERY, Statement.RETURN_GENERATED_KEYS);) {
+            setParams(statement, entity);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            resultSet.next();
+            return resultSet.getInt(1);
         } catch (SQLException e) {
             throw new DaoException("Can't save drug recipe.", e);
         }
@@ -52,7 +67,7 @@ public class DrugRecipeDaoImpl extends AbstractDaoImpl<DrugRecipe> implements Dr
         }
     }
 
-    private void setParams(PreparedStatement statement, DrugRecipe drugRecipe) throws SQLException{
+    private void setParams(PreparedStatement statement, DrugRecipe drugRecipe) throws SQLException {
         statement.setString(1, drugRecipe.getDescription());
         statement.setFloat(2, drugRecipe.getDose());
         statement.setInt(3, drugRecipe.getTreatmentCourseId());

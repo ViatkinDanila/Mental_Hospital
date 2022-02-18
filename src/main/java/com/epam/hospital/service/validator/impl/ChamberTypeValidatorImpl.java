@@ -19,10 +19,7 @@ public class ChamberTypeValidatorImpl implements Validator<ChamberType> {
             return false;
         }
 
-        if (num_of_beds < MIN_NUMBER_BEDS_VALUE){
-            return false;
-        }
-        return true;
+        return num_of_beds >= MIN_NUMBER_BEDS_VALUE;
     }
 
     public boolean isValidOfInjectionAttack(String line) {

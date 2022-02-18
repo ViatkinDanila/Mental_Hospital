@@ -1,20 +1,27 @@
 package com.epam.hospital.service.logic.impl;
 
-import com.epam.hospital.dao.*;
-import com.epam.hospital.dao.exception.DaoException;
-import com.epam.hospital.dao.helper.DaoTransactionProvider;
-import com.epam.hospital.dao.impl.*;
 import com.epam.hospital.constant.database.Column;
+import com.epam.hospital.dao.AbstractDao;
+import com.epam.hospital.dao.DiseaseSymptomDao;
+import com.epam.hospital.dao.DrugRecipeDao;
+import com.epam.hospital.dao.TreatmentCourseDao;
+import com.epam.hospital.dao.exception.DaoException;
+import com.epam.hospital.dao.provider.DaoTransactionProvider;
+import com.epam.hospital.dao.impl.DiseaseSymptomDaoImpl;
+import com.epam.hospital.dao.impl.DrugRecipeDaoImpl;
+import com.epam.hospital.dao.impl.TreatmentCourseDaoImpl;
 import com.epam.hospital.model.treatment.DiseaseSymptom;
 import com.epam.hospital.model.treatment.DrugRecipe;
 import com.epam.hospital.model.treatment.TreatmentCourse;
-import com.epam.hospital.service.logic.TreatmentCourseService;
 import com.epam.hospital.service.exception.ServiceException;
+import com.epam.hospital.service.logic.TreatmentCourseService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     private static TreatmentCourseService instance;
+
     //TODO вынести в конст дао
     private TreatmentCourseServiceImpl() {
 
@@ -32,7 +39,11 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
         TreatmentCourseDao treatmentCourseDao = new TreatmentCourseDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(treatmentCourseDao);
-            return treatmentCourseDao.findById(treatmentCourseId);
+            Optional<TreatmentCourse> treatmentCourseOptional = treatmentCourseDao.findById(treatmentCourseId);
+            if (treatmentCourseOptional.isEmpty()) {
+                throw new ServiceException("Cannot find treatment course with id=" + treatmentCourseId);
+            }
+            return treatmentCourseOptional.get();
         } catch (DaoException e) {
             throw new ServiceException("Can't get treatment course.", e);
         }
@@ -61,18 +72,16 @@ public class TreatmentCourseServiceImpl implements TreatmentCourseService {
     }
 
     @Override
-    public int saveTreatmentCourse(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException {
+    public int saveTreatmentCourseAndGetId(TreatmentCourse treatmentCourse, List<DiseaseSymptom> diseasesSymptoms, List<DrugRecipe> drugsRecipes) throws ServiceException {
         TreatmentCourseDao treatmentCourseDao = new TreatmentCourseDaoImpl();
         DrugRecipeDao drugRecipeDao = new DrugRecipeDaoImpl();
         DiseaseSymptomDao diseaseSymptomDao = new DiseaseSymptomDaoImpl();
         try (DaoTransactionProvider transaction = new DaoTransactionProvider()) {
             transaction.initTransaction(false, treatmentCourseDao, diseaseSymptomDao, drugRecipeDao);
 
-            treatmentCourseDao.save(treatmentCourse);
-            treatmentCourse = treatmentCourseDao.findTreatmentCourseByInstruction(treatmentCourse.getInstruction());
-            int treatmentCourseId = treatmentCourse.getTreatmentCourseId();
+            int treatmentCourseId = treatmentCourseDao.saveAndGetId(treatmentCourse);
 
-            for (DiseaseSymptom diseaseSymptom : diseasesSymptoms){
+            for (DiseaseSymptom diseaseSymptom : diseasesSymptoms) {
                 diseaseSymptom.setTreatmentCourseId(treatmentCourseId);
                 diseaseSymptomDao.save(diseaseSymptom);
             }

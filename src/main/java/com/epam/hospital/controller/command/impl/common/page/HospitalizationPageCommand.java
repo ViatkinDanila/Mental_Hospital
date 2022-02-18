@@ -1,4 +1,4 @@
-package com.epam.hospital.controller.command.impl.common;
+package com.epam.hospital.controller.command.impl.common.page;
 
 import com.epam.hospital.constant.web.Page;
 import com.epam.hospital.constant.web.RequestAttributes;
@@ -12,6 +12,7 @@ import com.epam.hospital.model.hospital.Chamber;
 import com.epam.hospital.model.treatment.ChamberStaying;
 import com.epam.hospital.model.treatment.Hospitalization;
 import com.epam.hospital.model.user.User;
+import com.epam.hospital.service.exception.ServiceException;
 import com.epam.hospital.service.logic.ChamberService;
 import com.epam.hospital.service.logic.HospitalizationService;
 import com.epam.hospital.service.logic.PatientCardService;
@@ -20,7 +21,6 @@ import com.epam.hospital.service.logic.impl.ChamberServiceImpl;
 import com.epam.hospital.service.logic.impl.HospitalizationServiceImpl;
 import com.epam.hospital.service.logic.impl.PatientCardServiceImpl;
 import com.epam.hospital.service.logic.impl.UserServiceImpl;
-import com.epam.hospital.service.exception.ServiceException;
 
 
 public class HospitalizationPageCommand implements Command {
@@ -36,7 +36,7 @@ public class HospitalizationPageCommand implements Command {
         requestContext.addAttribute(RequestAttributes.HOSPITALIZATION_ID, hospitalizationId);
 
         Hospitalization hospitalization = hospitalizationService.getHospitalizationById(hospitalizationId);
-        ChamberStaying chamberStaying = chamberService.getChamberStayingById(hospitalizationId);
+        ChamberStaying chamberStaying = chamberService.getChamberStayingByHospitalizationId(hospitalizationId);
         User doctor = userService.getUserById(hospitalization.getDoctorId());
         int patientId = patientCardService.getPatientCardById(hospitalization.getPatientId()).getUserId();
         User patient = userService.getUserById(patientId);

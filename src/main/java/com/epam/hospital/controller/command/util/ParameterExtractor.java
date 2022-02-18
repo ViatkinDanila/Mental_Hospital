@@ -11,32 +11,30 @@ import java.util.Date;
 public class ParameterExtractor {
 
     public static String extractString(String parameterName, RequestContext requestContext) {
-        String paramValue = requestContext.getRequestParameter(parameterName);
-        return paramValue;
+        return requestContext.getRequestParameter(parameterName);
     }
+
     public static int extractInt(String parameterName, RequestContext requestContext) {
-        int paramValue = Integer.parseInt(requestContext.getRequestParameter(parameterName));
-        return paramValue;
+        return Integer.parseInt(requestContext.getRequestParameter(parameterName));
     }
 
     public static Date extractDate(String parameterName, RequestContext requestContext) {
         SimpleDateFormat utilDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date paramValue = null;
-        try{
-            paramValue  = utilDateFormatter.parse(requestContext.getRequestParameter(parameterName));
+        try {
+            paramValue = utilDateFormatter.parse(requestContext.getRequestParameter(parameterName));
         } catch (Exception e) {
             log.error("Input date from html form is wrong");
         }
         return paramValue;
     }
+
     public static double extractDouble(String parameterName, RequestContext requestContext) {
-        double paramValue = Double.parseDouble(requestContext.getRequestParameter(parameterName));
-        return paramValue;
+        return Double.parseDouble(requestContext.getRequestParameter(parameterName));
     }
 
     public static Timestamp extractTimestamp(String parameterName, RequestContext requestContext) {
-        Date date = extractDate(parameterName,requestContext);
-        Timestamp paramValue = new Timestamp(date.getTime());
-        return paramValue;
+        Date date = extractDate(parameterName, requestContext);
+        return new Timestamp(date.getTime());
     }
 }

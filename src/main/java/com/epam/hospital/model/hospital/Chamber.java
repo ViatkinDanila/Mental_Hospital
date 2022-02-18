@@ -6,16 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Chamber implements Entity {
-     Integer chamberId;
-     Integer hospitalId;
-     Integer chamberTypeId;
-     Integer numberOfFreeBeds;
+    Integer chamberId;
+    Integer hospitalId;
+    Integer chamberTypeId;
+    Integer numberOfFreeBeds;
 
 }
